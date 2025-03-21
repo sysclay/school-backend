@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/app.ts",
-    "build": "rimraf ./dist && tsc && ncp .env ./dist/ && ncp src/public ./dist/public",
+    "build": "rimraf ./dist && tsc && copy .env dist\\ && xcopy /E /I src\\public dist\\public",
     "start": "npm run build && node dist/app.js"
   },
   "keywords": [],
