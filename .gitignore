@@ -1,0 +1,25 @@
+# Ignorar node_modules
+node_modules/
+
+# Ignorar archivos de entorno
+.env
+.DS_Store
+
+# Ignorar archivos de configuración de depuración
+.vscode/
+package-lock.json
+yarn.lock
+# Ignorar logs y datos temporales
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar el directorio de construcción (en caso de usar TypeScript)
+dist/
+db/
+
+# Ignorar configuraciones del sistema operativo
+.DS_Store
+Thumbs.db
