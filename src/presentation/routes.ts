@@ -13,6 +13,7 @@ import { authMiddleware } from "./middlewares/AuthMiddleware.js";
 import { MatriculaRoutes } from "./matricula/router.js";
 import { AsistenciaRoutes } from "./asistencia/router.js";
 import { NotificacionRoutes } from "./notificacion/router.js";
+import { FcmRoutes } from "./fcm/router.js";
 
 export class AppRouter {
     static get routes(): Router {
@@ -30,6 +31,7 @@ export class AppRouter {
         router.use('/apirest/matricula',authMiddleware, MatriculaRoutes.routes);
         router.use('/apirest/asistencia',authMiddleware, AsistenciaRoutes.routes);
 
+        router.use('/apirest/fcm', FcmRoutes.routes);
         router.use('/apirest/notificacion', NotificacionRoutes.routes);
 
         router.use('/apirest/usuario', UsuarioRoutes.routes);

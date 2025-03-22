@@ -86,3 +86,10 @@ export * from './repositories/asistencia.repository.js';
 export * from './dtos/asistencia/register.asistencia.dto.js';
 export * from './dtos/asistencia/update.entrada.asistencia.dto.js';
 export * from './dtos/asistencia/update.salida.asistencia.dto.js';
+
+// DOMAIN FCM
+export * from './entities/in/fcm.entity.js';
+export * from './entities/ou/fcm.entity.js';
+export * from './datasources/fcm.datasource.js';
+export * from './repositories/fcm.repository.js';
+export * from './dtos/fcm/register.fcm.dto.js';

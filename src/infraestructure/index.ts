@@ -60,3 +60,8 @@ export * from "./datasources/postgres/asistencia.datasource.impl.js";
 export * from "./repositories/asistencia.repository.impl.js";
 export * from "./mappers/asistencia.mapper.js";
 
+// INFRA FCM
+export * from "./datasources/postgres/fcm.datasource.impl.js";
+export * from "./repositories/fcm.repository.impl.js";
+export * from "./mappers/fcm.mapper.js";
+

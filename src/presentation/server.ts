@@ -26,7 +26,13 @@ export class Server {
     }
 
     async start(){
-        this.app.use(cors({exposedHeaders:['Authorization']}));
+        this.app.use(cors({ 
+            origin: '*',  
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            allowedHeaders: ['Content-Type', 'Authorization'],
+            exposedHeaders:['Authorization'] 
+        }
+        ));
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended:true}));
 
@@ -41,7 +47,7 @@ export class Server {
         );
 
         // Escuchar en el puerto dinámico
-        const port = process.env.PORT || this.port;
+        const port =  Number(process.env.PORT) || this.port;
         this.app.listen(port,()=> {
             console.log(`Server running on port ${this.port}`)
         })
