@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { NotificacionController } from "./controller.js";
+import { NotificacionDatasourceImpl, NotificacionRepositoryImpl } from "../../infraestructure/index.js";
 // import { UsuarioDatasourceImpl, UsuarioRepositoryImpl } from "../../infraestructure/index.js";
 // import { authMiddleware } from "../middlewares/AuthMiddleware.js";
 
@@ -7,9 +8,14 @@ import { NotificacionController } from "./controller.js";
 export class NotificacionRoutes {
     static get routes(): Router {
         const router = Router();
-        const notificacionController = new NotificacionController();
+
+        const datasource = new NotificacionDatasourceImpl();
+        const notificacionRepository = new NotificacionRepositoryImpl(datasource);
+        const controller = new NotificacionController(notificacionRepository);
+
+        // const notificacionController = new NotificacionController();
         
-        router.post('/register',notificacionController.enviarNotificacion);
+        router.post('/enviar',controller.enviarNotificacion);
 
         return router
     }

@@ -1,5 +1,5 @@
 
-import { CustomError, AlumnoDatasource, AlumnoEntityOu, RegisterAlumnoDto } from "../../../domain/index.js";
+import { CustomError, AlumnoDatasource, AlumnoEntityOu, RegisterAlumnoDto, FilterAlumnoDto } from "../../../domain/index.js";
 import { AlumnoMapper } from "../../mappers/alumno.mapper.js";
 //import { AlumnoModel } from "../../../data/mongodb/models/tipo.documento.model";
 
@@ -88,6 +88,32 @@ export class AlumnoDatasourceImpl implements AlumnoDatasource {
             }
             return AlumnoMapper.findEntityFromObject({ok:false,message:'Error'})
         } catch (error) {
+            if(error instanceof CustomError){ throw error; }
+            throw CustomError.internalServer();
+        }
+    }
+
+    async filterAll(filterAlumnoDto:FilterAlumnoDto):Promise<AlumnoEntityOu>{
+        try {
+            const { nro_documento } = filterAlumnoDto;
+            const pool = PostgresDatabase.getPool();
+
+            const query = `SELECT * FROM tbl_alumno where estado = true and nro_documento=$1`;
+            const values = [nro_documento];
+
+            await pool.query('BEGIN'); 
+            const result = await pool.query(query, values); 
+            await pool.query('COMMIT'); 
+            // console.log(result)
+            if(result){
+                if(result.rowCount===0){
+                    return AlumnoMapper.findEntityFromObject({ok:false, data:result.rows,message:'No encontrado'})
+                }
+                return AlumnoMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
+            }
+            return AlumnoMapper.findEntityFromObject({ok:false,message:'Error'})
+        } catch (error) {
+            console.log(error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }

@@ -20,7 +20,7 @@ export class AppRouter {
         const router = Router();
 
         router.use('/apirest/tipo-documento', authMiddleware, TipoDocumentoRoutes.routes);
-        router.use('/apirest/alumno',authMiddleware, AlumnoRoutes.routes);
+        router.use('/apirest/alumno', AlumnoRoutes.routes);
         router.use('/apirest/colegio',authMiddleware, ColegioRoutes.routes);
         router.use('/apirest/lectivo',authMiddleware, AniolectivoRoutes.routes);
         router.use('/apirest/grado',authMiddleware, GradoRoutes.routes);

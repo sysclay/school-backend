@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CustomError, RegisterAlumnoDto, AlumnoRepository } from "../../domain/index.js";
+import { CustomError, RegisterAlumnoDto, AlumnoRepository, FilterAlumnoDto } from "../../domain/index.js";
 
 export class AlumnoController {
     constructor (
@@ -37,20 +37,20 @@ export class AlumnoController {
         })
     };
 
-    //findByNameCorto = (req:Request, res:Response) =>{
-    //    const nombreCorto = req.query.nom_corto as string;
-//
-    //    this.AlumnoRepository.findByNameCorto(nombreCorto)
-    //    .then( async data =>{
-    //        res.json(data)
-    //    }).catch(error => {
-    //        this.handleError(error,res)
-    //    })
-    //};
-
-
     findAlumno = (req:Request, res: Response)=>{
         this.AlumnoRepository.findAll()
+        .then(async data =>{
+            res.json(data)
+        }).catch(error => {
+            this.handleError(error,res)
+        });
+    };
+    filterAlumno = (req:Request, res: Response):any=>{
+        const nro_documento = req.query.nro_documento as string;
+        const [error, filterAlumnoDto ] = FilterAlumnoDto.filter({nro_documento});
+        
+        if(error){ return res.status(400).json({error})};
+        this.AlumnoRepository.filterAll(filterAlumnoDto!)
         .then(async data =>{
             res.json(data)
         }).catch(error => {

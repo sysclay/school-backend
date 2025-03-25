@@ -30,7 +30,7 @@ export class Server {
             origin: '*',  
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
             allowedHeaders: ['Content-Type', 'Authorization'],
-            exposedHeaders:['Authorization'] 
+            exposedHeaders:['Authorization']
         }
         ));
         this.app.use(express.json());

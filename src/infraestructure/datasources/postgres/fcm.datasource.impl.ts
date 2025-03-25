@@ -53,10 +53,13 @@ export class FcmDatasourceImpl implements FcmDatasource {
 
     async findAll():Promise<FcmEntityOu>{
         try {
+            console.log('data 11')
             const pool = PostgresDatabase.getPool();
             const result = await pool.query("SELECT * FROM tbl_fcm where estado = true");
             //console.log('LISTA',result)
             if(result){
+                console.log('data 22',result.rows)
+
                 return FcmMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }
             return FcmMapper.findEntityFromObject({ok:false,message:'Error'})

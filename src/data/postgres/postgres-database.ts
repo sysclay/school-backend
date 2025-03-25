@@ -32,8 +32,8 @@ export class PostgresDatabase {
 
         if (!this.pool) {
 
-            // this.pool = new Pool({user,host, database, password, port, ssl:ssl===true ?{ rejectUnauthorized: false }:ssl});
-            this.pool = new Pool({connectionString, ssl:ssl===true ?{ rejectUnauthorized: false }:ssl});
+            this.pool = new Pool({user,host, database, password, port, ssl:ssl===true ?{ rejectUnauthorized: false }:ssl});
+            // this.pool = new Pool({connectionString, ssl:ssl===true ?{ rejectUnauthorized: false }:ssl});
 
             try {
                 console.log('Conexión exitosa 🎉')

@@ -13,6 +13,7 @@ export * from './entities/ou/alumno.entity.js';
 export * from './datasources/alumno.datasource.js';
 export * from './repositories/alumno.repository.js';
 export * from './dtos/alumno/register.alumno.dto.js';
+export * from './dtos/alumno/filter.alumno.dto.js';
 
 // DOMAIN COLEGIO
 export * from './entities/in/colegio.entity.js';
@@ -93,3 +94,10 @@ export * from './entities/ou/fcm.entity.js';
 export * from './datasources/fcm.datasource.js';
 export * from './repositories/fcm.repository.js';
 export * from './dtos/fcm/register.fcm.dto.js';
+
+// DOMAIN NOTIFICACION
+export * from './entities/in/notificacion.entity.js';
+export * from './entities/ou/notificacion.entity.js';
+export * from './datasources/notificacion.datasource.js';
+export * from './repositories/notificacion.repository.js';
+export * from './dtos/notificacion/register.notificacion.dto.js';

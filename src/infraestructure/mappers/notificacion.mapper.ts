@@ -1,23 +1,24 @@
-import { CustomError, FcmEntity, FcmEntityOu } from "../../domain/index.js";
+import { CustomError, NotificacionEntity, NotificacionEntityOu } from "../../domain/index.js";
 
-export class FcmMapper {
+export class NotificacionMapper {
 
-    static FcmEntityFromObject(object:{[key:string]:any}){
+    static NotificacionEntityFromObject(object:{[key:string]:any}){
         const {ok,data,message} = object;
         if(data!==undefined){
-            if(!data.token_fcm){ throw CustomError.badRequest('Missing fcm'); }
-            const _data = new FcmEntity (
+            // if(!data.token_fcm){ throw CustomError.badRequest('Missing fcm'); }
+            if(!data.apoderado_id){ throw CustomError.badRequest('Missing apoderado_id'); }
+            const _data = new NotificacionEntity (
                 data._id||data.id ,
-                data.token_fcm, 
-                data.apoderado_id, 
+                // data.token_fcm,
+                data.apoderado_id,
             );   
-            return new FcmEntityOu(
+            return new NotificacionEntityOu(
                 ok,
                 _data, 
                 message,
             );            
         }else{
-            return new FcmEntityOu(
+            return new NotificacionEntityOu(
                 ok,
                 data, 
                 message,
@@ -31,49 +32,49 @@ export class FcmMapper {
         var _data:any
         // console.log(_data, ok,data,message)
         if(data){
-            const _data = new FcmEntity (
+            const _data = new NotificacionEntity (
                 data._id||data.id ,
-                data.token_fcm, 
+                // data.token_fcm,
                 data.apoderado_id,
             );
-            return new FcmEntityOu(
+            return new NotificacionEntityOu(
                 ok,
                 _data,
                 message,
             );
         }
 
-        return new FcmEntityOu(
+        return new NotificacionEntityOu(
             ok,
             _data,
             message,
         );
     }
 
-
     static findEntityFromObject(object:{[key:string]:any}){
         const {ok,data,message} = object;
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
-                const {_id,id, token_fcm,apoderado_id} = object;
-                return new FcmEntity(
+                const {_id,id,apoderado_id } = object;
+                return new NotificacionEntity(
                     _id||id,
-                    token_fcm, 
-                    apoderado_id, 
+                    // token_fcm,
+                    apoderado_id,
                 )
             })
 
-            return new FcmEntityOu(
+            return new NotificacionEntityOu(
                 ok,
                 _data, 
                 message,
             )
         }else{
-            return new FcmEntityOu(
+            return new NotificacionEntityOu(
                 ok,
                 data, 
                 message,
             )
         }
+
     }
 }
