@@ -14,7 +14,8 @@ export class UsuarioRoutes {
         const usuarioooRepository = new UsuarioRepositoryImpl(datasource);
         const controller = new UsuarioController(usuarioooRepository);
 
-        router.post('/register',authMiddleware, authorizeRoles(Roles.ADMIN ), controller.registerUsuario);
+        // router.post('/register',authMiddleware, authorizeRoles(Roles.ADMIN ), controller.registerUsuario);
+        router.post('/register', controller.registerUsuario);
         router.post('/login',controller.loginUsuario);
         //router.get('/search/:id', controller.findById);
         //router.get('/filter', controller.findByNameCorto);
