@@ -4,6 +4,10 @@ export * from "./datasources/postgres/tipo.documento.datasource.impl.js";
 export * from "./repositories/tipo.documento.repository.impl.js";
 export * from "./mappers/tipo.documento.mapper.js";
 
+// INFRA PERSONA
+export * from "./datasources/postgres/persona.datasource.impl.js";
+export * from "./repositories/persona.repository.impl.js";
+export * from "./mappers/persona.mapper.js";
 
 // INFRA ALUMNO
 export * from "./datasources/postgres/alumno.datasource.impl.js";
@@ -48,12 +52,13 @@ export * from "./mappers/docente.mapper.js";
 // INFRA APODERADO
 export * from "./datasources/postgres/apoderado.datasource.impl.js";
 export * from "./repositories/apoderado.repository.impl.js";
-export * from "./mappers/apoderado.mapper.js";
+export * from "./mappers/apoderado/apoderado.mapper.js";
 
 // INFRA MATRICULA
 export * from "./datasources/postgres/matricula.datasource.impl.js";
 export * from "./repositories/matricula.repository.impl.js";
-export * from "./mappers/matricula.mapper.js";
+export * from "./mappers/matricula/matricula.mapper.js";
+export * from "./mappers/matricula/filter.matricula.mapper.js";
 
 // INFRA ASISTENCIA
 export * from "./datasources/postgres/asistencia.datasource.impl.js";
@@ -69,4 +74,10 @@ export * from "./mappers/fcm.mapper.js";
 export * from "./datasources/postgres/notificacion.datasource.impl.js";
 export * from "./repositories/notificacion.repository.impl.js";
 export * from "./mappers/notificacion.mapper.js";
+
+// INFRA TOKEN
+export * from "./datasources/postgres/token.datasource.impl.js";
+export * from "./repositories/token.repository.impl.js";
+export * from "./mappers/token.mapper.js";
+
 

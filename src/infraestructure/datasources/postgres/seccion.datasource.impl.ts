@@ -27,7 +27,7 @@ export class SeccionDatasourceImpl implements SeccionDatasource {
 
         } catch (error:any) {
             await pool.query('ROLLBACK');
-            console.log(error)
+            
             if (error.code === '23505') {
                 if (error.constraint === 'tbl_seccion_seccion_grado_id_key') {
                     throw CustomError.badRequest(`El grado y seccion ya existe`);
@@ -37,6 +37,10 @@ export class SeccionDatasourceImpl implements SeccionDatasource {
                 if (error.constraint === 'tbl_seccion_grado_id_fkey') {
                     throw CustomError.badRequest(`El grado no existe`);
                 }
+            }
+
+            if (error.code === '22P02') {
+                throw CustomError.badRequest(`La sintaxis no es valida`);
             }
 
             if(error instanceof CustomError){
@@ -51,7 +55,7 @@ export class SeccionDatasourceImpl implements SeccionDatasource {
         try {
             const pool = PostgresDatabase.getPool();
             const result = await pool.query("SELECT * FROM tbl_seccion where estado = true");
-            //console.log('LISTA',result)
+
             if(result){
                 return SeccionMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }

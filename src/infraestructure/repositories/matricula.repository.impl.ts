@@ -1,4 +1,4 @@
-import {  MatriculaDatasource, MatriculaEntityOu, MatriculaRepository, RegisterMatriculaDto} from "../../domain/index.js";
+import {  FilterMatriculaEntityOu, MatriculaDatasource, MatriculaEntityOu, MatriculaRepository, RegisterMatriculaDto} from "../../domain/index.js";
 // import { RegisterTipoUsuarioDto } from "../../domain/dtos/tipousuario/register.usuario.dto";
 
 export class MatriculaRepositoryImpl implements MatriculaRepository {
@@ -18,5 +18,10 @@ export class MatriculaRepositoryImpl implements MatriculaRepository {
     findAll():Promise<MatriculaEntityOu|null>{
         return this.matriculaDatasource.findAll();
     }
+
+    filterMatriculaGradoSeccion(id: string): Promise<FilterMatriculaEntityOu> {
+        return this.matriculaDatasource.filterMatriculaGradoSeccion(id);
+    }
+
 
 }

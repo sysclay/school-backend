@@ -8,12 +8,12 @@ import { PostgresDatabase } from "../../../data/postgres/index.js";
 export class GradoDatasourceImpl implements GradoDatasource { 
 
     async register(registerGradoDto: RegisterGradoDto): Promise<GradoEntityOu>{
-        const { grado, anio_lectivo_id, nivel_id } = registerGradoDto;
+        const { grado,grado_alias,grado_desc, anio_lectivo_id, nivel_id } = registerGradoDto;
         const pool = PostgresDatabase.getPool();
         try {
             
-            const query = `INSERT INTO tbl_grado (grado, anio_lectivo_id, nivel_id ) VALUES ($1, $2, $3) RETURNING *`;
-            const values = [ grado, anio_lectivo_id, nivel_id];
+            const query = `INSERT INTO tbl_grado (grado,grado_alias,grado_desc, anio_lectivo_id, nivel_id ) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+            const values = [ grado,grado_alias,grado_desc, anio_lectivo_id, nivel_id];
 
             await pool.query('BEGIN'); 
             const result = await pool.query(query, values); 
@@ -26,6 +26,7 @@ export class GradoDatasourceImpl implements GradoDatasource {
             return GradoMapper.GradoEntityFromObject({ok:false,message:'Error'});
 
         } catch (error:any) {
+            console.log(error)
             await pool.query('ROLLBACK');
             if (error.code === '23505') {
                 if (error.constraint === 'tbl_grado_grado_nivel_id_anio_lectivo_id_key') {
@@ -41,6 +42,10 @@ export class GradoDatasourceImpl implements GradoDatasource {
                 }
             }
 
+            if (error.code === '22P02') {
+                throw CustomError.badRequest(`La sintaxis no es valida`);
+            }
+
             if(error instanceof CustomError){
                 throw error;
             }
@@ -53,7 +58,7 @@ export class GradoDatasourceImpl implements GradoDatasource {
         try {
             const pool = PostgresDatabase.getPool();
             const result = await pool.query("SELECT * FROM tbl_grado where estado = true");
-            //console.log('LISTA',result)
+   
             if(result){
                 return GradoMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }

@@ -1,4 +1,4 @@
-import {  UsuariorolDatasource, UsuariorolEntityOu, UsuariorolRepository, RegisterUsuariorolDto} from "../../domain/index.js";
+import {  UsuariorolDatasource, UsuariorolEntityOu, UsuariorolRepository, RegisterUsuariorolDto, FilterUsuariorolDto} from "../../domain/index.js";
 // import { RegisterTipoUsuariorolDto } from "../../domain/dtos/tipoUsuariorol/register.Usuariorol.dto";
 
 export class UsuariorolRepositoryImpl implements UsuariorolRepository {
@@ -17,6 +17,10 @@ export class UsuariorolRepositoryImpl implements UsuariorolRepository {
 //
     findAll():Promise<UsuariorolEntityOu>{
         return this.usuariorolDatasource.findAll();
+    }
+
+    filterAll(filterUsuariorolDto:FilterUsuariorolDto):Promise<UsuariorolEntityOu>{
+        return this.usuariorolDatasource.filterAll(filterUsuariorolDto);
     }
 
 }

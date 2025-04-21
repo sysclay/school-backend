@@ -2,6 +2,7 @@ import express, { Router } from "express"
 import path ,{} from "path"
 import cors from 'cors';
 import { fileURLToPath } from "url";
+// import { errorHandler } from "./middlewares/ErrorHandler.js";
 
 interface Options {
     port?:number;
@@ -45,6 +46,9 @@ export class Server {
             res.sendFile(path.join(__dirname,'../public/index.html'))
             }
         );
+
+        // 👇 Este debe ser el ÚLTIMO middleware
+        // this.app.use(errorHandler);
 
         // Escuchar en el puerto dinámico
         const port =  Number(process.env.PORT) || this.port;

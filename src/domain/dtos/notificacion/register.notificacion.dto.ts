@@ -1,17 +1,17 @@
 export class RegisterNotificacionDto {
     private constructor (
         public token_fcm: string,
-        public message: string | null,
-        public apoderado_id: string,
+        public message: string,
+        public title:string,
     ){}
 
     static create(object:{[key:string]:any}):[string?,RegisterNotificacionDto?]{
-        const { token_fcm,message, apoderado_id} = object;
+        const { token_fcm,message,title} = object;
         if(!token_fcm) return ["Missing fcm"];
-        if(!apoderado_id) return ["Missing apoderado"];
+        if(!message) return ["Missing message"];
         return [
             undefined,
-            new RegisterNotificacionDto(token_fcm,message, apoderado_id),
+            new RegisterNotificacionDto(token_fcm,message,title),
         ]
     }
 }

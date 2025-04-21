@@ -5,7 +5,7 @@ import { envspg } from '../config/postgres/config.js';
 const SECRET_KEY = new TextEncoder().encode(envspg.SECRET_JWT);
 
 export class JwtAdapter {
-    static async generateToken(payload: JWTPayload, expiresIn:string="7d"):Promise<string> {
+    static async generateToken(payload: JWTPayload, expiresIn:string="12h"):Promise<string> {
         return await new SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' }) // Algoritmo de firma
         .setExpirationTime(expiresIn) // Tiempo de expiración
@@ -13,7 +13,7 @@ export class JwtAdapter {
         .sign(SECRET_KEY); // Firmar con la clave secreta
     }
 
-    static async refreshToken(token:string, newExpiresIn: string = "7d"):Promise<string|null> {
+    static async refreshToken(token:string, newExpiresIn: string = "12h"):Promise<string|null> {
         const payload = await this.verifyToken(token);
         if (!payload) return null; // Si el token es inválido, retornar null
         delete payload.exp; // Eliminar expiración anterior

@@ -21,4 +21,5 @@ async function main() {
     });
 
     new Server({port:Number(envspg.PORT), routes: AppRouter.routes }).start();
+
 }

@@ -1,13 +1,13 @@
-import { CustomError, ApoderadoEntity, ApoderadoEntityOu } from "../../domain/index.js";
+import { CustomError, PersonaEntity, PersonaEntityOu } from "../../domain/index.js";
 
-export class ApoderadoMapper {
+export class PersonaMapper {
 
-    static ApoderadoEntityFromObject(object:{[key:string]:any}){
+    static PersonaEntityFromObject(object:{[key:string]:any}){
         const {ok,data,message} = object;
         if(data!==undefined){
             if(!data.nombre){ throw CustomError.badRequest('Missing nombre'); }
             if(!data.apellido_paterno){ throw CustomError.badRequest('Missing apellido'); }
-            const _data = new ApoderadoEntity (
+            const _data = new PersonaEntity (
                 data._id||data.id ,
                 data.nombre,
                 data.apellido_paterno, 
@@ -16,13 +16,13 @@ export class ApoderadoMapper {
                 //data.codigo_qr,
                 data.tipo_documento_id,
             );   
-            return new ApoderadoEntityOu(
+            return new PersonaEntityOu(
                 ok,
                 _data, 
                 message,
             );            
         }else{
-            return new ApoderadoEntityOu(
+            return new PersonaEntityOu(
                 ok,
                 data, 
                 message,
@@ -34,9 +34,9 @@ export class ApoderadoMapper {
 
         const {ok,data,message} = object;
         var _data:any
-        // console.log(_data, ok,data,message)
+
         if(data){
-            const _data = new ApoderadoEntity (
+            const _data = new PersonaEntity (
                 data._id||data.id ,
                 data.nombre,
                 data.apellido_paterno, 
@@ -45,14 +45,14 @@ export class ApoderadoMapper {
                 //data.codigo_qr,
                 data.tipo_documento_id,
             );
-            return new ApoderadoEntityOu(
+            return new PersonaEntityOu(
                 ok,
                 _data,
                 message,
             );
         }
 
-        return new ApoderadoEntityOu(
+        return new PersonaEntityOu(
             ok,
             _data,
             message,
@@ -65,7 +65,7 @@ export class ApoderadoMapper {
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
                 const {_id,id, nombre,apellido_paterno,apellido_materno, nro_documento,tipo_documento_id} = object;
-                return new ApoderadoEntity(
+                return new PersonaEntity(
                     _id||id,
                     nombre,
                     apellido_paterno, 
@@ -76,13 +76,13 @@ export class ApoderadoMapper {
                 )
             })
 
-            return new ApoderadoEntityOu(
+            return new PersonaEntityOu(
                 ok,
                 _data, 
                 message,
             )
         }else{
-            return new ApoderadoEntityOu(
+            return new PersonaEntityOu(
                 ok,
                 data, 
                 message,

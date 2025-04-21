@@ -1,4 +1,4 @@
-import {  AsistenciaDatasource, AsistenciaEntityOu, AsistenciaRepository, RegisterAsistenciaDto, UpdateEntradaAsistenciaDto, UpdateSalidaAsistenciaDto} from "../../domain/index.js";
+import {  AsistenciaDatasource, AsistenciaEntityOu, AsistenciaRepository, FilterClaseAsistenciaDto, RegisterAsistenciaDto, UpdateEntradaAsistenciaDto, UpdateSalidaAsistenciaDto} from "../../domain/index.js";
 // import { RegisterTipoUsuarioDto } from "../../domain/dtos/tipousuario/register.usuario.dto";
 
 export class AsistenciaRepositoryImpl implements AsistenciaRepository {
@@ -11,12 +11,12 @@ export class AsistenciaRepositoryImpl implements AsistenciaRepository {
         return this.asistenciaDatasource.register(registerAsistenciaDto);
     }
 
-    registerEntrada(nro_documento:string,updateEntradaAsistenciaDto: UpdateEntradaAsistenciaDto): Promise<AsistenciaEntityOu> {
-        return this.asistenciaDatasource.registerEntrada(nro_documento,updateEntradaAsistenciaDto);
+    registerEntrada(codigo:string,updateEntradaAsistenciaDto: UpdateEntradaAsistenciaDto): Promise<AsistenciaEntityOu> {
+        return this.asistenciaDatasource.registerEntrada(codigo,updateEntradaAsistenciaDto);
     } 
 
-    registerSalida(nro_documento:string,updateSalidaAsistenciaDto: UpdateSalidaAsistenciaDto): Promise<AsistenciaEntityOu> {
-        return this.asistenciaDatasource.registerSalida(nro_documento,updateSalidaAsistenciaDto);
+    registerSalida(codigo:string,updateSalidaAsistenciaDto: UpdateSalidaAsistenciaDto): Promise<AsistenciaEntityOu> {
+        return this.asistenciaDatasource.registerSalida(codigo,updateSalidaAsistenciaDto);
     } 
 
     findById(id:string):Promise<AsistenciaEntityOu|null>{
@@ -25,6 +25,11 @@ export class AsistenciaRepositoryImpl implements AsistenciaRepository {
 
     findAll():Promise<AsistenciaEntityOu|null>{
         return this.asistenciaDatasource.findAll();
+    }
+
+    filterClaseLectiva(filterClaseAsistenciaDto: FilterClaseAsistenciaDto): Promise<AsistenciaEntityOu> {
+        return this.asistenciaDatasource.filterClaseLectiva(filterClaseAsistenciaDto);
+        
     }
 
 }

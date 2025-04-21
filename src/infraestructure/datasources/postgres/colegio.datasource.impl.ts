@@ -35,6 +35,9 @@ export class ColegioDatasourceImpl implements ColegioDatasource {
                     throw CustomError.badRequest(`El telefono ya existe`);
                 }
             }
+            if (error.code === '22P02') {
+                throw CustomError.badRequest(`La sintaxis no es valida`);
+            }
             if(error instanceof CustomError){
                 throw error;
             }
@@ -42,12 +45,11 @@ export class ColegioDatasourceImpl implements ColegioDatasource {
         }
     }
 
-
     async findAll():Promise<ColegioEntityOu>{
         try {
             const pool = PostgresDatabase.getPool();
             const result = await pool.query("SELECT * FROM tbl_colegio where estado = true");
-            //console.log('LISTA',result)
+
             if(result){
                 return ColegioMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }

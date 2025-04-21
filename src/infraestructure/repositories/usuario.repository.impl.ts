@@ -1,4 +1,4 @@
-import {  UsuarioDatasource, UsuarioEntityOu, UsuarioRepository, RegisterUsuarioDto, LoginUsuarioDto} from "../../domain/index.js";
+import {  UsuarioDatasource, UsuarioEntityOu, UsuarioRepository, RegisterUsuarioDto, LoginUsuarioDto, UpdateEntityMessageOu, UpdateUsuarioDto} from "../../domain/index.js";
 // import { RegisterTipoUsuarioDto } from "../../domain/dtos/tipousuario/register.usuario.dto";
 
 export class UsuarioRepositoryImpl implements UsuarioRepository {
@@ -23,6 +23,10 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
 //
     findAll():Promise<UsuarioEntityOu>{
         return this.usuarioDatasource.findAll();
+    }
+
+    updateAll(id: string, updateUsuarioDto: UpdateUsuarioDto): Promise<UsuarioEntityOu> {
+        return this.usuarioDatasource.updateAll(id,updateUsuarioDto);
     }
 
 }

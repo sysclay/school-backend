@@ -49,7 +49,7 @@ export class TipoDocumentoDatasourceImpl implements TipoDocumentoDatasource {
 
     async findAll():Promise<TipoDocumentoEntityOu>{
         try {
-            console.log('Aqui')
+
             const pool = PostgresDatabase.getPool();
             const result = await pool.query("SELECT * FROM tbl_tipo_documento where estado = true");
             if(result){
@@ -57,7 +57,7 @@ export class TipoDocumentoDatasourceImpl implements TipoDocumentoDatasource {
             }
             return TipoDocumentoMapper.findEntityFromObject({ok:false,message:'Error'})
         } catch (error) {
-            console.log('Aqui error',error)
+
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }

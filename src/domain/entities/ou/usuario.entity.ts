@@ -1,9 +1,13 @@
 export class UsuarioEntity {
     constructor(
         public id: string,
-        public nro_documento: string,
-        public telefono: string,
-        public correo: string,
+        public username: string,
+        public nro_documento:string,
+        public nombre:string,
+        public paterno:string,
+        public materno:string,
+        public correo:string,
+        public telefono:string,
         public token?: string,
     ){}
 }

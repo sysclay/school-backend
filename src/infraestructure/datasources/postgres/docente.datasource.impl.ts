@@ -4,34 +4,41 @@ import { DocenteMapper } from "../../mappers/docente.mapper.js";
 //import { DocenteModel } from "../../../data/mongodb/models/tipo.documento.model";
 
 import { PostgresDatabase } from "../../../data/postgres/index.js";
+import { Validators } from "../../../utils/index.js";
 
 export class DocenteDatasourceImpl implements DocenteDatasource { 
 
     async register(registerDocenteDto: RegisterDocenteDto): Promise<DocenteEntityOu>{
-        const { nombre, apellido_paterno, apellido_materno, nro_documento,tipo_documento_id} = registerDocenteDto;
+        const {persona_id} = registerDocenteDto;
         const pool = PostgresDatabase.getPool();
 
         try {
            
-            const query = `INSERT INTO tbl_docente (nombre,apellido_paterno, apellido_materno,nro_documento,tipo_documento_id) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
-            const values = [nombre, apellido_paterno,apellido_materno, nro_documento, tipo_documento_id];
+            const queryI = `INSERT INTO tbl_docente (persona_id) VALUES ($1) RETURNING *`;
+            const valuesI = [persona_id];
             await pool.query('BEGIN'); 
-            const result = await pool.query(query, values); 
+            const resultI = await pool.query(queryI, valuesI); 
             await pool.query('COMMIT'); 
-            if(result.rows.length>0){
-                return DocenteMapper.DocenteEntityFromObject({ok:true, data:result.rows[0],message:'Operación exitosa'});
+
+            if(resultI.rows.length>0){
+                const find = resultI.rows.find(i=>String(i.persona_id)===String(persona_id));
+                if (!find) { DocenteMapper.DocenteEntityFromObject({ok:false,message:'Docente no existe'}); }
+                return DocenteMapper.DocenteEntityFromObject({ok:true, data:find,message:'Operación exitosa'});
             }
 
-            return DocenteMapper.DocenteEntityFromObject({ok:false,message:'Error'});
+            return DocenteMapper.DocenteEntityFromObject({ok:false,message:'No se inserto'});
 
         } catch (error:any) {
             await pool.query('ROLLBACK');
-            // console.log(error)
+            console.log(error)
             if (error.code === '23505') {
-                throw CustomError.badRequest(`El numero documento ya existe`);
+                throw CustomError.badRequest(`El docente ya existe`);
             }
             if (error.code === '23503') {
-                throw CustomError.badRequest(`El tipo documento no existe`);
+                throw CustomError.badRequest(`El apoderado no existe`);
+            }
+            if (error.code === '22P02') {
+                throw CustomError.badRequest(`La sintaxis no es valida`);
             }
 
             if(error instanceof CustomError){
@@ -42,41 +49,58 @@ export class DocenteDatasourceImpl implements DocenteDatasource {
     }
 
     async findById (id:string): Promise<DocenteEntityOu> {
+        const pool = PostgresDatabase.getPool();
         try {
-            const pool = PostgresDatabase.getPool();
-            const query = `SELECT * FROM tbl_docente WHERE id = $1`;
-            const result = await pool.query(query, [id]);
-            // console.log('ID::',result)
-            if(result.rowCount===1){
+            const queryS = `SELECT 
+            doc.id,
+            doc.codigo_id,
+            tdoc.nom_corto as doc_tipo,
+            per.nro_documento,
+            per.nombre,
+            per.apellido_paterno,
+            per.apellido_materno,
+            per.email as correo,
+            per.telefono,
+            doc.estado
+            FROM tbl_docente doc INNER JOIN tbl_persona per
+            ON doc.persona_id = per.id INNER JOIN tbl_tipo_documento tdoc
+            ON per.tipo_documento_id = tdoc.id
+            WHERE doc.estado = true and doc.id=$1`
+            const result = await pool.query(queryS, [id]);
 
+            if(result.rowCount===1){
                 return DocenteMapper.findByIdEntityFromObject({ok:true, data:result.rows[0],message:'Operación exitosa'})
             }
             return DocenteMapper.findByIdEntityFromObject({ok:false,message:'Sin datos'})
 
-        } catch (error) {
-            if(error instanceof CustomError){
-                throw error;
-            }
+        } catch (error:any) {
+            await pool.query('ROLLBACK');
+            if(error.code === '22P02') { throw CustomError.badRequest(`La sintaxis no es valida`); }
+            if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }
     }
 
-    //async findByNameCorto(nom_corto:string): Promise<DocenteEntityOu> {
-    //    try {
-    //        return DocenteMapper.findByNameCortoEntityFromObject({ok:true, data:'documento',message:'Operación //exitosa'});
-    //    } catch (error) {
-    //        if(error instanceof CustomError){
-    //        throw error;
-    //        }
-    //        throw CustomError.internalServer();
-    //    }
-    //}
-
     async findAll():Promise<DocenteEntityOu>{
         try {
             const pool = PostgresDatabase.getPool();
-            const result = await pool.query("SELECT * FROM tbl_docente where estado = true");
-            //console.log('LISTA',result)
+            const queryS = `SELECT 
+            doc.id,
+            doc.codigo_id,
+            tdoc.nom_corto as doc_tipo,
+            per.nro_documento,
+            per.nombre,
+            per.apellido_paterno,
+            per.apellido_materno,
+            per.email as correo,
+            per.telefono,
+            doc.estado
+            FROM tbl_docente doc INNER JOIN tbl_persona per
+            ON doc.persona_id = per.id INNER JOIN tbl_tipo_documento tdoc
+            ON per.tipo_documento_id = tdoc.id
+            WHERE doc.estado = true`
+            const result = await pool.query(queryS);
+
             if(result){
                 return DocenteMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }

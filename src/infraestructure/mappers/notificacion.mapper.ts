@@ -5,12 +5,16 @@ export class NotificacionMapper {
     static NotificacionEntityFromObject(object:{[key:string]:any}){
         const {ok,data,message} = object;
         if(data!==undefined){
-            // if(!data.token_fcm){ throw CustomError.badRequest('Missing fcm'); }
-            if(!data.apoderado_id){ throw CustomError.badRequest('Missing apoderado_id'); }
             const _data = new NotificacionEntity (
                 data._id||data.id ,
-                // data.token_fcm,
-                data.apoderado_id,
+                data.nom_apoderado,
+                data.pat_apoderado,
+                data.mat_apoderado,
+                data.doc_apoderado,
+                data.correo,
+                data.anio,
+                data.device_id,
+                data.token_fcm,
             );   
             return new NotificacionEntityOu(
                 ok,
@@ -30,12 +34,17 @@ export class NotificacionMapper {
 
         const {ok,data,message} = object;
         var _data:any
-        // console.log(_data, ok,data,message)
         if(data){
             const _data = new NotificacionEntity (
                 data._id||data.id ,
-                // data.token_fcm,
-                data.apoderado_id,
+                data.nom_apoderado,
+                data.pat_apoderado,
+                data.mat_apoderado,
+                data.doc_apoderado,
+                data.correo,
+                data.anio,
+                data.device_id,
+                data.token_fcm,
             );
             return new NotificacionEntityOu(
                 ok,
@@ -55,11 +64,17 @@ export class NotificacionMapper {
         const {ok,data,message} = object;
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
-                const {_id,id,apoderado_id } = object;
+                const {_id,id,doc_apoderado,correo,nom_apoderado,pat_apoderado,mat_apoderado,anio,device_id,token_fcm } = object;
                 return new NotificacionEntity(
                     _id||id,
-                    // token_fcm,
-                    apoderado_id,
+                    nom_apoderado,
+                    pat_apoderado,
+                    mat_apoderado,
+                    doc_apoderado,
+                    correo,
+                    anio,
+                    device_id,
+                    token_fcm,
                 )
             })
 

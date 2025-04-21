@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CustomError, RegisterAsistenciaDto, AsistenciaRepository, UpdateEntradaAsistenciaDto, UpdateSalidaAsistenciaDto } from "../../domain/index.js";
+import { CustomError, RegisterAsistenciaDto, AsistenciaRepository, UpdateEntradaAsistenciaDto, UpdateSalidaAsistenciaDto, FilterClaseAsistenciaDto } from "../../domain/index.js";
 
 export class AsistenciaController {
     constructor (
@@ -8,14 +8,14 @@ export class AsistenciaController {
 
     private handleError(error:unknown, res:Response){
         if(error instanceof CustomError){
-            return res.status(error.statusCode).json({error:error.message});    
+            return res.status(error.statusCode).json({message:error.message});    
         }
         return res.status(500).json({error:'Internal Server Error'});
     }
 
     registerAsistencia= (req:Request, res:Response):any=>{
         const [error, registerAsistenciaDto ] = RegisterAsistenciaDto.create(req.body);
-        if(error){ return res.status(400).json({error})};
+        if(error){ return res.status(400).json({message:error})};
         this.asistenciaRepository.register(registerAsistenciaDto!)
         .then(async data=>{
             return res.json(data)
@@ -26,9 +26,9 @@ export class AsistenciaController {
     };
 
     registerEntradaAsistencia= (req:Request, res:Response):any=>{
-        const [error, updateEntradaAsistenciaDto ] = UpdateEntradaAsistenciaDto.create(req.body);
         const { id } = req.params; 
-        if(error){ return res.status(400).json({error})};
+        const [error, updateEntradaAsistenciaDto ] = UpdateEntradaAsistenciaDto.update(req.body);
+        if(error){ return res.status(400).json({message:error})};
         this.asistenciaRepository.registerEntrada(id,updateEntradaAsistenciaDto!)
         .then(async data=>{
             return res.json(data)
@@ -40,13 +40,14 @@ export class AsistenciaController {
 
 
     registerSalidaAsistencia= (req:Request, res:Response):any=>{
-        const [error, updateSalidaAsistenciaDto ] = UpdateSalidaAsistenciaDto.create(req.body);
+        const [error, updateSalidaAsistenciaDto ] = UpdateSalidaAsistenciaDto.update(req.body);
         const { id } = req.params; 
-        if(error){ return res.status(400).json({error})};
+        if(error){ return res.status(400).json({message:error})};
         this.asistenciaRepository.registerSalida(id,updateSalidaAsistenciaDto!)
         .then(async data=>{
             return res.json(data)
         }).catch( error => {
+            console.log('111', error)
             return this.handleError(error,res)
            }
         );
@@ -63,20 +64,22 @@ export class AsistenciaController {
         })
     };
 
-    //findByNameCorto = (req:Request, res:Response) =>{
-    //    const nombreCorto = req.query.nom_corto as string;
-//
-    //    this.AsistenciaRepository.findByNameCorto(nombreCorto)
-    //    .then( async data =>{
-    //        res.json(data)
-    //    }).catch(error => {
-    //        this.handleError(error,res)
-    //    })
-    //};
-
-
     findAsistencia = (req:Request, res: Response)=>{
         this.asistenciaRepository.findAll()
+        .then(async data =>{
+            res.json(data)
+        }).catch(error => {
+            this.handleError(error,res)
+        });
+    }
+
+    filterClaseLectiva = (req:Request, res: Response):any => {
+        const codigo = req.query.codigo as string;
+        const fecha = req.query.fecha as string;
+        const [error, updateSalidaAsistenciaDto ] =  FilterClaseAsistenciaDto.filterClase({codigo, fecha});
+        if(error){ return res.status(400).json({message:error})};
+
+        this.asistenciaRepository.filterClaseLectiva(updateSalidaAsistenciaDto!)
         .then(async data =>{
             res.json(data)
         }).catch(error => {

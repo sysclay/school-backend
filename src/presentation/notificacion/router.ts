@@ -4,6 +4,9 @@ import { NotificacionDatasourceImpl, NotificacionRepositoryImpl } from "../../in
 // import { UsuarioDatasourceImpl, UsuarioRepositoryImpl } from "../../infraestructure/index.js";
 // import { authMiddleware } from "../middlewares/AuthMiddleware.js";
 
+import { authorizeRoles } from "../middlewares/AuthorizeRoles.js";
+import { authMiddleware } from "../middlewares/AuthMiddleware.js";
+import { Roles } from '../../config/index.js';
 
 export class NotificacionRoutes {
     static get routes(): Router {
@@ -15,7 +18,8 @@ export class NotificacionRoutes {
 
         // const notificacionController = new NotificacionController();
         
-        router.post('/enviar',controller.enviarNotificacion);
+        router.post('/enviar', authMiddleware, authorizeRoles(Roles.ADMIN, Roles.AUXILIAR, Roles.DOCENTE), controller.enviarNotificacion);
+        router.post('/fcm-alumno-apoderado', authMiddleware, authorizeRoles(Roles.ADMIN, Roles.AUXILIAR, Roles.DOCENTE), controller.obtenerFcmApoderadoAlumno);
 
         return router
     }

@@ -2,7 +2,8 @@ export class FcmEntity {
     constructor(
         public id: string,
         public token_fcm: string,
-        public apoderado_id: string,
+        public device_id: string,
+        public usuario_id: string,
     ){}
 }
 

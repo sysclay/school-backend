@@ -8,7 +8,7 @@ export class GradoController {
 
     private handleError(error:unknown, res:Response){
         if(error instanceof CustomError){
-            return res.status(error.statusCode).json({error:error.message});    
+            return res.status(error.statusCode).json({message:error.message});    
         }
         return res.status(500).json({error:'Internal Server Error'});
     }
@@ -16,7 +16,7 @@ export class GradoController {
     registerGrado= (req:Request, res:Response):any=>{
         const [error, registerGradoDto ] = RegisterGradoDto.create(req.body);
         
-        if(error){ return res.status(400).json({error})};
+        if(error){ return res.status(400).json({message:error})};
         this.gradoRepository.register(registerGradoDto!)
         .then(async data=>{
             return res.json(data)

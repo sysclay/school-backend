@@ -1,20 +1,18 @@
 export class RegisterUsuarioDto {
     private constructor (
-        public nro_documento: string,
+        public username: string,
         public contrasena: string,
-        public telefono: string,
-        public correo: string,
+        public persona_id:string
     ){}
 
     static create(object:{[key:string]:any}):[string?,RegisterUsuarioDto?]{
-        const { nro_documento, contrasena, telefono, correo} = object;
-        if(!nro_documento) return ["Missing numero documento"];
+        const { username, contrasena, persona_id} = object;
+        if(!username) return ["Missing username"];
         if(!contrasena) return ["Missing contraseña"];
-        if(!telefono) return ["Missing telefono"];
-        if(!correo) return ["Missing correo"];
+        if(!persona_id) return ["Missing persona"];
         return [
             undefined,
-            new RegisterUsuarioDto( nro_documento, contrasena, telefono, correo),
+            new RegisterUsuarioDto( username, contrasena, persona_id),
         ]
     }
 }

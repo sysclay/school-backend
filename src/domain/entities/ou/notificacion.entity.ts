@@ -1,8 +1,14 @@
 export class NotificacionEntity {
     constructor(
         public id: string,
-        // public token_fcm: string,
-        public apoderado_id: string,
+        public nom_apoderado: string,
+        public pat_apoderado: string,
+        public mat_apoderado: string,
+        public doc_apoderado: string,
+        public correo: string,
+        public anio: string,
+        public device_id: string,
+        public token_fcm: string,
     ){}
 }
 

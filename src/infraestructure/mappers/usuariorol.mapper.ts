@@ -9,6 +9,7 @@ export class UsuariorolMapper {
             const _data = new UsuariorolEntity (
                 data.rol_id,
                 data.usuario_id,
+                data.rol,
             );   
             return new UsuariorolEntityOu(
                 ok,
@@ -28,11 +29,13 @@ export class UsuariorolMapper {
 
         const {ok,data,message} = object;
         var _data:any
-        // console.log(_data, ok,data,message)
+        
         if(data){
             const _data = new UsuariorolEntity (
                 data.rol_id,
                 data.usuario_id, 
+                data.rol,
+
             );
             return new UsuariorolEntityOu(
                 ok,
@@ -53,10 +56,11 @@ export class UsuariorolMapper {
         const {ok,data,message} = object;
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
-                const {rol_id,usuario_id} = object;
+                const {rol_id,usuario_id,rol} = object;
                 return new UsuariorolEntity(
                     rol_id,
                     usuario_id,
+                    rol,
                 )
             })
 

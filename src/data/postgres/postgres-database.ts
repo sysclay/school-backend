@@ -22,8 +22,6 @@ interface Options {
 // // Construir la ruta al archivo SQL
 // const schemaPath = path.join(__dirname, 'db', 'schema.sql');
 
-// console.log('📂 Archivo SQL en:', schemaPath);
-
 export class PostgresDatabase {
     private static pool: InstanceType<typeof Pool>;
 

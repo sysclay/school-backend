@@ -1,8 +1,8 @@
-import { CustomError, MatriculaEntity, MatriculaEntityOu } from "../../domain/index.js";
+import { CustomError, MatriculaEntity, MatriculaEntityOu } from "../../../domain/index.js";
 
 export class MatriculaMapper {
 
-    static MatriculaEntityFromObject(object:{[key:string]:any}){
+    static matriculaEntityFromObject(object:{[key:string]:any}){
         const {ok,data,message} = object;
         if(data!==undefined){
             if(!data.alumno_id){ throw CustomError.badRequest('Missing nombre'); }
@@ -30,7 +30,6 @@ export class MatriculaMapper {
 
         const {ok,data,message} = object;
         var _data:any
-        // console.log(_data, ok,data,message)
         if(data){
             const _data = new MatriculaEntity (
                 data._id||data.id ,

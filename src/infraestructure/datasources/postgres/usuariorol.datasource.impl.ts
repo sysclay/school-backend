@@ -1,5 +1,5 @@
 
-import { CustomError, UsuariorolDatasource, UsuariorolEntityOu, RegisterUsuariorolDto } from "../../../domain/index.js";
+import { CustomError, UsuariorolDatasource, UsuariorolEntityOu, RegisterUsuariorolDto, FilterUsuariorolDto } from "../../../domain/index.js";
 import { UsuariorolMapper } from "../../mappers/usuariorol.mapper.js";
 //import { UsuariorolModel } from "../../../data/mongodb/models/tipo.documento.model";
 
@@ -43,6 +43,10 @@ export class UsuariorolDatasourceImpl implements UsuariorolDatasource {
                 }
             }
 
+            if (error.code === '22P02') {
+                throw CustomError.badRequest(`La sintaxis no es valida`);
+            }
+
             if(error instanceof CustomError){
                 throw error;
             }
@@ -55,11 +59,35 @@ export class UsuariorolDatasourceImpl implements UsuariorolDatasource {
         try {
             const pool = PostgresDatabase.getPool();
             const result = await pool.query("SELECT * FROM tbl_Usuariorol where estado = true");
-            //console.log('LISTA',result)
+  
             if(result){
                 return UsuariorolMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }
             return UsuariorolMapper.findEntityFromObject({ok:false,message:'Error'})
+        } catch (error) {
+            if(error instanceof CustomError){ throw error; }
+            throw CustomError.internalServer();
+        }
+    }
+
+    async filterAll(filterUsuariorolDto:FilterUsuariorolDto):Promise<UsuariorolEntityOu>{
+        try {
+            const { usuario_id } = filterUsuariorolDto;
+
+            const pool = PostgresDatabase.getPool();
+            const query = "SELECT * FROM obtener_roles_por_usuario($1)";
+            const values = [usuario_id];
+
+            await pool.query('BEGIN'); 
+            const result = await pool.query(query, values); 
+            await pool.query('COMMIT'); 
+    
+            if(result.rowCount!=0){
+                const roles = result.rows.length==0?[]:result.rows.map((r)=> { return { rol:r.rol} } );
+                return UsuariorolMapper.findEntityFromObject({ok:true, data:roles,message:'Operación exitosa'})
+            }else {
+                return UsuariorolMapper.findEntityFromObject({ok:false,data:result.rows,message:'Sin datos'})
+            }
         } catch (error) {
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();

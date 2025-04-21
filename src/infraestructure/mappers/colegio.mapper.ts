@@ -31,7 +31,7 @@ export class ColegioMapper {
 
         const {ok,data,message} = object;
         var _data:any
-        // console.log(_data, ok,data,message)
+
         if(data){
             const _data = new ColegioEntity (
                 data._id||data.id ,

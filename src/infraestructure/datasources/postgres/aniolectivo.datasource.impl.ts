@@ -40,7 +40,7 @@ export class AniolectivoDatasourceImpl implements AniolectivoDatasource {
             }
 
             if (error.code === '22P02') {
-                throw CustomError.badRequest(`La sintaxis de entrada no es válida`);
+                throw CustomError.badRequest(`La sintaxis no es valida`);
             }
             if(error instanceof CustomError){
                 throw error;
@@ -49,12 +49,11 @@ export class AniolectivoDatasourceImpl implements AniolectivoDatasource {
         }
     }
 
-
     async findAll():Promise<AniolectivoEntityOu>{
         try {
             const pool = PostgresDatabase.getPool();
             const result = await pool.query("SELECT * FROM tbl_anio_lectivo where estado = true");
-            //console.log('LISTA',result)
+
             if(result){
                 return AniolectivoMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }

@@ -5,11 +5,11 @@ export class FcmMapper {
     static FcmEntityFromObject(object:{[key:string]:any}){
         const {ok,data,message} = object;
         if(data!==undefined){
-            if(!data.token_fcm){ throw CustomError.badRequest('Missing fcm'); }
             const _data = new FcmEntity (
                 data._id||data.id ,
                 data.token_fcm, 
-                data.apoderado_id, 
+                data.device_id,
+                data.usuario_id, 
             );   
             return new FcmEntityOu(
                 ok,
@@ -29,12 +29,13 @@ export class FcmMapper {
 
         const {ok,data,message} = object;
         var _data:any
-        // console.log(_data, ok,data,message)
+
         if(data){
             const _data = new FcmEntity (
                 data._id||data.id ,
-                data.token_fcm, 
-                data.apoderado_id,
+                data.token_fcm,
+                data.device_id,
+                data.usuario_id,
             );
             return new FcmEntityOu(
                 ok,
@@ -55,11 +56,12 @@ export class FcmMapper {
         const {ok,data,message} = object;
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
-                const {_id,id, token_fcm,apoderado_id} = object;
+                const {_id,id, token_fcm,device_id,usuario_id} = object;
                 return new FcmEntity(
                     _id||id,
                     token_fcm, 
-                    apoderado_id, 
+                    device_id,
+                    usuario_id, 
                 )
             })
 

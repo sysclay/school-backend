@@ -30,7 +30,7 @@ export class AniolectivoMapper {
 
         const {ok,data,message} = object;
         var _data:any
-        // console.log(_data, ok,data,message)
+
         if(data){
             const _data = new AniolectivoEntity (
                 data._id||data.id ,

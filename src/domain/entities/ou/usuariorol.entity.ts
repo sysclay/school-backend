@@ -2,6 +2,7 @@ export class UsuariorolEntity {
     constructor(
         public rol_id: string,
         public usuario_id: string,
+        public rol?: string,
     ){}
 }
 

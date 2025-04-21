@@ -5,7 +5,7 @@ export class AsistenciaEntity {
         public hora_entrada: string,
         public hora_salida: string,
         public registrador_entrada: string,
-        public registradorsalida: string,
+        public registrador_salida: string,
         public tardanza: boolean,
         public falta: boolean,
     ){}

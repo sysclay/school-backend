@@ -8,7 +8,7 @@ export class TipoDocumentoController {
 
     private handleError(error:unknown, res:Response){
         if(error instanceof CustomError){
-            return res.status(error.statusCode).json({error:error.message});    
+            return res.status(error.statusCode).json({message:error.message});    
         }
         return res.status(500).json({error:'Internal Server Error'});
     }
@@ -16,7 +16,7 @@ export class TipoDocumentoController {
     registerTipoDocumento= (req:Request, res:Response):any=>{
         const [error, registerTipoDocumentoDto ] = RegisterTipoDocumentoDto.create(req.body);
 
-        if(error){ return res.status(400).json({error})};
+        if(error){ return res.status(400).json({message:error})};
         this.tipoDocumentoRepository.register(registerTipoDocumentoDto!)
         .then(async data=>{
             return res.json({data:'Mis datos'})
@@ -50,9 +50,9 @@ export class TipoDocumentoController {
 
 
     findTipoDocumento = (req:Request, res: Response)=>{
+        const { user } = req as any;
         this.tipoDocumentoRepository.findAll()
         .then(async data =>{
-            console.log('DATA PS ee')
             res.json(data)
         }).catch(error => {
             this.handleError(error,res)

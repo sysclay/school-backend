@@ -1,18 +1,20 @@
-export class ApoderadoEntity {
+export class TokenEntity {
     constructor(
         public id: string,
-        public nombre: string,
-        public apellido_paterno: string,
-        public apellido_materno: string,
+        public username: string,
         public nro_documento: string,
-        public tipo_documento_id: string,
+        public nombre: string,
+        public paterno: string,
+        public materno: string,
+        public correo: string,
+        public telefono: string,
     ){}
 }
 
-export class ApoderadoEntityOu {
+export class TokenEntityOu {
     constructor (
         public ok:boolean,
-        public data: ApoderadoEntity | null| undefined,
+        public data: TokenEntity | null| undefined,
         public message: string,
     ){}
 

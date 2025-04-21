@@ -1,14 +1,14 @@
 export class FilterAlumnoDto {
     private constructor (
-        public nro_documento: string,
+        public codigo: string,
     ){}
 
     static filter(object:{[key:string]:any}):[string?,FilterAlumnoDto?]{
-        const {  nro_documento } = object;
-        if(!nro_documento) return ["Missing numero documento"];
+        const { codigo } = object;
+        if(!codigo) return ["Missing codigo"];
         return [
             undefined,
-            new FilterAlumnoDto(nro_documento), 
+            new FilterAlumnoDto(codigo), 
         ]
     }
 }

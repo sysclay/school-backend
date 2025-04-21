@@ -8,7 +8,7 @@ export class AlumnoController {
 
     private handleError(error:unknown, res:Response){
         if(error instanceof CustomError){
-            return res.status(error.statusCode).json({error:error.message});    
+            return res.status(error.statusCode).json({message:error.message});    
         }
         return res.status(500).json({error:'Internal Server Error'});
     }
@@ -16,7 +16,7 @@ export class AlumnoController {
     registerAlumno= (req:Request, res:Response):any=>{
         const [error, registerAlumnoDto ] = RegisterAlumnoDto.create(req.body);
         
-        if(error){ return res.status(400).json({error})};
+        if(error){ return res.status(400).json({message:error})};
         this.AlumnoRepository.register(registerAlumnoDto!)
         .then(async data=>{
             return res.json(data)
@@ -29,8 +29,7 @@ export class AlumnoController {
     findById = (req:Request, res:Response) =>{
         const { id } = req.params;
 
-        this.AlumnoRepository.findById(id)
-        .then( async data =>{
+        this.AlumnoRepository.findById(id).then( async data =>{
             res.json(data)
         }).catch(error => {
             this.handleError(error,res)
@@ -38,20 +37,19 @@ export class AlumnoController {
     };
 
     findAlumno = (req:Request, res: Response)=>{
-        this.AlumnoRepository.findAll()
-        .then(async data =>{
+        this.AlumnoRepository.findAll().then(async data =>{
             res.json(data)
         }).catch(error => {
             this.handleError(error,res)
         });
     };
+
     filterAlumno = (req:Request, res: Response):any=>{
-        const nro_documento = req.query.nro_documento as string;
-        const [error, filterAlumnoDto ] = FilterAlumnoDto.filter({nro_documento});
+        const codigo = req.query.codigo as string;
+        const [error, filterAlumnoDto ] = FilterAlumnoDto.filter({codigo});
         
-        if(error){ return res.status(400).json({error})};
-        this.AlumnoRepository.filterAll(filterAlumnoDto!)
-        .then(async data =>{
+        if(error){ return res.status(400).json({message:error})};
+        this.AlumnoRepository.filterAll(filterAlumnoDto!).then(async data =>{
             res.json(data)
         }).catch(error => {
             this.handleError(error,res)
@@ -61,8 +59,7 @@ export class AlumnoController {
     updateQR = (req:Request, res:Response) =>{
         const { id } = req.params;
 
-        this.AlumnoRepository.updateQR(id)
-        .then( async data =>{
+        this.AlumnoRepository.updateQR(id).then( async data =>{
             res.json(data)
         }).catch(error => {
             this.handleError(error,res)
