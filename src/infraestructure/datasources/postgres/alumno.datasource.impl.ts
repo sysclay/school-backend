@@ -70,12 +70,6 @@ export class AlumnoDatasourceImpl implements AlumnoDatasource {
             const result = await pool.query(queryS, [id]);
             await pool.query('COMMIT');
             if(result.rowCount===1){
-
-                console.log(result.rows)
-                const qrBuffer: Buffer = result.rows[0].codigo_qr;
-                const qrBase64 = qrBuffer.toString("base64"); // 🔹 Convertir a Base64
-                console.log(`data:image/png;base64,${qrBase64}`)
-
                 return AlumnoMapper.findByIdEntityFromObject({ok:true, data:result.rows[0],message:'Operación exitosa'})
             }
             return AlumnoMapper.findByIdEntityFromObject({ok:false,message:'Sin datos'})

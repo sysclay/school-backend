@@ -3,6 +3,7 @@ export class FilterApoderadoEntity {
         // public id: string,
         public alumno_id: string,
         public matricula_id: string,
+        public codigo_qr:string,
         public turno: string,
         public nro_documento: string,
         public nombre: string,

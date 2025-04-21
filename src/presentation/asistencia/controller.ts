@@ -47,7 +47,6 @@ export class AsistenciaController {
         .then(async data=>{
             return res.json(data)
         }).catch( error => {
-            console.log('111', error)
             return this.handleError(error,res)
            }
         );

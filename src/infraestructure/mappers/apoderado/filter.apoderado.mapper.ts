@@ -9,6 +9,7 @@ export class FilterApoderadoMapper {
             const _data = new FilterApoderadoEntity (
                 data.alumno_id,
                 data.matricula_id,
+                data.codigo_qr,
                 data.turno,
                 data.nro_documento,
                 data.nombre,
@@ -45,6 +46,7 @@ export class FilterApoderadoMapper {
             const _data = new FilterApoderadoEntity (
                 data.alumno_id,
                 data.matricula_id,
+                data.codigo_qr,
                 data.turno,
                 data.nro_documento,
                 data.nombre,
@@ -77,11 +79,12 @@ export class FilterApoderadoMapper {
         const {ok,data,message} = object;
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
-                const {alumno_id,matricula_id,turno,nro_documento,nombre,apellido_paterno,apellido_materno,nivel,telefono,grado,alias,descripcion,seccion,anio} = object;
+                const {alumno_id,matricula_id,codigo_qr,turno,nro_documento,nombre,apellido_paterno,apellido_materno,nivel,telefono,grado,alias,descripcion,seccion,anio} = object;
                 return new FilterApoderadoEntity(
                     // _id||id,
                     alumno_id,
                     matricula_id,
+                    codigo_qr,
                     turno,
                     nro_documento,
                     nombre,

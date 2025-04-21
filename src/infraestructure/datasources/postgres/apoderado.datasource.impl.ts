@@ -112,11 +112,11 @@ export class ApoderadoDatasourceImpl implements ApoderadoDatasource {
     async filterApoderadoAlumno(filterApoderadoAlumnoDto: FilterApoderadoAlumnoDto): Promise<FilterApoderadoEntityOu> {
         const {nro_documento, year} = filterApoderadoAlumnoDto;
         const pool = PostgresDatabase.getPool();
-        console.log(filterApoderadoAlumnoDto)
         try {
             const queryS = `SELECT
             alu.id as alumno_id,
             mat.id as matricula_id,
+            alu.codigo_qr,
             mat.turno,
             pea.nro_documento,
             pea.nombre,
@@ -142,7 +142,12 @@ export class ApoderadoDatasourceImpl implements ApoderadoDatasource {
             const result = await pool.query(queryS,[nro_documento, year]);
 
             if(result){
-                return FilterApoderadoMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
+                const qrUpdate = result.rows.map((i:any) => {
+                    const qrBuffer: Buffer = i.codigo_qr;
+                    const qrBase64 = qrBuffer.toString("base64"); // 🔹 Convertir a Base64
+                    return { ...i, codigo_qr: `data:image/png;base64,${qrBase64}` };
+                });
+                return FilterApoderadoMapper.findEntityFromObject({ok:true, data:qrUpdate,message:'Operación exitosa'})
             }
             return FilterApoderadoMapper.findEntityFromObject({ok:false,message:'Error'})
 

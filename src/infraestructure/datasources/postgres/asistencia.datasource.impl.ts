@@ -22,7 +22,6 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
             const entradaDate = new Date(`${fecha}T${hora_entrada}Z`);
             const llegadaDate = new Date(`${fecha}T${hora_llegada}Z`);
             const diffMin = (llegadaDate.getTime() - entradaDate.getTime()) / (1000 * 60);
-            // console.log('RESSS::',registerAsistenciaDto)
             if (diffMin < -60) { throw  CustomError.badRequest("Solo se puede registrar desde 1 hora antes de la hora de entrada"); }
             if (diffMin > 60) { throw  CustomError.badRequest("Hora de llegada fuera de rango, ya se considera falta"); }
             const tardanza = diffMin > 0;
@@ -38,7 +37,6 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
             return AsistenciaMapper.AsistenciaEntityFromObject({ok:false,message:'Error'});
 
         } catch (error:any) {
-            console.log(error)
             await pool.query('ROLLBACK');
             if (error.code === '23505') {
                 if (error.constraint === 'unique_asistencia_por_dia') {
@@ -63,7 +61,6 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
 
     async registerEntrada(nro_documento:string,updateEntradaAsistenciaDto:UpdateEntradaAsistenciaDto):Promise<AsistenciaEntityOu>{
         const { hora_entrada, registrador_entrada, tardanza} = updateEntradaAsistenciaDto;
-        console.log(updateEntradaAsistenciaDto)
         const pool = PostgresDatabase.getPool();
         try {
             const query = `select 
@@ -133,11 +130,10 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
             where alu.codigo_id = $1 AND asi.fecha = $2`;
 
             const values = [codigo, fecha];
-            console.log(values)
+
             await pool.query('BEGIN'); 
             const result = await pool.query(query, values); 
-            console.log(result.rows)
-            
+    
             if(result.rows.length===0){ return AsistenciaMapper.AsistenciaEntityFromObject({ok:false,message:'No se registro asistencia hoy'});}
 
             if(result.rows[0].hora_entrada===null){ return AsistenciaMapper.AsistenciaEntityFromObject({ok:false, message:'Primero debe marcar asistencia'}); }
@@ -167,7 +163,6 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
             }
 
         } catch (error) {
-            console.log('SALIDA::',error)
             if(error instanceof CustomError){
                 throw error;
             }
@@ -212,7 +207,6 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
     async filterClaseLectiva(filterClaseAsistenciaDto: FilterClaseAsistenciaDto): Promise<AsistenciaEntityOu> {
         try {
             const { codigo, fecha} = filterClaseAsistenciaDto;
-            console.log(filterClaseAsistenciaDto)
 
             const pool = PostgresDatabase.getPool();
             const query = `SELECT 
@@ -238,7 +232,6 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
             await pool.query('COMMIT'); 
 
             if(result){
-                // console.log(result)
                 if(result.rowCount!=0){
                     return AsistenciaMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
                 }
@@ -246,7 +239,6 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
             }
             return AsistenciaMapper.findEntityFromObject({ok:false,message:'Error'})
         } catch (error) {
-            // console.log(error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }

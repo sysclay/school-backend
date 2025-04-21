@@ -26,7 +26,6 @@ export class GradoDatasourceImpl implements GradoDatasource {
             return GradoMapper.GradoEntityFromObject({ok:false,message:'Error'});
 
         } catch (error:any) {
-            console.log(error)
             await pool.query('ROLLBACK');
             if (error.code === '23505') {
                 if (error.constraint === 'tbl_grado_grado_nivel_id_anio_lectivo_id_key') {

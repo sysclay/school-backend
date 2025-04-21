@@ -29,7 +29,6 @@ export class JwtAdapter {
             });
             return payload; // Devolver el payload si es válido
           } catch (error) {
-            // console.error("Token inválido:", error);
             return null; // Si el token es inválido, devolver null
           }
     }

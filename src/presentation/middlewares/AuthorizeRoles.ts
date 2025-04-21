@@ -31,7 +31,6 @@ export const authorizeRoles = (...requiredRoles: string[]) => {
         next();
     
     } catch (error) {
-        console.error('Error al verificar roles:', error);
         res.status(500).json({ message: 'Error del servidor al verificar roles' });
         return;
     }

@@ -39,7 +39,6 @@ export class NotificacionDatasourceImpl implements NotificacionDatasource {
             return NotificacionMapper.findEntityFromObject({ok:true,message:'Operación exitosa'});
 
         } catch (error:any) {
-            console.log('YAA:',error)
             const firebaseErrorCode = error?.errorInfo?.code || error?.code;
             if ( firebaseErrorCode === 'messaging/registration-token-not-registered' || firebaseErrorCode === 'messaging/invalid-argument') {
                 throw CustomError.badRequest(`⚠️ Token FCM inválido o caducado: ${firebaseErrorCode}`);

@@ -90,7 +90,6 @@ export class FcmDatasourceImpl implements FcmDatasource {
     async updateAll(id: string, updateFcmDto: UpdateFcmDto): Promise<FcmEntityOu> {
         try {
             const { authenticated, usuario_id } = updateFcmDto;
-            console.log('ZZZ:',updateFcmDto,id)
             const pool = PostgresDatabase.getPool();
 
             const query = "UPDATE tbl_fcm set authenticated = $1 WHERE id=$2 and usuario_id=$3";

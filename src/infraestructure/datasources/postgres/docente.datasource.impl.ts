@@ -30,7 +30,6 @@ export class DocenteDatasourceImpl implements DocenteDatasource {
 
         } catch (error:any) {
             await pool.query('ROLLBACK');
-            console.log(error)
             if (error.code === '23505') {
                 throw CustomError.badRequest(`El docente ya existe`);
             }
