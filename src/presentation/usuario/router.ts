@@ -18,7 +18,6 @@ export class UsuarioRoutes {
         router.post('/register', controller.registerUsuario);
         router.post('/login',controller.loginUsuario);
         //router.get('/search/:id', controller.findById);
-        //router.get('/filter', controller.findByNameCorto);
         router.get('/searchall', authMiddleware, authorizeRoles(Roles.ADMIN ), controller.findUsuario);
         router.put('/update/:id', controller.updateUsuario);
 
