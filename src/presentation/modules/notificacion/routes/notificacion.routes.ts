@@ -3,7 +3,7 @@ import { Router } from "express";
 // import { NotificacionDatasourceImpl, NotificacionRepositoryImpl } from "../../infraestructure/index.js";
 import { authMiddleware } from "../../../middlewares/AuthMiddleware.js";
 import { Permissiones } from "../../../../config/segurity.permisiones.js";
-import { Modulos } from "../../../../config/segurity.Modulos.js";
+import { Modulos } from "../../../../config/segurity.modulos.js";
 import { authorizeRoles } from "../../../middlewares/AuthorizeRoles.js";
 import { NotificacionDatasourceImpl, NotificacionRepositoryImpl } from "../../../../infraestructure/index.js";
 import { NotificacionController } from "../controllers/notificacion.controller.js";
