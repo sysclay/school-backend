@@ -1,5 +1,5 @@
 import express, { Router } from "express"
-import path ,{} from "path"
+import path  from "path"
 import cors from 'cors';
 import { fileURLToPath } from "url";
 // import { errorHandler } from "./middlewares/ErrorHandler.js";
@@ -21,7 +21,7 @@ export class Server {
     constructor(
         options:Options,
     ){
-        const { port = 3000, routes }= options;
+        const { port = 8000, routes }= options;
         this.port = port;
         this.routes =routes;
     }
@@ -29,7 +29,7 @@ export class Server {
     async start(){
         this.app.use(cors({ 
             origin: '*',  
-            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
             allowedHeaders: ['Content-Type', 'Authorization'],
             exposedHeaders:['Authorization']
         }
@@ -46,13 +46,14 @@ export class Server {
             res.sendFile(path.join(__dirname,'../public/index.html'))
             }
         );
+        
 
         // 👇 Este debe ser el ÚLTIMO middleware
         // this.app.use(errorHandler);
 
         // Escuchar en el puerto dinámico
         const port =  Number(process.env.PORT) || this.port;
-        this.app.listen(port,()=> {
+        this.app.listen(port,'0.0.0.0',()=> {
             console.log(`Server running on port ${this.port}`)
         })
         

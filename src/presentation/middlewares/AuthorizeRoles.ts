@@ -1,36 +1,47 @@
 import { Request, Response, NextFunction } from 'express';
-import { PostgresDatabase } from "../../data/postgres/index.js";
+import { PostgresConnection } from '../../infraestructure/index.js';
 
 interface AuthRequest extends Request {
-    user?: {
-      id: number;
-      nro_documento:string,
-      // cualquier otro campo de tu token
-    };
-  }
+  payload?: {
+    id_usuario: string,
+    username: string,
+    rol?: {
+        id_rol: number,
+        rol_nombre: string
+    },
+    colegio?: {
+        id_colegio: string,
+        nombre_institucion: string
+    }
+  };
+}
 
 export const authorizeRoles = (...requiredRoles: string[]) => {
   return async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const pool = PostgresDatabase.getPool();
-        const query = `SELECT * FROM obtener_roles_por_usuario($1)`;
-        const values = [req.user?.id];
+        const pool = PostgresConnection.getPool();
+        const query = `SELECT seleccionar_permiso_usuario(p_id_rol:=$1,p_permiso:=$2,p_modulo:=$3) as response`;
+        const values = [req.payload?.rol?.id_rol,requiredRoles[0],requiredRoles[1]];
 
         await pool.query('BEGIN'); 
         const result = await pool.query(query, values); 
         await pool.query('COMMIT'); 
 
-        // const roles = result.rows.length==0?[]:result.rows.map((r)=> { return { id:r.rol_id, rol:r.rol }});
-        const roles = result.rows.length==0?[]:result.rows.map((r)=> r.rol );
-        const hasAccess = roles.some((role: string) => requiredRoles.includes(role));
-
-        if (!hasAccess) {
+        // console.log(result.rows[0].response)
+        if (!result.rows[0].response.ok) {
+          if(result.rows[0].response.message==='Sin acceso'){
             res.status(403).json({ message: 'Acceso denegado' });
-            return;
+            return;            
+          }
+
+        }else {
+          if(result.rows[0].response.message==='Validación de permiso'){
+            next();
+          }          
         }
-        next();
-    
+        
     } catch (error) {
+      // console.log(error)
         res.status(500).json({ message: 'Error del servidor al verificar roles' });
         return;
     }

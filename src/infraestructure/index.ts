@@ -1,83 +1,120 @@
+export * from './database/index.js';
+
+
+export * from "./modules/personas/index.js";
+
+
+export * from "./modules/directores/index.js"
+
+export * from "./modules/matriculas/index.js"
 
 // INFRA TIPO DICUMENTO
-export * from "./datasources/postgres/tipo.documento.datasource.impl.js";
-export * from "./repositories/tipo.documento.repository.impl.js";
-export * from "./mappers/tipo.documento.mapper.js";
+// export * from "./datasources/postgres/tipo.documento.datasource.impl.js";
+// export * from "./repositories/tipo.documento.repository.impl.js";
+// export * from "./mappers/tipo.documento.mapper.js";
 
 // INFRA PERSONA
-export * from "./datasources/postgres/persona.datasource.impl.js";
-export * from "./repositories/persona.repository.impl.js";
-export * from "./mappers/persona.mapper.js";
+// export * from "./datasources/postgres/persona.datasource.impl.js";
+// export * from "./repositories/persona.repository.impl.js";
+// export * from "./mappers/persona.mapper.js";
+
+// // INFRA ALUMNO
+// export * from "./datasources/postgres/alumno.datasource.impl.js";
+// export * from "./repositories/alumno.repository.impl.js";
+// export * from "./mappers/alumno.mapper.js";
+
+// INFRA FILE
+export * from "./modules/files/index.js";
 
 // INFRA ALUMNO
-export * from "./datasources/postgres/alumno.datasource.impl.js";
-export * from "./repositories/alumno.repository.impl.js";
-export * from "./mappers/alumno.mapper.js";
+export * from "./modules/alumnos/index.js";
 
 // INFRA COLEGIO
-export * from "./datasources/postgres/colegio.datasource.impl.js";
-export * from "./repositories/colegio.repository.impl.js";
-export * from "./mappers/colegio.mapper.js";
+export * from "./modules/colegios/index.js";
+
+// INFRA ACADEMICOS
+export * from "./modules/academicos/index.js";
 
 // INFRA AÑO LECTIVO
-export * from "./datasources/postgres/aniolectivo.datasource.impl.js";
-export * from "./repositories/aniolectivo.repository.impl.js";
-export * from "./mappers/aniolectivo.mapper.js";
-
-// INFRA GRADO
-export * from "./datasources/postgres/grado.datasource.impl.js";
-export * from "./repositories/grado.repository.impl.js";
-export * from "./mappers/grado.mapper.js";
-
-// INFRA SECCION
-export * from "./datasources/postgres/seccion.datasource.impl.js";
-export * from "./repositories/seccion.repository.impl.js";
-export * from "./mappers/seccion.mapper.js";
+// export * from "./datasources/postgres/aniolectivo.datasource.impl.js";
+// export * from "./repositories/aniolectivo.repository.impl.js";
+// export * from "./mappers/aniolectivo.mapper.js";
 
 // INFRA USUARIO
-export * from "./datasources/postgres/usuario.datasource.impl.js";
-export * from "./repositories/usuario.repository.impl.js";
-export * from "./mappers/usuario.mapper.js";
+// export * from "./datasources/postgres/usuario.datasource.impl.js";
+// export * from "./repositories/usuario.repository.impl.js";
+// export * from "./mappers/usuario.mapper.js";
 
-// INFRA USUARIO
-export * from "./datasources/postgres/usuariorol.datasource.impl.js";
-export * from "./repositories/usuariorol.repository.impl.js";
-export * from "./mappers/usuariorol.mapper.js";
+// INFRA ACCESOS
+export * from "./modules/accesos/index.js";
+
+
+export * from './modules/gestiones/index.js'
+
+export * from './modules/notificacion/index.js'
+
+// INFRA ROL
+// export * from "./datasources/postgres/rol.datasource.impl.js";
+// export * from "./repositories/rol.repository.impl.js";
+// export * from "./mappers/rol/rol.mapper.js";
+// export * from "./mappers/rol/rol.asignado.mapper.js";
+
+// INFRA PERMISO
+// export * from "./datasources/postgres/permiso.datasource.impl.js";
+// export * from "./repositories/permiso.repository.impl.js";
+// export * from "./mappers/permiso.mapper.js";
+
+// INFRA TABLA
+// export * from "./datasources/postgres/tabla.datasource.impl.js";
+// export * from "./repositories/tabla.repository.impl.js";
+// export * from "./mappers/tabla.mapper.js";
+
+// INFRA LOGIN
+export * from "./modules/usuarios/index.js";
+// export * from "./datasources/postgres/login.datasource.impl.js";
+// export * from "./repositories/login.repository.impl.js";
+// export * from "./mappers/login/login.mapper.js";
+// export * from "./mappers/login/checkrol.mapper.js";
+
 
 // INFRA DOCENTE
-export * from "./datasources/postgres/docente.datasource.impl.js";
-export * from "./repositories/docente.repository.impl.js";
-export * from "./mappers/docente.mapper.js";
+// export * from "./datasources/postgres/docente.datasource.impl.js";
+// export * from "./repositories/docente.repository.impl.js";
+// export * from "./mappers/docente.mapper.js";
 
 // INFRA APODERADO
-export * from "./datasources/postgres/apoderado.datasource.impl.js";
-export * from "./repositories/apoderado.repository.impl.js";
-export * from "./mappers/apoderado/apoderado.mapper.js";
+// export * from "./datasources/postgres/apoderado.datasource.impl.js";
+// export * from "./repositories/apoderado.repository.impl.js";
+// export * from "./mappers/apoderado/apoderado.mapper.js";
+
+export * from "./modules/apoderados/index.js";
+export * from "./modules/porteros/index.js";
+export * from "./modules/asistencias/index.js";
 
 // INFRA MATRICULA
-export * from "./datasources/postgres/matricula.datasource.impl.js";
-export * from "./repositories/matricula.repository.impl.js";
-export * from "./mappers/matricula/matricula.mapper.js";
-export * from "./mappers/matricula/filter.matricula.mapper.js";
+// export * from "./datasources/postgres/matricula.datasource.impl.js";
+// export * from "./repositories/matricula.repository.impl.js";
+// export * from "./mappers/matricula/matricula.mapper.js";
+// export * from "./mappers/matricula/filter.matricula.mapper.js";
 
 // INFRA ASISTENCIA
-export * from "./datasources/postgres/asistencia.datasource.impl.js";
-export * from "./repositories/asistencia.repository.impl.js";
-export * from "./mappers/asistencia.mapper.js";
+// export * from "./datasources/postgres/asistencia.datasource.impl.js";
+// export * from "./repositories/asistencia.repository.impl.js";
+// export * from "./mappers/asistencia.mapper.js";
 
 // INFRA FCM
-export * from "./datasources/postgres/fcm.datasource.impl.js";
-export * from "./repositories/fcm.repository.impl.js";
-export * from "./mappers/fcm.mapper.js";
+// export * from "./datasources/postgres/fcm.datasource.impl.js";
+// export * from "./repositories/fcm.repository.impl.js";
+// export * from "./mappers/fcm.mapper.js";
 
 // INFRA FCM
-export * from "./datasources/postgres/notificacion.datasource.impl.js";
-export * from "./repositories/notificacion.repository.impl.js";
-export * from "./mappers/notificacion.mapper.js";
+// export * from "./datasources/postgres/notificacion.datasource.impl.js";
+// export * from "./repositories/notificacion.repository.impl.js";
+// export * from "./mappers/notificacion.mapper.js";
 
 // INFRA TOKEN
-export * from "./datasources/postgres/token.datasource.impl.js";
-export * from "./repositories/token.repository.impl.js";
-export * from "./mappers/token.mapper.js";
+// export * from "./datasources/postgres/token.datasource.impl.js";
+// export * from "./repositories/token.repository.impl.js";
+// export * from "./mappers/token.mapper.js";
 
 

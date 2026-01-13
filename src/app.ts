@@ -1,5 +1,6 @@
-import { envspg, JwtAdapter } from './config/index.js';
-import { PostgresDatabase } from './data/postgres/index.js';
+// import { envspg, JwtAdapter } from './config/index.js';
+// import { PostgresDatabase } from './data/postgres/index.js';
+import { envspg, PostgresConnection } from './infraestructure/index.js';
 import { AppRouter } from './presentation/routes.js';
 import { Server } from "./presentation/server.js";
 
@@ -10,7 +11,7 @@ import { Server } from "./presentation/server.js";
 
 async function main() {
 
-    await PostgresDatabase.connect({
+    await PostgresConnection.connect({
         database:envspg.POSTGRES_DATABASE,
         host:envspg.POSTGRES_HOST,
         password:envspg.POSTGRES_PASSWORD,

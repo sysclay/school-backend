@@ -19,6 +19,8 @@ yarn-error.log*
 # Ignorar el directorio de construcción (en caso de usar TypeScript)
 dist/
 db/
+src/secret/
+
 
 # Ignorar configuraciones del sistema operativo
 .DS_Store
