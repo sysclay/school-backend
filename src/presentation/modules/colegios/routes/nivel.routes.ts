@@ -5,7 +5,7 @@ import { NivelDatasourceImpl, NivelRepositoryImpl } from "../../../../infraestru
 import { authorizeRoles } from "../../../middlewares/AuthorizeRoles.js";
 import { authMiddleware } from "../../../middlewares/AuthMiddleware.js";
 import { Permissiones } from "../../../../config/segurity.permisiones.js";
-import { Modulos } from "../../../../config/segurity.Modulos.js";
+import { Modulos } from "../../../../config/segurity.modulos.js";
 // import { Roles } from '../../../../config/index.js';
 
 export class NivelRoutes {

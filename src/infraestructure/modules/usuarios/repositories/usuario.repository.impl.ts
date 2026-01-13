@@ -1,4 +1,4 @@
-import {  UsuarioDatasource, UsuarioEntityOu, UsuarioRepository, RegisterUsuarioDto, LoginUsuarioDto, UpdateEntityMessageOu, UpdateUsuarioDto} from "../../../../domain/index.js";
+import {  UsuarioDatasource, UsuarioEntityOu, UsuarioRepository, RegisterUsuarioDto, LoginUsuarioDto, UpdateUsuarioDto} from "../../../../domain/index.js";
 // import { RegisterTipoUsuarioDto } from "../../domain/dtos/tipousuario/register.usuario.dto";
 
 export class UsuarioRepositoryImpl implements UsuarioRepository {
