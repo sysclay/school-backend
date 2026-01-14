@@ -43,37 +43,25 @@ export class AlumnoDatasourceImpl implements AlumnoDatasource {
             const result = await pool.query(query, values); 
             await pool.query('COMMIT');
             if(result.rows.length>0){
-            // if(true) {
                 if(result.rows[0].response.ok){
-                    // const id_alumno = result.rows[0].response.data.id_alumno;
-                    // const qrBase64 = await QR.generate(id_alumno,id_alumno)
-                    // console.log('QR generado:', qrBase64);
+                    const id_alumno = result.rows[0].response.data.id_alumno;
+                    const qrBase64 = await QR.generate(id_alumno,id_alumno);
+
+                    // Paso 3: Guardar la URI en la BD
+                    const qrFileName = `${id_alumno}.png`;
+                    // const qrUri = `/uploads/qr/${qrFileName}`; // o URL pública si usas S3/Cloud
+                    const queryU = `UPDATE tbl_alumnos SET qr_uri=$1, qr_code=$2 where cod=$3`;
+                    const valuesU = [ qrBase64,qrFileName,id_alumno];
+                    await pool.query(queryU, valuesU);
+
                     return AlumnoMapper.alumnoEntityFromObject({ok:result.rows[0].response.ok,message:result.rows[0].response.message});
                 } 
                 return AlumnoMapper.alumnoEntityFromObject({ok:result.rows[0].response.ok,message:result.rows[0].response.message});
-
-
-            // const find = resultI.rows.find(i=>String(i.persona_id)===String(persona_id));
-            // if (!find) { AlumnoMapper.AlumnoEntityFromObject({ok:false,message:'Alumno no existe'}); }
-
-
-            // const base64Data = qrBase64.split(",")[1];
-            // const qrBuffer  = Buffer.from(base64Data, "base64");
-            // const queryU = `UPDATE tbl_alumno SET codigo_qr=$1 where id=$2`;
-            // const valuesU = [ qrBuffer,find.id];
-            // const resultU = await pool.query(queryU, valuesU);
-            // await pool.query('COMMIT');
-
-            // if(resultU.rowCount !== null && resultU.rowCount>0){
-                // return AlumnoMapper.findByIdEntityFromObject({ok:false, message:'Operación exitosa'});
-            // } 
-            
             }
             return AlumnoMapper.alumnoEntityFromObject({ok:false,message:'No se inserto'});
             
         } catch (error:any) {
             await pool.query('ROLLBACK');
-            console.log(error)
             if(error instanceof CustomError){ throw error;}
             throw CustomError.internalServer();
         }
