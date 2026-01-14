@@ -72,16 +72,13 @@ export class AcademicoColegioController {
             id_academico:id_academico_query_str,
         }
 
-        // console.log(filter)
         const [error,filterAcademicoColegioDto]=FilterAcademicoColegioDto.filter(filter);
         if (error) { return res.status(400).json({ message: error });}
 
         this.academicoColegioRepository.filter(filterAcademicoColegioDto!)
         .then(async data =>{
-            // console.log('ROUTER::',data)
             res.json(data)
         }).catch(error => {
-            console.log(error)
             this.handleError(error,res)
         });
     }

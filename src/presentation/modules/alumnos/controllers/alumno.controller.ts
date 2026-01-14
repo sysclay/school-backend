@@ -73,7 +73,6 @@ export class AlumnoController {
 
     findColegio = (req:AuthRequest, res: Response)=>{
         const id_colegio = req?.payload?.colegio?.id_colegio;
-        console.log('find all alumnos by:', id_colegio);
         this.AlumnoRepository.findAllColegio(id_colegio!).then(async data =>{
             res.json(data)
         }).catch(error => {

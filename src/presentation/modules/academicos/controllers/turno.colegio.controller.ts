@@ -67,7 +67,6 @@ export class TurnoColegioController {
         .then(async data =>{
             res.json(data)
         }).catch(error => {
-            console.log(error)
             this.handleError(error,res)
         });
 

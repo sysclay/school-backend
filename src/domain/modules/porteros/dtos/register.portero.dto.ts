@@ -27,13 +27,7 @@ export class RegisterPorteroDto {
 
     static create(object:{[key:string]:any}):[string?,RegisterPorteroDto?]{
         const { id_colegio,  nombre, paterno,materno, id_documento, nro_documento,id_genero,correo,telefono} = object;
-        // console.log(object)
-        // if(!qr_uri) return ["Missing qr_uri"];
-        // if(!qr_code) return ["Missing qr_code"];
-        // if(!id_persona) return ["Missing persona"];
         if(!id_colegio) return ["Missing colegio"];
-
-        // const { nombre, paterno,materno,telefono,correo, nro_documento, id_documento,id_genero } = object;
         if(!nombre) return ["Missing nombre"];
         if(!paterno) return ["Missing apellido paterno"];
         if(!materno) return ["Missing apellido materno"];

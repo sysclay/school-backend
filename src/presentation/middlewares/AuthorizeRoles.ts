@@ -27,7 +27,6 @@ export const authorizeRoles = (...requiredRoles: string[]) => {
         const result = await pool.query(query, values); 
         await pool.query('COMMIT'); 
 
-        // console.log(result.rows[0].response)
         if (!result.rows[0].response.ok) {
           if(result.rows[0].response.message==='Sin acceso'){
             res.status(403).json({ message: 'Acceso denegado' });
@@ -41,7 +40,6 @@ export const authorizeRoles = (...requiredRoles: string[]) => {
         }
         
     } catch (error) {
-      // console.log(error)
         res.status(500).json({ message: 'Error del servidor al verificar roles' });
         return;
     }

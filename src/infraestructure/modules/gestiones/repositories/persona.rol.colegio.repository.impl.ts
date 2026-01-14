@@ -19,14 +19,12 @@ export class PersonaRolColegioRepositoryImpl implements PersonaRolColegioReposit
         // return this.PersonaRolColegioDatasource.findAll(page,limit,role,search);
         const rawData = (await this.PersonaRolColegioDatasource.findAll()).data;
 
-        // console.log(page, limit, role, search);
         let data: PersonaRolColegioEntity[] = [];
         if (Array.isArray(rawData)) {
             data = rawData;
         } else if (rawData) {
             data = [rawData];
         }
-        // console.log(data.length)
 
         // Filtro especial: solo usuarios sin roles
         if (role === 'no-role') {

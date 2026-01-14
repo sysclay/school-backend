@@ -1,10 +1,7 @@
 import { CustomError, DirectorDatasource, DirectorEntityOu, RegisterDirectorDto } from "../../../../../domain/index.js";
 import { DirectorMapper } from "../../mappers/director.mapper.js";
-//import { DirectorModel } from "../../../data/mongodb/models/tipo.documento.model";
 
 import { PostgresConnection } from "../../../../database/postgres/index.js";
-import { Console } from "console";
-// import { PostgresDatabase } from "../../../../../data/postgres/index.js";
 
 export class DirectorDatasourceImpl implements DirectorDatasource { 
 
@@ -90,13 +87,11 @@ export class DirectorDatasourceImpl implements DirectorDatasource {
             const values = [id];
 
             const result = await pool.query(query, values);
-            // console.log(result)
             if(result.rows.length>0){
                 return DirectorMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }
             return DirectorMapper.findEntityFromObject({ok:false,message:'Operación exitosa', data: []})
         } catch (error) {
-            // console.log(error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }

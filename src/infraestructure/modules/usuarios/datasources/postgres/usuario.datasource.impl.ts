@@ -16,7 +16,6 @@ export class UsuarioDatasourceImpl implements UsuarioDatasource {
         const { username,password, id_persona } = registerUsuarioDto;
         const pool = PostgresConnection.getPool();
         try {
-
             const query = `SELECT insertar_usuario(p_user:=$1, p_pass:=$2, p_id_persona:=$3, p_by:=$4 ) AS response`;
             const values = [username.toLocaleLowerCase(),this.hashPassword(password),id_persona, by]; 
 
@@ -30,7 +29,6 @@ export class UsuarioDatasourceImpl implements UsuarioDatasource {
 
         } catch (error:any) {
             await pool.query('ROLLBACK');
-            console.log(error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }
@@ -139,7 +137,6 @@ export class UsuarioDatasourceImpl implements UsuarioDatasource {
             return UsuarioMapper.EntityFromObject({ok:false,message:'No se actualizo'});
 
         } catch (error:any) {
-            console.log(9, error)
             if (error.code === 'P0001') {
                 throw CustomError.badRequest(`${error.message}`);
             }

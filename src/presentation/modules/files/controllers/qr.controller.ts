@@ -18,27 +18,10 @@ export class QRController {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 
-    // registerFile = (req: AuthRequest, res: Response):any => {
-    //     const [error, registerFileDto] = RegisterFileDto.create({
-    //         filename: req.file?.filename,
-    //         mimetype: req.file?.mimetype,
-    //         size: req.file?.size,
-    //         buffer: req.file?.buffer, // si lo necesitas
-    //     });
-    //     // console.log('REGISTER',error)
-    //     if (error) return res.status(400).json({ message: error });
-    //     const by = req?.payload?.id_usuario;
-
-    //     this.FileRepository.register(registerFileDto!, by!)
-    //         .then(data => res.json(data))
-    //         .catch(error => this.handleError(error, res));
-    // };
-
     findFileByFilename = (req: AuthRequest, res: Response) => {
         const { filename } = req.params;
         this.QRRepository.findByFilename(filename)
         .then(data => {
-                // console.log(data)
                 if (!data.ok || !data.data) {
                     return res.json(data)
                 }
@@ -48,8 +31,6 @@ export class QRController {
         )
         .catch(error => this.handleError(error, res));
     };
-
-    // updateFile = (req: AuthRequest, res: Response):any=> {
     //     const [error, updateFileDto] = UpdateFileDto.update({
     //         filename: req.params.filename,
     //         newFilename: req.body.newFilename,
