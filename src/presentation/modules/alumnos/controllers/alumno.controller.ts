@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CustomError, RegisterAlumnoDto, AlumnoRepository, FilterAlumnoDto } from "../../../../domain/index.js";
+import { CustomError, RegisterAlumnoDto, AlumnoRepository, FilterAlumnoDto, UpdateAlumnoDto } from "../../../../domain/index.js";
 
 interface AuthRequest extends Request {
     payload?: { id_usuario: string, colegio?:{ id_colegio: string } };
@@ -94,13 +94,21 @@ export class AlumnoController {
         });
     };
 
-    // updateQR = (req:Request, res:Response) =>{
-    //     const { id } = req.params;
+    updateAll = (req:Request, res:Response):any =>{
+        const { id } = req.params;
+        const { estado } = req.query;
+        const estado_query_str = typeof estado === 'boolean'? String(estado): null;
 
-    //     this.AlumnoRepository.updateQR(id).then( async data =>{
-    //         res.json(data)
-    //     }).catch(error => {
-    //         this.handleError(error,res)
-    //     })
-    // };
+        const query = { 
+            estado: estado_query_str,
+        }
+        const [error, updateAlumnoDto ] = UpdateAlumnoDto.update(query);
+        if(error){ return res.status(400).json({message:error})};
+
+        this.AlumnoRepository.updateAll(id,updateAlumnoDto!).then( async data =>{
+            res.json(data)
+        }).catch(error => {
+            this.handleError(error,res)
+        })
+    };
 }

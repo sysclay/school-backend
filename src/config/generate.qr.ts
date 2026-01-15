@@ -2,9 +2,14 @@ import QRCode  from 'qrcode'
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from "url";
+
+interface valueQR {
+    texto:string,
+    filename:string
+}
 export class QR {
 
-    static async generate(texto: string, filename?:string):Promise<string>{
+    static async generate({texto,filename}:valueQR):Promise<{ uri: string; filename: string; path: string }>{
         try {
             const __filename = fileURLToPath(import.meta.url);
             const __dirname = path.dirname(__filename);
@@ -22,9 +27,15 @@ export class QR {
 
             // Generar y guardar el QR como imagen
             await QRCode.toFile(filePath, texto);
+            const uri = `/imagen/alumno/${file}`;
+
 
             // const qrDataUrl = await QRCode.toDataURL(texto);
-            return filePath; // Retorna la ruta del archivo generado
+            return {
+                uri,        // para servirlo públicamente
+                filename: file, // nombre del archivo
+                path: filePath  // ruta absoluta en el servidor
+            }; // Retorna la ruta del archivo generado
         } catch (error) {
             throw error;
         }

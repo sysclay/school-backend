@@ -26,7 +26,7 @@ export class AlumnoRoutes {
         router.get('/list', authMiddleware, authorizeRoles(Permissiones.LIST_ALL, Modulos.ALUMNOS ),controller.find);
         router.get('/list-colegio', authMiddleware, authorizeRoles(Permissiones.READ_OTHERS, Modulos.ALUMNOS ),controller.findColegio);
 
-        // router.put('/updateqr/:id', authMiddleware, authorizeRoles(Permissiones.ADMIN), controller.updateQR);
+        router.put('/update/:id', authMiddleware, authorizeRoles(Permissiones.UPDATE_ALL, Modulos.ALUMNOS ), controller.updateAll);
 
 
         return router

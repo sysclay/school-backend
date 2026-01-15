@@ -1,4 +1,4 @@
-import { AlumnoDatasource, AlumnoEntityOu, AlumnoRepository, FilterAlumnoDto, RegisterAlumnoDto } from "../../../../domain/index.js";
+import { AlumnoDatasource, AlumnoEntityOu, AlumnoRepository, FilterAlumnoDto, RegisterAlumnoDto, UpdateAlumnoDto } from "../../../../domain/index.js";
 // import { UpdateAlumnoDto } from "../../../../domain/modules/alumnos/dtos/update.Alumno.dto.js";
 
 export class AlumnoRepositoryImpl implements AlumnoRepository {
@@ -27,8 +27,8 @@ export class AlumnoRepositoryImpl implements AlumnoRepository {
         return this.AlumnoDatasource.filter(filterAlumnoDto);
     }
 
-    // updateAll(updateAlumnoDto: UpdateAlumnoDto, by: string): Promise<AlumnoEntityOu> {
-    //     return this.AlumnoDatasource.updateAll(updateAlumnoDto,by)
-    // }
+    updateAll(id:string, updateAlumnoDto: UpdateAlumnoDto): Promise<AlumnoEntityOu> {
+        return this.AlumnoDatasource.updateAll(id, updateAlumnoDto)
+    }
 
 }

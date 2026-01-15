@@ -20,6 +20,12 @@ yarn-error.log*
 dist/
 db/
 src/secret/
+src/public/imagen/alumno/*
+src/public/imagen/persona/*
+
+touch src/public/imagen/alumno/.gitkeep
+touch src/public/imagen/persona/.gitkeep
+
 
 
 # Ignorar configuraciones del sistema operativo

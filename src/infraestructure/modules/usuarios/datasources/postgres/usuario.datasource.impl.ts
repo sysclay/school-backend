@@ -73,10 +73,10 @@ export class UsuarioDatasourceImpl implements UsuarioDatasource {
         try {
 
             const updateFields: any = {};
-            if (id) updateFields.p_codigo = id;
-            if (username && username.trim() !== '') updateFields.p_username = username.toLocaleLowerCase();
-            if (password && password.trim() !== '') updateFields.p_password = this.hashPassword(password);
-            if (estado !== undefined) updateFields.p_estado = estado;
+            if (id) updateFields.p_cod = id;
+            if (username && username.trim() !== '') updateFields.p_user = username.toLocaleLowerCase();
+            if (password && password.trim() !== '') updateFields.p_pass = this.hashPassword(password);
+            if (estado !== undefined) updateFields.p_est = estado;
 
             const queryKeys = Object.keys(updateFields).map((key, index) => `${key} := $${index + 1}`).join(', ');
             const query = `SELECT update_usuario(${queryKeys}) AS response`;

@@ -1,5 +1,5 @@
 
-import { CustomError, AlumnoDatasource, AlumnoEntityOu, RegisterAlumnoDto, FilterAlumnoDto } from "../../../../../domain/index.js";
+import { CustomError, AlumnoDatasource, AlumnoEntityOu, RegisterAlumnoDto, FilterAlumnoDto, UpdateAlumnoDto } from "../../../../../domain/index.js";
 import { AlumnoMapper } from "../../mappers/alumno.mapper.js";
 
 // import { PostgresDatabase } from "../../../../../data/postgres/index.js";
@@ -45,13 +45,14 @@ export class AlumnoDatasourceImpl implements AlumnoDatasource {
             if(result.rows.length>0){
                 if(result.rows[0].response.ok){
                     const id_alumno = result.rows[0].response.data.id_alumno;
-                    const qrBase64 = await QR.generate(id_alumno,id_alumno);
-
-                    // Paso 3: Guardar la URI en la BD
-                    const qrFileName = `${id_alumno}.png`;
+                    const valueQR = {
+                        texto:id_alumno,
+                        filename:id_alumno,
+                    }
+                    const {filename,path,uri} = await QR.generate(valueQR);
                     // const qrUri = `/uploads/qr/${qrFileName}`; // o URL pública si usas S3/Cloud
                     const queryU = `UPDATE tbl_alumnos SET qr_uri=$1, qr_code=$2 where cod=$3`;
-                    const valuesU = [ qrBase64,qrFileName,id_alumno];
+                    const valuesU = [ path,filename,id_alumno];
                     await pool.query(queryU, valuesU);
 
                     return AlumnoMapper.alumnoEntityFromObject({ok:result.rows[0].response.ok,message:result.rows[0].response.message});
@@ -160,26 +161,36 @@ export class AlumnoDatasourceImpl implements AlumnoDatasource {
         }
     }
 
-    async updateQR (id:string): Promise<AlumnoEntityOu> {
+    async updateAll (id:string, updateAlumnoDto:UpdateAlumnoDto): Promise<AlumnoEntityOu> {
         const pool = PostgresConnection.getPool();
+        const {estado} = updateAlumnoDto;
         try {
             await pool.query('BEGIN'); 
-            const query = `SELECT * FROM tbl_alumno WHERE id = $1`;
+            const query = `SELECT * FROM tbl_alumnos WHERE cod = $1`;
             const result = await pool.query(query, [id]);
             
             if(result.rowCount===1){
-                const qrBase64 = await QR.generate(`${result.rows[0].codigo_id}`)
-                const base64Data = qrBase64.split(",")[1];
-                const qrBuffer  = Buffer.from(base64Data, "base64");
-
-                const queryU = `update tbl_alumno set codigo_qr=$1 where id=$2 RETURNING *`;
-                const valuesU = [qrBuffer,id];
-                const resultU:any = await pool.query(queryU, valuesU); 
+                const valueQR = {
+                    texto:id,
+                    filename:`myqr-${id}`,
+                }
+                const {filename,path,uri} = await QR.generate(valueQR);
+                const query = `SELECT update_alumno($1,$2,$3,$4) AS response`;
+                const values = [
+                    id,
+                    path || null,
+                    filename || null,
+                    typeof estado === 'boolean' ? estado : null
+                ];
+                const res = await pool.query(query, values);
                 await pool.query('COMMIT'); 
-                if(resultU.rowCount>0){
-                    return AlumnoMapper.findByIdEntityFromObject({ok:true, message:'Se actualiazo'});
+                if(res.rowCount!==0){
+                    if(res.rows[0].response.ok){
+                        return AlumnoMapper.findByIdEntityFromObject({ok:res.rows[0].response.ok, message:res.rows[0].response.message});
+                    }
+                    return AlumnoMapper.findByIdEntityFromObject({ok:res.rows[0].response.ok, message:res.rows[0].response.message});
                 } else {
-                    return AlumnoMapper.findByIdEntityFromObject({ok:false,message:'No se actualiazo'});
+                    return AlumnoMapper.findByIdEntityFromObject({ok:res.rows[0].response.ok,message:'No se actualiazo'});
                 }
             }
             return AlumnoMapper.findByIdEntityFromObject({ok:false,message:'No encontrado'})

@@ -1,5 +1,6 @@
 import { FilterAlumnoDto } from "../dtos/filter.alumno.dto.js";
 import { RegisterAlumnoDto } from "../dtos/register.alumno.dto.js";
+import { UpdateAlumnoDto } from "../dtos/update.alumno.dto.js";
 import { AlumnoEntityOu } from "../entities/ou/alumno.entity.js";
 // import { UpdateEntityMessage } from "../entities/output/update.entity";
 
@@ -14,6 +15,7 @@ export abstract class AlumnoDatasource {
     abstract filter(filterAlumnoDto:FilterAlumnoDto):Promise<AlumnoEntityOu>;
     // abstract updateQR(id:string):Promise<AlumnoEntityOu>;
 
+    abstract updateAll(id:string,updateStationDto:UpdateAlumnoDto): Promise<AlumnoEntityOu>;
     //abstract updateAll(id:string,updateStationDto:UpdateStationDto): Promise<UpdateEntityMessage>;
 
 }
