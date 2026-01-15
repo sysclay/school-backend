@@ -171,7 +171,6 @@ export class PersonaDatasourceImpl implements PersonaDatasource {
     async updateById(id:string, updatePersonaDto:UpdatePersonaDto,by:string):Promise<PersonaEntityOu>{
         const { nombre, paterno,materno ,correo,telefono,direccion,fecha_nacimiento,estado,foto,id_genero} = updatePersonaDto;
         try {
-
             const pool = PostgresConnection.getPool();
             const fields = [
                 { key: 'p_id_persona', value: id },

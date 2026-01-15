@@ -21,7 +21,7 @@ export class QR {
 
             // Nombre del archivo
             const file = filename 
-                ? `${filename}.png`
+                ? `myqr-${filename}.png`
                 : `qr_${Date.now()}.png`;
             const filePath = path.join(qrDir, file);
 
