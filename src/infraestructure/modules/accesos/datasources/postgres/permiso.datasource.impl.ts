@@ -51,6 +51,7 @@ export class PermisoDatasourceImpl implements PermisoDatasource {
             return PermisoMapper.findEntityFromObject({ok:false,message:'No encontrado',}); 
 
         } catch (error) {
+            console.log(error)
             if(error instanceof CustomError){
                 throw error;
             }
@@ -93,6 +94,7 @@ export class PermisoDatasourceImpl implements PermisoDatasource {
             return PermisoMapper.findEntityFromObject({ok:false,message:'Error'})
 
         } catch (error) {
+            console.log('error::',error)
             if(error instanceof CustomError){
                 throw error;
             } 

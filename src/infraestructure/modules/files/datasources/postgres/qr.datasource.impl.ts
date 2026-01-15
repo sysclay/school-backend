@@ -44,6 +44,7 @@ export class QRDatasourceImpl implements QRDatasource {
                 });
             }
             const stats = fs.statSync(filePath);
+            // console.log('File App 22',stats,filePath);
             return FileMapper.FileEntityFromObject({
                 ok: true,
                 data: {

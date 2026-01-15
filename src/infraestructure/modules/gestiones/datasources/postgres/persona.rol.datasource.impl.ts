@@ -52,6 +52,7 @@ export class PersonaRolDatasourceImpl implements PersonaRolDatasource {
         try {
             const pool = PostgresConnection.getPool();
             const result = await pool.query("SELECT * FROM v_list_personas_roles");
+            console.log(result.rows);
             if (result) {
                 return PersonaRolMapper.findEntityFromObject({ ok: true, data: result.rows, message: 'Operación exitosa' });
             }

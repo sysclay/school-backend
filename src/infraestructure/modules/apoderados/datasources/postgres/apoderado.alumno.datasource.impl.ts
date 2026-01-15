@@ -39,6 +39,7 @@ export class ApoderadoAlumnoDatasourceImpl implements ApoderadoAlumnoDatasource 
             
         } catch (error:any) {
             await pool.query('ROLLBACK');
+            console.log('here::',error)
             if(error instanceof CustomError){ throw error;}
             throw CustomError.internalServer();
         }
@@ -66,11 +67,13 @@ export class ApoderadoAlumnoDatasourceImpl implements ApoderadoAlumnoDatasource 
         try {
 
             const { id_persona} = FilterApoderadoAlumnoDto;
+            // console.log('aa',FilterApoderadoAlumnoDto)
 
             const pool = PostgresConnection.getPool();
             const query = `SELECT*FROM v_list_apoderado_alumnos WHERE id_persona=$1`
             const values = [id_persona]
             const result = await pool.query(query,values);
+            // console.log(result)
             if(result){
                 return ApoderadoAlumnoMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }

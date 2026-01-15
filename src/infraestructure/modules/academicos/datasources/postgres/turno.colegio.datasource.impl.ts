@@ -11,6 +11,7 @@ export class TurnoColegioDatasourceImpl implements TurnoColegioDatasource {
         const { id_colegio, id_turno, hora_ini, hora_fin} = registerTurnoColegioDto;
         const pool = PostgresConnection.getPool();
         try {
+            // console.log(registerTurnoColegioDto)
             const query = `SELECT insertar_turno_colegio (p_id_turno:=$1,p_id_colegio:=$2,  p_h_ini:=$3, p_h_fin:=$4, p_by:=$5 ) AS response`;
             const values = [ id_turno,id_colegio, hora_ini, hora_fin,by];
 
@@ -26,6 +27,7 @@ export class TurnoColegioDatasourceImpl implements TurnoColegioDatasource {
 
             return TurnoColegioMapper.EntityFromObject({ok:false,message:'Error'});
         } catch (error) {
+            console.log(error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }
@@ -56,6 +58,7 @@ export class TurnoColegioDatasourceImpl implements TurnoColegioDatasource {
             }
             return TurnoColegioMapper.findEntityFromObject({ok:false,message:'Error'})
         } catch (error) {
+            console.log(error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }
@@ -83,6 +86,7 @@ export class TurnoColegioDatasourceImpl implements TurnoColegioDatasource {
 
             return TurnoColegioMapper.findEntityFromObject({ok:false,message:'Error'});
         } catch (error) {
+            console.log(error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }
@@ -119,6 +123,7 @@ export class TurnoColegioDatasourceImpl implements TurnoColegioDatasource {
             await pool.query('BEGIN'); 
             const result = await pool.query(query, values);
             await pool.query('COMMIT'); 
+            // console.log(result)
             if(result.rows.length>0){
                 return TurnoColegioMapper.findEntityFromObject({ok:true, data:result.rows,message:result.rows[0].response.message})
             }

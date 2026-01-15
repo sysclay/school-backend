@@ -42,6 +42,9 @@ export class RegisterAcademicoColegioDto {
         if (fin.getFullYear() < minYear || fin.getFullYear() > maxYear) {
             return [`fecha_fin year must be between ${minYear} and ${maxYear}`];
         }
+
+        // console.log('ERROR::::', id_colegio.trim(), id_academico.trim(), fecha_inicio, fecha_fin )
+
         return [
             undefined,
             new RegisterAcademicoColegioDto(id_colegio.trim(), id_academico.trim(), fecha_inicio, fecha_fin ),

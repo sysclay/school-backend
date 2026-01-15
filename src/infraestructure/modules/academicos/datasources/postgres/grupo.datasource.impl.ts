@@ -12,12 +12,14 @@ export class GrupoDatasourceImpl implements GrupoDatasource {
         const pool = PostgresConnection.getPool();
 
         try {
+             console.log('res..',registerGrupoDto)
             const query = `SELECT insertar_grupo_academico(p_nom:=$1,p_cap:=$2,p_id_col:=$3, p_id_niv:=$4,p_id_gra:=$5,p_id_sec:=$6,p_id_tur:=$7,p_id_aca:=$8,p_by:=$9 ) AS response`;
             const values = [ nombre,capacidad,id_colegio,id_nivel,id_grado,id_seccion,id_turno,id_academico,by];
 
             await pool.query('BEGIN'); 
             const result = await pool.query(query, values); 
             await pool.query('COMMIT'); 
+            console.log(result)
 
             if(result.rows.length>0){
                 return GrupoMapper.EntityFromObject({

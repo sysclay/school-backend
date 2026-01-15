@@ -25,6 +25,7 @@ export class FileController {
             size: req.file?.size,
             buffer: req.file?.buffer, // si lo necesitas
         });
+        // console.log('REGISTER',error)
         if (error) return res.status(400).json({ message: error });
         const by = req?.payload?.id_usuario;
 
@@ -35,6 +36,7 @@ export class FileController {
 
     findFileByFilename = (req: AuthRequest, res: Response) => {
         const { filename } = req.params;
+        // console.log('FILE:::',filename)
         this.FileRepository.findByFilename(filename)
         .then(data => {
                 if (!data.ok || !data.data) {

@@ -21,7 +21,7 @@ export class LoginDatasourceImpl implements LoginDatasource {
         const pool = PostgresConnection.getPool();
         try {
             const query = `SELECT login_usuario(p_username := $1) AS response`
-            const values = [username.toLocaleLowerCase()];
+            const values = [username];
 
             await pool.query('BEGIN');
             const result = await pool.query(query, values);
@@ -29,9 +29,11 @@ export class LoginDatasourceImpl implements LoginDatasource {
 
 
             if(result.rows.length>0){
+            console.log(result.rows[0].response)
                 if(result.rows[0].response.ok){
                     const isPasswordValid = await this.compareFunction(password, result.rows[0].response.hash);
                     if(isPasswordValid){
+                        // console.log(result.rows[0].response)
                         const payload = {
                             id_usuario:result.rows[0].response.cod,
                             username:result.rows[0].response.username,
@@ -40,6 +42,7 @@ export class LoginDatasourceImpl implements LoginDatasource {
                         }
 
                         const token = await JwtAdapter.encryptWithRSA(payload);
+                        // console.log(payload)
                         return LoginMapper.LoginEntityFromObject({ok:result.rows[0].response.ok,message:result.rows[0].response.message, token:token});                            
 
                     }else{
@@ -89,6 +92,8 @@ export class LoginDatasourceImpl implements LoginDatasource {
                             nombre_institucion:result.rows[0].response.colegio,          
                         }:null
                     }
+                    // console.log('OKKK',_payload)
+                    // const _token = await JwtAdapter.generateToken(_payload);
                     const _token = await JwtAdapter.encryptWithRSA(_payload);
 
                     return CheckRolMapper.CheckRolEntityFromObject({ok:true,message:'Login exitoso', token:_token});  
@@ -98,6 +103,7 @@ export class LoginDatasourceImpl implements LoginDatasource {
             }
 
         } catch (error) {
+            console.log(error)
             if(error instanceof CustomError){
                 throw error;
             }
@@ -110,9 +116,11 @@ export class LoginDatasourceImpl implements LoginDatasource {
         try {
             // const payload = await JwtAdapter.verifyToken(token);// Verificar el token
             const payload = await JwtAdapter.decryptWithRSA(token);// Verificar el token
+            // console.log('PAYLOAD::',payload);
             if (!payload) {
                 return TokenMapper.TokenEntityFromObject({ok:false,message:'Token inválido o expirado'});
-            } else {
+            } else { 
+                // console.log(payload)
                 const data = {
                     // id:payload.id,
                     id_usuario:payload.id_usuario,
@@ -128,6 +136,7 @@ export class LoginDatasourceImpl implements LoginDatasource {
                     // correo:payload.correo,
                     // telefono:payload.telefono,
                 }
+                // console.log('DATA TOKEN::',data)
 
                 return TokenMapper.TokenEntityFromObject({ok:true,data:data,message:'Operación exitosa'});
             }

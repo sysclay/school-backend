@@ -45,6 +45,7 @@ export class NivelDatasourceImpl implements NivelDatasource {
         try {
             const pool = PostgresConnection.getPool();
             const numericId = Number(id);
+            console.log(numericId)
             if (isNaN(numericId)) {
                 return NivelMapper.nivelEntityFromObject({ok:false,message:'No encontrado'});
             }

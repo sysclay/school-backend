@@ -25,6 +25,7 @@ export class RolController {
     register= (req:AuthRequest, res:Response):any=>{
         
         const [error, registerRolDto ] = RegisterRolDto.create(req.body);
+        console.log('error dto',error, req.body)
         if(error){ return res.status(400).json({message:error})};
         const by = req?.payload?.id_usuario;
         this.rolRepository.register(registerRolDto!,by!)

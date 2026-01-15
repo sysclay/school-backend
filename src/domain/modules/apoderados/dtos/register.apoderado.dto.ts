@@ -27,6 +27,10 @@ export class RegisterApoderadoDto {
 
     static create(object:{[key:string]:any}):[string?,RegisterApoderadoDto?]{
         const { id_colegio,  nombre, paterno,materno, id_documento, nro_documento,id_genero,correo,telefono} = object;
+        // console.log(object)
+        // if(!qr_uri) return ["Missing qr_uri"];
+        // if(!qr_code) return ["Missing qr_code"];
+        // if(!id_persona) return ["Missing persona"];
         if(!id_colegio) return ["Missing colegio"];
 
         // const { nombre, paterno,materno,telefono,correo, nro_documento, id_documento,id_genero } = object;

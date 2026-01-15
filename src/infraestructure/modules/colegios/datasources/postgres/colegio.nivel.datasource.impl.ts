@@ -14,9 +14,11 @@ export class ColegioNivelDatasourceImpl implements ColegioNivelDatasource {
 
             const query = `SELECT insertar_colegio_nivel (p_id_colegio:=$1,p_id_nivel:=$2,p_by:=$3) AS response`;
             const values = [id_colegio, id_nivel,by];
+            console.log(values)
             await pool.query('BEGIN'); 
             const result = await pool.query(query, values); 
             await pool.query('COMMIT'); 
+            console.log(result)
             if(result.rows.length>0){
                 // if(result.rows[0].response.ok){
                 //     return ColegioNivelMapper.colegioNivelEntityFromObject({
@@ -34,6 +36,7 @@ export class ColegioNivelDatasourceImpl implements ColegioNivelDatasource {
             return ColegioNivelMapper.colegioNivelEntityFromObject({ok:false,message:'Error'});
 
         } catch (error:any) {
+            console.log(error)
             if(error instanceof CustomError){
                 throw error;
             }
@@ -52,6 +55,7 @@ export class ColegioNivelDatasourceImpl implements ColegioNivelDatasource {
             }
             
         } catch (error) {
+            console.log(error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }

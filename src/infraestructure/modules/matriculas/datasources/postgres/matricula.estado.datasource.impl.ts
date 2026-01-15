@@ -10,6 +10,7 @@ export class MatriculaEstadoDatasourceImpl implements MatriculaEstadoDatasource 
             const pool = PostgresConnection.getPool();
             const result = await pool.query("SELECT * FROM v_list_matricula_estado");
             if (result.rows.length>0) {
+                // console.log(result.rows)
                 return MatriculaEstadoMapper.findEntityFromObject({ 
                     ok: true, 
                     data: result.rows, 
@@ -28,6 +29,7 @@ export class MatriculaEstadoDatasourceImpl implements MatriculaEstadoDatasource 
             const pool = PostgresConnection.getPool();
             const result = await pool.query("SELECT * FROM v_list_matricula_estado WHERE estado=true");
             if (result.rows.length>0) {
+                // console.log(result.rows)
                 return MatriculaEstadoMapper.findEntityFromObject({ 
                     ok: true, 
                     data: result.rows, 
@@ -46,6 +48,7 @@ export class MatriculaEstadoDatasourceImpl implements MatriculaEstadoDatasource 
             const pool = PostgresConnection.getPool();
             const result = await pool.query("SELECT * FROM v_list_matricula_estado");
             if (result.rows.length>0) {
+                // console.log(result.rows)
                 return MatriculaEstadoMapper.findEntityFromObject({ 
                     ok: true,
                     data: result.rows,

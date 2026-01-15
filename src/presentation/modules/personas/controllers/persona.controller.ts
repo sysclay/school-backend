@@ -42,6 +42,7 @@ export class PersonaController {
 
     findPersonaById = (req:AuthRequest, res:Response) =>{
         // const { id } = req.params;
+        // console.log('perfil')
         const by = req?.payload?.id_usuario;
         this.personaRepository.findByIdPerfil(by!).then( async data =>{
             res.json(data)
@@ -52,7 +53,8 @@ export class PersonaController {
 
     findPersonaByNDoc = (req:AuthRequest, res:Response) =>{
         const { id } = req.params;
-        // const { doc } = req.query as { doc:string }
+        // const { doc } = req.query as { doc:string };
+        // console.log(doc)
         this.personaRepository.findByNDoc(id).then( async data =>{
             res.json(data)
         }).catch(error => {

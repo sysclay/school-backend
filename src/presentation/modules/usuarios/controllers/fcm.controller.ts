@@ -89,6 +89,7 @@ export class FcmController {
         if(error){ return res.status(400).json({message:error})};
 
         this.fcmRepository.updateActive(by!,updateFcmDto!,by!).then(async data =>{
+            console.log('ss',data)
             res.json(data)
         }).catch(error => {
             this.handleError(error,res)

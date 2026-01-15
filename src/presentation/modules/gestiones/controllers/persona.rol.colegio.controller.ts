@@ -39,6 +39,7 @@ export class PersonaRolColegioController {
 
         this.PersonaRolColegioRepository.findAll(Number(page), Number(limit), role, colegio, search)
         .then(async data =>{
+            console.log(data)
             // Return pagination response with metadata
             const response = {
                 ok: data.ok,

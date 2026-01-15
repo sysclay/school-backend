@@ -43,6 +43,7 @@ export class PersonaRolColegioDatasourceImpl implements PersonaRolColegioDatasou
             const pool = PostgresConnection.getPool();
             const result = await pool.query("SELECT * FROM v_list_personas_roles_colegios");
             if (result.rows.length>0) {
+                // console.log('HERE',result.rows.length)
                 return PersonaRolColegioMapper.findEntityFromObject({ 
                     ok: true, 
                     data: result.rows, 

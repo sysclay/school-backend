@@ -43,6 +43,7 @@ export class AsistenciaController {
             fecha: id_fecha_query_str,
         };
 
+        // console.log('FILTER CONTROLLER::',query)
         const [error, filterAsistenciaDto ] = FilterAsistenciaDto.filter(query);
         if(error){ return res.status(400).json({message:error})};
         this.asistenciaRepository.filter(filterAsistenciaDto!)
@@ -60,10 +61,83 @@ export class AsistenciaController {
         if(error){ return res.status(400).json({message:error})};
         this.asistenciaRepository.update('',updateAsistenciaDto!, by!)
         .then(async data =>{
+            // console.log('RESULT::',data)
             res.json(data)
         }).catch(error => {
             this.handleError(error,res)
         });
     }
+
+    // findById = (req:Request, res:Response) =>{
+    //    const { id } = req.params;
+
+    //    this.asistenciaRepository.findById(id)
+    //    .then( async data =>{
+    //        res.json(data)
+    //    }).catch(error => {
+    //        this.handleError(error,res)
+    //    })
+    // };
+
+    //findByNameCorto = (req:Request, res:Response) =>{
+    //    const nombreCorto = req.query.nom_corto as string;
+//
+    //    this.AsistenciaRepository.findByNameCorto(nombreCorto)
+    //    .then( async data =>{
+    //        res.json(data)
+    //    }).catch(error => {
+    //        this.handleError(error,res)
+    //    })
+    //};
+
+
+    // findAll = (req:Request, res: Response)=>{
+    //     const page = Number.isNaN(Number(req.query.page)) || !req.query.page ? 1 : Number(req.query.page);
+    //     const limit = Number.isNaN(Number(req.query.limit)) || !req.query.limit ? 10 : Number(req.query.limit);
+
+    //     this.asistenciaRepository.findAll(Number(page), Number(limit))
+    //     .then(async data =>{
+    //         res.json(data)
+    //     }).catch(error => {
+    //         this.handleError(error,res)
+    //     });
+    // }
+
+    // findAllActive = (req:Request, res: Response)=>{
+    //     const page = Number.isNaN(Number(req.query.page)) || !req.query.page ? 1 : Number(req.query.page);
+    //     const limit = Number.isNaN(Number(req.query.limit)) || !req.query.limit ? 10 : Number(req.query.limit);
+
+    //     this.asistenciaRepository.findAll(Number(page), Number(limit))
+    //     .then(async data =>{
+    //         res.json(data)
+    //     }).catch(error => {
+    //         this.handleError(error,res)
+    //     });
+    // }
+
+    // findOne = (req:AuthRequest, res: Response)=>{
+    //     const id_asistencia = req.payload?.asistencia.id_asistencia;
+    //     this.asistenciaRepository.findOne(id_asistencia!)
+    //     .then(async data =>{
+    //         console.log(data)
+    //         res.json(data)
+    //     }).catch(error => {
+    //         console.log(error)
+    //         this.handleError(error,res)
+    //     });
+    // }
+
+    // updateAll = (req:AuthRequest, res: Response):any=>{
+    //     const [error, updateAsistenciaDto ] = UpdateAsistenciaDto.update(req.body);
+    //     if(error){ return res.status(400).json({message:error})};
+    //     const by = req?.payload?.id_usuario;
+    //     this.asistenciaRepository.updateAll(updateAsistenciaDto!,by!)
+    //     .then(async data =>{
+    //         res.json(data)
+    //     }).catch(error => {
+    //         this.handleError(error,res)
+    //     });
+    // }
+
 
 }

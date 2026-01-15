@@ -15,6 +15,7 @@ export class PersonaDatasourceImpl implements PersonaDatasource {
         const { nombre, paterno, materno, telefono, correo, nro_documento, id_documento, id_genero, direccion, fecha_nacimiento, foto } = registerPersonaDto;
         const pool = PostgresConnection.getPool();
         try {
+            console.log(registerPersonaDto)
             // Construir arrays dinámicos de campos y valores
             const fields = [
                 { key: 'p_nom', value: nombre ? Validators.capitalizar(nombre) : undefined },
@@ -35,7 +36,11 @@ export class PersonaDatasourceImpl implements PersonaDatasource {
             const paramPlaceholders = filteredFields.map((_, idx) => `$${idx + 1}`);
             const paramNames = filteredFields.map(f => `${f.key}:=${paramPlaceholders.shift()}`).join(', ');
             const values = filteredFields.map(f => f.value);
+            console.log('VALUES::',values)
             const query = `SELECT insertar_persona(${paramNames}) AS response`;
+
+            console.log('RESS::',query)
+            
             await pool.query('BEGIN'); 
             const result = await pool.query(query, values); 
             await pool.query('COMMIT');
@@ -211,6 +216,43 @@ export class PersonaDatasourceImpl implements PersonaDatasource {
             throw CustomError.internalServer();
         }
     }
+
+
+    // async updateById(id: string, updatePersonaDto: UpdatePersonaDto, by: string): Promise<PersonaEntityOu> {
+    //     const { nombre, paterno, materno, correo, telefono, direccion, fecha_nacimiento, estado, foto, id_genero } = updatePersonaDto;
+    //     try {
+    //         const pool = PostgresConnection.getPool();
+            
+    //         // Enviar TODOS los parámetros que espera la función PostgreSQL
+    //         const query = `SELECT update_persona($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) AS response`;
+            
+    //         const values = [
+    //             id,                    // p_id_persona (requerido)
+    //             id_genero || null,     // p_id_genero (requerido)
+    //             nombre || null,        // p_nombre
+    //             paterno || null,       // p_paterno
+    //             materno || null,       // p_materno
+    //             correo || null,        // p_correo
+    //             direccion || null,     // p_direccion
+    //             telefono || null,      // p_telefono
+    //             fecha_nacimiento || null, // p_fec_nac
+    //             foto || null,          // p_foto
+    //             estado || null         // p_estado
+    //         ];
+
+    //         console.log(values)
+    
+    //         const result = await pool.query(query, values);
+
+    //         if (result) {
+    //             return PersonaMapper.findEntityFromObject({ ok: result.rows[0].response.ok,  message: result.rows[0].response.message });
+    //         }
+    //         return PersonaMapper.findEntityFromObject({ ok: false, message: 'Error' });
+    //     } catch (error) {
+    //         if (error instanceof CustomError) { throw error; }
+    //         throw CustomError.internalServer();
+    //     }
+    // }
 
 }
 

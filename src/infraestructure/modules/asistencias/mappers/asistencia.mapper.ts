@@ -72,6 +72,7 @@ export class AsistenciaMapper {
 
     static findEntityFromObject(object:{[key:string]:any}){
         const {ok,data,message,meta} = object;
+        // console.log('OBJECT::',object)
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
                 const {id, id_matricula, fecha,hora_llegada,hora_entrada,hora_salida,registrador_entrada,registrador_salida,asistencia} = object;

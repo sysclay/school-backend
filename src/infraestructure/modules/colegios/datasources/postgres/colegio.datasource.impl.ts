@@ -93,6 +93,7 @@ export class ColegioDatasourceImpl implements ColegioDatasource {
         try {
             const pool = PostgresConnection.getPool();
             const result = await pool.query("SELECT * FROM v_list_colegio WHERE id_colegio = $1 AND estado=true", [id]);
+            // console.log(id,result.rows[0])
             if(result.rows.length>0){
                 return ColegioMapper.findEntityFromObject({
                     ok:true,

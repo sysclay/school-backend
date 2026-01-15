@@ -19,6 +19,7 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
             const result = await pool.query(query, values); 
             await pool.query('COMMIT'); 
             if(result.rows.length>0){
+                console.log('ENTRADA::', result.rows[0].response)
                 return AsistenciaMapper.asistenciaEntityFromObject({
                     ok:result.rows[0].response.ok,
                     message:result.rows[0].response.message, 
@@ -81,6 +82,7 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
             const values = [id_alumno, by];
             const result = await pool.query(query, values);
             if(result){
+                // console.log('UUUUUUUU::',result.rows[0].response.data)
                 return AsistenciaMapper.findByIdEntityFromObject({
                     ok:result.rows[0].response.ok, 
                     data:result.rows[0].response.data,
@@ -90,9 +92,63 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
             }
             return AsistenciaMapper.findByIdEntityFromObject({ok:false,message:'Error'})
         } catch(error) {
+            // console.log('EROR::',error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }
     }
+
+    // async findById(id:string):Promise<AsistenciaEntityOu>{
+    //     try {
+    //         const pool = PostgresConnection.getPool();
+    //         // const numericId = Number(id);
+    //         // if (isNaN(numericId)) {
+    //         //     return AsistenciaMapper.asistenciaEntityFromObject({ok:false,message:'No encontrado'});
+    //         // }
+
+    //         const result = await pool.query("SELECT * FROM v_list_asistencia WHERE id_asistencia = $1", [id]);
+    //         if(result.rows.length>0){
+    //             return AsistenciaMapper.asistenciaEntityFromObject({ok:true, data:result.rows[0],message:'Operación exitosa'});
+    //         }else {
+    //             return AsistenciaMapper.asistenciaEntityFromObject({ok:false, message:'No encontrado'});
+    //         }
+    //     } catch (error) {
+    //         if(error instanceof CustomError){ throw error; }
+    //         throw CustomError.internalServer();
+    //     }
+    // }
+
+    // async findAll(page:number, limit:number):Promise<AsistenciaEntityOu>{
+    //     try {
+    //         const pool = PostgresConnection.getPool();
+    //         const offset = (page - 1) * limit;
+    //         const result = await pool.query("SELECT * FROM v_list_asistencia AS response");
+
+    //         if(result){
+    //             return AsistenciaMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
+    //         }
+    //         return AsistenciaMapper.findEntityFromObject({ok:false,message:'Error'})
+    //     } catch (error) {
+    //         if(error instanceof CustomError){ throw error; }
+    //         throw CustomError.internalServer();
+    //     }
+    // }
+
+    // async findAllActive(page: number, limit: number): Promise<AsistenciaEntityOu> {
+    //     try {
+    //         const pool = PostgresConnection.getPool();
+    //         const offset = (page - 1) * limit;
+    //         const result = await pool.query("SELECT * FROM v_list_asistencia AS response WHERE estado = true");
+    //         if(result){
+    //             return AsistenciaMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
+    //         }
+    //         return AsistenciaMapper.findEntityFromObject({ok:false,message:'Error'})
+    //     } catch(error) {
+    //         if(error instanceof CustomError){ throw error; }
+    //         throw CustomError.internalServer();
+    //     }
+    // }
+
+
 
 }

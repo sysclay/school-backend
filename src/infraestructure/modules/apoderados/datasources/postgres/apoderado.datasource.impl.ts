@@ -41,7 +41,11 @@ export class ApoderadoDatasourceImpl implements ApoderadoDatasource {
             const result = await pool.query(query, values); 
             await pool.query('COMMIT');
             if(result.rows.length>0){
+            // if(true) {
                 if(result.rows[0].response.ok){
+                    // const id_apoderado = result.rows[0].response.data.id_apoderado;
+                    // const qrBase64 = await QR.generate(id_apoderado,id_apoderado)
+                    // console.log('QR generado:', qrBase64);
                     return ApoderadoMapper.apoderadoEntityFromObject({ok:result.rows[0].response.ok,message:result.rows[0].response.message});
                 } 
                 return ApoderadoMapper.apoderadoEntityFromObject({ok:result.rows[0].response.ok,message:result.rows[0].response.message});
@@ -50,6 +54,7 @@ export class ApoderadoDatasourceImpl implements ApoderadoDatasource {
             
         } catch (error:any) {
             await pool.query('ROLLBACK');
+            // console.log(error)
             if(error instanceof CustomError){ throw error;}
             throw CustomError.internalServer();
         }

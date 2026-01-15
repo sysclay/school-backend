@@ -58,6 +58,7 @@ export class TurnoDatasourceImpl implements TurnoDatasource {
             }
             return TurnoMapper.findEntityFromObject({ok:false,message:'Error'})
         } catch (error) {
+            console.log(error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }

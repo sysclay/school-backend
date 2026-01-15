@@ -102,12 +102,14 @@ export class AsistenciaProgramadoDatasourceImpl implements AsistenciaProgramadoD
             ORDER BY fecha DESC LIMIT $2 OFFSET $3`;
 
             const result = await pool.query(query, value);
+            // console.log(result.rows)
 
             if(result){
                 return AsistenciaProgramadoMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }
             return AsistenciaProgramadoMapper.findEntityFromObject({ok:false,message:'Error'})
         } catch (error) {
+            console.log(error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }

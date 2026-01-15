@@ -64,6 +64,7 @@ export class ApoderadoController {
         this.apoderadoRepository.findAllColegio(id_colegio!).then(async data =>{
             res.json(data)
         }).catch(error => {
+            // console.log(error)
             this.handleError(error,res)
         });
     };

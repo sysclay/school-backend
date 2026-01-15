@@ -88,6 +88,7 @@ export class MatriculaController {
             id_seccion: id_seccion_query_str,
             id_alumno: id_alumno_query_str,
         }
+        // console.log('FILTER CONTROLLER::',query)
         const [error, filterMatriculaDto ] = FilterMatriculaDto.filter(query);
         if(error){ return res.status(400).json({message:error})};
         this.matriculaRepository.filter(filterMatriculaDto!,Number(page_query), Number(limit_query), )
@@ -105,8 +106,10 @@ export class MatriculaController {
                     hasPrevPage: data.page ? data.page > 1 : false,
                 }
             };
+            // console.log('RESPONSE CONTROLLER::',response.data)
             res.json(response)
         }).catch(error => {
+            // console.log(error)
             this.handleError(error,res)
         });
     }

@@ -83,8 +83,10 @@ export class ColegioController {
         const id_colegio = req.payload?.colegio.id_colegio;
         this.colegioRepository.findOne(id_colegio!)
         .then(async data =>{
+            console.log(data)
             res.json(data)
         }).catch(error => {
+            console.log(error)
             this.handleError(error,res)
         });
     }

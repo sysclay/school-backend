@@ -26,6 +26,7 @@ export class QR {
             // const qrDataUrl = await QRCode.toDataURL(texto);
             return filePath; // Retorna la ruta del archivo generado
         } catch (error) {
+            console.error('Error al generar QR:', error);
             throw error;
         }
     }
