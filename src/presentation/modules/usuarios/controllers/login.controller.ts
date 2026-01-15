@@ -15,7 +15,6 @@ export class LoginController {
 
 
     loginUsuario= (req:Request, res:Response):any=>{
-        console.log('sdsd')
         const [error, loginUsuarioDto ] = LoginUsuarioDto.login(req.body);
         if(error){ return res.status(400).json({ message: error})};
         this.loginRepository.login(loginUsuarioDto!).then(async data=>{
@@ -41,9 +40,7 @@ export class LoginController {
         // const [error, validarTokenDto ] = ValidarTokenDto.validar(req.body);
         // const token = req.headers.authorization?.split(' ')[1];
         const token = req.body.token;
-        // console.log('GE',token)
         // if(error){ return res.status(400).json({message:error})};
-        // console.log('TOKEN CONTROLLER::',token)
         this.loginRepository.validar(token!)
         .then(async data=>{
             return res.json(data)

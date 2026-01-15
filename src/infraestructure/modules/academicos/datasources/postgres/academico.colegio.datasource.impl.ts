@@ -35,7 +35,6 @@ export class AcademicoColegioDatasourceImpl implements AcademicoColegioDatasourc
         try {
             const pool = PostgresConnection.getPool();
             const result = await pool.query("SELECT * FROM v_list_anios_academicos_colegios AS response");
-            console.log(result)
             if(result){
                 return AcademicoColegioMapper.findEntityFromObject({ ok:true, data:result.rows,message:'Operación exitosa'})
             }
@@ -80,9 +79,6 @@ export class AcademicoColegioDatasourceImpl implements AcademicoColegioDatasourc
 
             const query = `SELECT * FROM v_list_anios_academicos_colegios WHERE ${conditions.join(' AND ')}`;
             const result = await pool.query(query, values);
-
-            // console.log(result.rows)
-
             if(result.rows.length>0){
                 return AcademicoColegioMapper.findEntityFromObject({
                     ok:true,
@@ -102,20 +98,16 @@ export class AcademicoColegioDatasourceImpl implements AcademicoColegioDatasourc
             const pool = PostgresConnection.getPool();
             const query = `SELECT * FROM v_list_anios_academicos_colegios WHERE id_academico_colegio=$1 AND estado=true`;
             const values = [id];
-
-            console.log('O::',id)
             await pool.query('BEGIN'); 
             const result = await pool.query(query, values); 
             await pool.query('COMMIT');
 
             if(result.rows.length>0){
-                // console.log('2222',result.rows)
                 return AcademicoColegioMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }
             return AcademicoColegioMapper.findEntityFromObject({ok:false,message:'Error'})
             
         } catch (error) {
-            // console.log(error)
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();
         }

@@ -95,7 +95,6 @@ export class AlumnoDatasourceImpl implements AlumnoDatasource {
             const result = await pool.query(query, [limit, offset]);
 
             if(result){
-                console.log(result.rows.length)
                 return AlumnoMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }
             return AlumnoMapper.findEntityFromObject({ok:false,message:'Error'})
@@ -144,7 +143,6 @@ export class AlumnoDatasourceImpl implements AlumnoDatasource {
                 index++;
             }
             queryS += ` LIMIT 5`;
-            // console.log(queryS, values)
             await pool.query('BEGIN'); 
             const result = await pool.query(queryS, values); 
             await pool.query('COMMIT'); 

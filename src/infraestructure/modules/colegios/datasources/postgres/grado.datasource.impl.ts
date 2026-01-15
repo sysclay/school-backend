@@ -43,7 +43,6 @@ export class GradoDatasourceImpl implements GradoDatasource {
         try {
             const pool = PostgresConnection.getPool();
             const numericId = Number(id);
-            console.log(numericId)
             if (isNaN(numericId)) {
                 return GradoMapper.gradoEntityFromObject({ok:false,message:'No encontrado'});
             }

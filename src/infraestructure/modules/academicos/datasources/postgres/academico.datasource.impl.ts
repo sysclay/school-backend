@@ -38,7 +38,6 @@ export class AcademicoDatasourceImpl implements AcademicoDatasource {
         try {
             const pool = PostgresConnection.getPool();
             const result = await pool.query("SELECT * FROM v_list_anio_academico AS response ORDER BY nombre desc");
-            // console.log(result)
             if(result){
                 return AcademicoMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
             }

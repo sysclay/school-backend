@@ -39,7 +39,6 @@ export class PersonaRolController {
 
         this.PersonaRolRepository.findAll(Number(page), Number(limit), role, search)
         .then(async data =>{
-            console.log('FIND::',page)
             // Return pagination response with metadata
             const response = {
                 ok: data.ok,

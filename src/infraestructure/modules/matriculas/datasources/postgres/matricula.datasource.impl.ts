@@ -160,7 +160,6 @@ export class MatriculaDatasourceImpl implements MatriculaDatasource {
             const total = Number(countResult.rows[0].total);
             const totalPages = Math.ceil(total / limit);
 
-            // console.log(dataResult.rows)
             return MatriculaMapper.findEntityFromObject({ 
                 ok: true, 
                 data: dataResult.rows, 
@@ -172,7 +171,6 @@ export class MatriculaDatasourceImpl implements MatriculaDatasource {
             });
         } catch (error: any) {
             // await pool.query('ROLLBACK');
-            // console.log(error)
             if (error instanceof CustomError) { throw error; }
             throw CustomError.internalServer();
         }

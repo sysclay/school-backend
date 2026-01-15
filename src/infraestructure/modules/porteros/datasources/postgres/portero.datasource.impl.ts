@@ -41,11 +41,7 @@ export class PorteroDatasourceImpl implements PorteroDatasource {
             const result = await pool.query(query, values); 
             await pool.query('COMMIT');
             if(result.rows.length>0){
-            // if(true) {
                 if(result.rows[0].response.ok){
-                    // const id_portero = result.rows[0].response.data.id_portero;
-                    // const qrBase64 = await QR.generate(id_portero,id_portero)
-                    // console.log('QR generado:', qrBase64);
                     return PorteroMapper.porteroEntityFromObject({ok:result.rows[0].response.ok,message:result.rows[0].response.message});
                 } 
                 return PorteroMapper.porteroEntityFromObject({ok:result.rows[0].response.ok,message:result.rows[0].response.message});
@@ -54,7 +50,6 @@ export class PorteroDatasourceImpl implements PorteroDatasource {
             
         } catch (error:any) {
             await pool.query('ROLLBACK');
-            // console.log(error)
             if(error instanceof CustomError){ throw error;}
             throw CustomError.internalServer();
         }
@@ -149,7 +144,6 @@ export class PorteroDatasourceImpl implements PorteroDatasource {
                 index++;
             }
             queryS += ` LIMIT 5`;
-            // console.log(queryS, values)
             await pool.query('BEGIN'); 
             const result = await pool.query(queryS, values); 
             await pool.query('COMMIT'); 
