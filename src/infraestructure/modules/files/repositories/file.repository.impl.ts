@@ -3,6 +3,10 @@ import { FileDatasource, FileEntityOu, FileRepository, RegisterFileDto, UpdateFi
 export class FileRepositoryImpl implements FileRepository {
     constructor(private readonly FileDatasource: FileDatasource) {}
 
+    registerCloudinary(id:string,registerFileDto: RegisterFileDto): Promise<FileEntityOu> {
+        return this.FileDatasource.registerCloudinary(id,registerFileDto);
+    }
+
     register(registerFileDto: RegisterFileDto, by: string): Promise<FileEntityOu> {
         return this.FileDatasource.register(registerFileDto, by);
     }

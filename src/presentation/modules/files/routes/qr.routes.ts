@@ -15,6 +15,7 @@ export class QRRoutes {
 
         // Solo imágenes
         // router.post('/register-image',authMiddleware, uploadImages('../../public/imagen/persona').single('file'), controller.registerFile);
+        router.post('/save/:filename',authMiddleware, controller.saveFilenameQR);
         router.get('/find/:filename',authMiddleware, controller.findFileByFilename);
         // router.put('/update/:filename', authMiddleware, uploadImages('../../public/imagen/persona').single('file'), controller.updateFile);
         // router.delete('/delete/:filename',authMiddleware, controller.deleteFile);

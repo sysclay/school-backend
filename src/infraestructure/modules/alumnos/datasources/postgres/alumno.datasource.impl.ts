@@ -6,6 +6,7 @@ import { AlumnoMapper } from "../../mappers/alumno.mapper.js";
 import { QR } from "../../../../../config/index.js";
 import { Validators } from "../../../../../utils/validators.js";
 import { PostgresConnection } from "../../../../database/index.js";
+import { CLOUDINARY } from "../../../../../config/cloudinary.js";
 export class AlumnoDatasourceImpl implements AlumnoDatasource { 
 
     async register(registerAlumnoDto: RegisterAlumnoDto, by:string): Promise<AlumnoEntityOu>{
@@ -47,12 +48,14 @@ export class AlumnoDatasourceImpl implements AlumnoDatasource {
                     const id_alumno = result.rows[0].response.data.id_alumno;
                     const valueQR = {
                         texto:id_alumno,
-                        filename:id_alumno,
+                        filename:`qr-${id_alumno}`,
                     }
-                    const {filename,path,uri} = await QR.generate(valueQR);
+                    // 903 341 410
+                     const {public_id,bytes,original_filename,secure_url,format,resource_type,created_at} = await CLOUDINARY.cloudinaryQR(valueQR);
+                    // const {filename,path,uri} = await QR.generate(valueQR);
                     // const qrUri = `/uploads/qr/${qrFileName}`; // o URL pública si usas S3/Cloud
                     const queryU = `UPDATE tbl_alumnos SET qr_uri=$1, qr_code=$2 where cod=$3`;
-                    const valuesU = [ path,filename,id_alumno];
+                    const valuesU = [ secure_url,public_id,id_alumno];
                     await pool.query(queryU, valuesU);
 
                     return AlumnoMapper.alumnoEntityFromObject({ok:result.rows[0].response.ok,message:result.rows[0].response.message});
@@ -172,14 +175,15 @@ export class AlumnoDatasourceImpl implements AlumnoDatasource {
             if(result.rowCount===1){
                 const valueQR = {
                     texto:id,
-                    filename:`myqr-${id}`,
+                    filename:`qr-${id}`,
                 }
-                const {filename,path,uri} = await QR.generate(valueQR);
+                // const {filename,path,uri} = await QR.generate(valueQR);
+                const {public_id,bytes,original_filename,secure_url,format,resource_type,created_at} = await CLOUDINARY.cloudinaryQR(valueQR);
                 const query = `SELECT update_alumno($1,$2,$3,$4) AS response`;
                 const values = [
                     id,
-                    path || null,
-                    filename || null,
+                    secure_url || null,
+                    public_id || null,
                     typeof estado === 'boolean' ? estado : null
                 ];
                 const res = await pool.query(query, values);

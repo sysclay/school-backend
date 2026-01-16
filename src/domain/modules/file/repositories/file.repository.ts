@@ -3,6 +3,7 @@ import { UpdateFileDto } from "../dtos/update.file.dto.js";
 import { FileEntityOu } from "../entities/ou/file.entity.js";
 
 export abstract class FileRepository {
+    abstract registerCloudinary(id:string,registerFileDto: RegisterFileDto): Promise<FileEntityOu>;
     abstract register(registerFileDto: RegisterFileDto, by: string): Promise<FileEntityOu>;
     abstract findByFilename(filename: string): Promise<FileEntityOu>;
     abstract update(updateFileDto: UpdateFileDto, by: string): Promise<FileEntityOu>;

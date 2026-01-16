@@ -66,9 +66,8 @@ export class ApoderadoAlumnoDatasourceImpl implements ApoderadoAlumnoDatasource 
         try {
 
             const { id_persona} = FilterApoderadoAlumnoDto;
-
             const pool = PostgresConnection.getPool();
-            const query = `SELECT*FROM v_list_apoderado_alumnos WHERE id_persona=$1`
+            const query = `SELECT*FROM v_list_apoderado_alumnos WHERE id_persona_apoderado=$1`
             const values = [id_persona]
             const result = await pool.query(query,values);
             if(result){

@@ -1,5 +1,7 @@
 export class ApoderadoAlumnoEntity {
     constructor(
+        public id_persona_apoderado: string,
+        public id_persona_alumno: string,
         public id_apoderado: string,
         public id_apoderado_alumno: string,
         public id_alumno: string,

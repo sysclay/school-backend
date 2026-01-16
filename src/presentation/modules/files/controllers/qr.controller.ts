@@ -18,15 +18,31 @@ export class QRController {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 
+    saveFilenameQR = (req: AuthRequest, res: Response) => {
+        const { filename } = req.params;
+        this.QRRepository.saveFilenameQR(filename).then(data => {
+            // if (!data.ok || !data.data) {
+                return res.json(data)
+            // }
+            // Envía el archivo como respuesta binaria
+            // res.sendFile(data.data.path);
+            // res.json(data);
+            }
+        )
+        .catch(error => {
+            this.handleError(error, res)
+        });
+    };
+
     findFileByFilename = (req: AuthRequest, res: Response) => {
         const { filename } = req.params;
         this.QRRepository.findByFilename(filename)
         .then(data => {
-                if (!data.ok || !data.data) {
+                // if (!data.ok || !data.data) {
                     return res.json(data)
-                }
+                // }
                 // Envía el archivo como respuesta binaria
-                res.sendFile(data.data.path);
+                // res.sendFile(data.data.path);
             }
         )
         .catch(error => this.handleError(error, res));

@@ -18,6 +18,20 @@ export class FileController {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 
+     registerCloudinary = (req: AuthRequest, res: Response):any => {
+        const id=req.body.identity
+        const [error, registerFileDto] = RegisterFileDto.create({
+            filename: req.file?.fieldname,
+            mimetype: req.file?.mimetype,
+            size: req.file?.size,
+            buffer: req.file?.buffer, // si lo necesitas
+        });
+        if (error) return res.status(400).json({ message: error });
+        this.FileRepository.registerCloudinary(id,registerFileDto!)
+            .then(data => res.json(data))
+            .catch(error => this.handleError(error, res));
+    };
+
     registerFile = (req: AuthRequest, res: Response):any => {
         const [error, registerFileDto] = RegisterFileDto.create({
             filename: req.file?.filename,
@@ -37,11 +51,11 @@ export class FileController {
         const { filename } = req.params;
         this.FileRepository.findByFilename(filename)
         .then(data => {
-                if (!data.ok || !data.data) {
+                // if (!data.ok || !data.data) {
                     return res.json(data)
-                }
+                // }
                 // Envía el archivo como respuesta binaria
-                res.sendFile(data.data.path);
+                // res.sendFile(data.data.path);
             }
         )
         .catch(error => this.handleError(error, res));
@@ -69,3 +83,6 @@ export class FileController {
             .catch(error => this.handleError(error, res));
     };
 }
+
+
+// 2, 1, 2, 3, 1, 3, 2, 3, 

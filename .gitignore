@@ -20,11 +20,15 @@ yarn-error.log*
 dist/
 db/
 src/secret/
+
+# Ignorar todas las imágenes subidas
 src/public/imagen/alumno/*
 src/public/imagen/persona/*
 
-touch src/public/imagen/alumno/.gitkeep
-touch src/public/imagen/persona/.gitkeep
+# Pero mantener el marcador .gitkeep
+!src/public/imagen/alumno/.gitkeep
+!src/public/imagen/persona/.gitkeep
+
 
 
 

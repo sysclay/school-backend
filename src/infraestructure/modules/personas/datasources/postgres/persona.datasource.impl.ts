@@ -43,7 +43,8 @@ export class PersonaDatasourceImpl implements PersonaDatasource {
             if(result.rows.length>0){
                 return PersonaMapper.PersonaEntityFromObject({
                     ok:result.rows[0].response.ok,
-                    message:result.rows[0].response.message
+                    message:result.rows[0].response.message,
+                    data:result.rows[0].response.data
                 });
             }
 

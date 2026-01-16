@@ -51,7 +51,6 @@ export class NotificacionDatasourceImpl implements NotificacionDatasource {
             }));
 
             const message1 = await getMessaging().sendEach(messages);
-            // console.log('okkkkkkkkkkkkkkk',message1)
             return NotificacionMapper.findEntityFromObject({ok:true,message:'Operación exitosa'});
 
         } catch (error:any) {

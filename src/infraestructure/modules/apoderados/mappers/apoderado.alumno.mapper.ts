@@ -12,6 +12,8 @@ export class ApoderadoAlumnoMapper {
             // if(!data.nombre_institucion){ throw CustomError.badRequest('Missing nombre'); }
             // if(!data.correo){ throw CustomError.badRequest('Missing apellido'); }
             const _data = new ApoderadoAlumnoEntity (
+                data.id_persona_apoderado,
+                data.id_persona_alumno,
                 data.id_apoderado,
                 data.id_apoderado_alumno,
                 data.id_alumno,
@@ -48,6 +50,8 @@ export class ApoderadoAlumnoMapper {
 
         if(data){
             const _data = new ApoderadoAlumnoEntity (
+                data.id_persona_apoderado,
+                data.id_persona_alumno,
                 data.id_apoderado,
                 data.id_apoderado_alumno,
                 data.id_alumno,
@@ -83,8 +87,10 @@ export class ApoderadoAlumnoMapper {
         const {ok,data,message} = object;
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
-                const {id_apoderado,id_apoderado_alumno,id_alumno,tipo_doc,nro_doc,nombre,paterno,materno,genero,foto,correo,telefono,direccion,qr} = object;   
+                const {id_persona_apoderado,id_persona_alumno,id_apoderado,id_apoderado_alumno,id_alumno,tipo_doc,nro_doc,nombre,paterno,materno,genero,foto,correo,telefono,direccion,qr} = object;   
                 return new ApoderadoAlumnoEntity(
+                    id_persona_apoderado,
+                    id_persona_alumno,
                     id_apoderado,
                     id_apoderado_alumno,
                     id_alumno,

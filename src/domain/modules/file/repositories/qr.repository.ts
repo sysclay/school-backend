@@ -4,6 +4,7 @@ import { FileEntityOu } from "../entities/ou/file.entity.js";
 
 export abstract class QRRepository {
     // abstract register(registerFileDto: RegisterFileDto, by: string): Promise<FileEntityOu>;
+    abstract saveFilenameQR(filename:string): Promise<FileEntityOu>;
     abstract findByFilename(filename: string): Promise<FileEntityOu>;
     // abstract update(updateFileDto: UpdateFileDto, by: string): Promise<FileEntityOu>;
     // abstract delete(filename: string, by: string): Promise<FileEntityOu>;

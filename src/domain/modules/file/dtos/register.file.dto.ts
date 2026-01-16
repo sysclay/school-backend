@@ -4,7 +4,7 @@ export class RegisterFileDto {
         public filename: string,
         public mimetype: string,
         public size: number,
-        public buffer?: Buffer // si lo necesitas en memoria
+        public buffer: Buffer // si lo necesitas en memoria
     ){}
 
     static create(object:{[key:string]:any}):[string?,RegisterFileDto?]{

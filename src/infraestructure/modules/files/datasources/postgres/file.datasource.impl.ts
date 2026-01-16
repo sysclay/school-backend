@@ -6,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from 'url';
 import { FOTO } from "../../../../../config/file.foto.js";
+import { CLOUDINARY } from "../../../../../config/cloudinary.js";
 
 export class FileDatasourceImpl implements FileDatasource {
     private basePath: string;
@@ -14,6 +15,36 @@ export class FileDatasourceImpl implements FileDatasource {
         const __filename = fileURLToPath(import.meta.url);
         const __dirname = path.dirname(__filename);
         this.basePath = path.join(__dirname, '../../../../../public/imagen/persona');
+    }
+
+    async registerCloudinary(id:string,registerFileDto:RegisterFileDto): Promise<FileEntityOu> {
+        try {
+
+            const {filename, mimetype,size,buffer} = registerFileDto;
+            const file = {
+                filename:`foto-${id}`,
+                buffer:buffer,
+            }
+            const result = await CLOUDINARY.cloudinaryFOTO(file);
+
+            const data = {
+                filename: result.original_filename,
+                path: result.secure_url,
+                mimetype: result.format,
+                size: result.bytes,
+                public_id: result.public_id,
+                created_at: result.created_at
+            };
+
+            return FileMapper.FileEntityFromObject({
+                ok: true,
+                data: data,
+                message: 'File guardada correctamente'
+            });
+        } catch (error) {
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServer();
+        }
     }
 
     async register(registerFileDto: RegisterFileDto): Promise<FileEntityOu> {
@@ -25,7 +56,7 @@ export class FileDatasourceImpl implements FileDatasource {
                 mimetype: registerFileDto.mimetype,
                 size: registerFileDto.size
             }
-            // console.log(data)
+            console.log(data)
             return FileMapper.FileEntityFromObject({
                 ok: true,
                 data: data,
@@ -39,28 +70,49 @@ export class FileDatasourceImpl implements FileDatasource {
 
     async findByFilename(filename: string): Promise<FileEntityOu> {
         try {
-            const filePath = path.join(this.basePath, filename);
-        
-            if (!fs.existsSync(filePath)) {
-                return FileMapper.FileEntityFromObject({ 
-                    ok: false, 
-                    message: 'Archivo no encontrado' 
+            const result = await CLOUDINARY.cloudinaryFotoRead(`foto-${filename}`);
+            if (!result) {
+                return FileMapper.FileEntityFromObject({
+                    ok: false,
+                    message: 'Archivo no encontrado'
                 });
             }
-            const stats = fs.statSync(filePath);
+            const data = {
+                filename: result.original_filename,
+                path: result.secure_url,
+                mimetype: result.format,
+                size: result.bytes,
+                public_id: result.public_id,
+                created_at: result.created_at,
+                resource_type: result.resource_type
+            };
             return FileMapper.FileEntityFromObject({
                 ok: true,
-                data: {
-                    filename,
-                    path: filePath,
-                    mimetype: '', // Puedes obtener el mimetype si lo guardaste
-                    size: stats.size
-                },
+                data,
                 message: 'Operación exitosa'
             });
 
+            // const filePath = path.join(this.basePath, filename);
+        
+            // if (!fs.existsSync(filePath)) {
+            //     return FileMapper.FileEntityFromObject({ 
+            //         ok: false, 
+            //         message: 'Archivo no encontrado' 
+            //     });
+            // }
+            // const stats = fs.statSync(filePath);
+            // return FileMapper.FileEntityFromObject({
+            //     ok: true,
+            //     data: {
+            //         filename,
+            //         path: filePath,
+            //         mimetype: '', // Puedes obtener el mimetype si lo guardaste
+            //         size: stats.size
+            //     },
+            //     message: 'Operación exitosa'
+            // });
+
         } catch (error) {
-            
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServer();
         }
