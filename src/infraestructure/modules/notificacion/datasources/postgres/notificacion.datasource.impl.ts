@@ -9,14 +9,14 @@ import { NotificacionMapper } from "../../mappers/notificacion.mapper.js";
 export class NotificacionDatasourceImpl implements NotificacionDatasource { 
 
     async register(registerNotificacionDto: RegisterNotificacionDto): Promise<NotificacionEntityOu>{
-        const { token_fcm,message, title, hora} = registerNotificacionDto;
+        const { id_alumno,message, title, hora} = registerNotificacionDto;
         const pool = PostgresConnection.getPool();
         try {
 
             await pool.query('BEGIN'); 
             const anio = ((new Date()).getFullYear()).toString();
             const queryS = `SELECT*FROM v_list_notificacion_apoderado WHERE id_alumno=$1 AND anio=$2 AND active=true`
-            const result = await pool.query(queryS, [token_fcm,anio]);
+            const result = await pool.query(queryS, [id_alumno,anio]);
             await pool.query('COMMIT');
             if(result.rowCount===0){
                 return NotificacionMapper.findEntityFromObject({ok:false,message:'El alumno no tiene apoderados registrados'});
