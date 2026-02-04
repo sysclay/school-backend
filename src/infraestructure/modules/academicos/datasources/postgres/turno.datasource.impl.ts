@@ -1,5 +1,5 @@
 
-import { CustomError, TurnoDatasource, TurnoEntityOu } from "../../../../../domain/index.js";
+import { CustomError, RegisterTurnoDto, TurnoDatasource, TurnoEntityOu } from "../../../../../domain/index.js";
 
 import { PostgresConnection } from "../../../../../infraestructure/database/index.js";
 import { TurnoMapper } from "../../mappers/turno.mapper.js";
@@ -7,31 +7,31 @@ import { TurnoMapper } from "../../mappers/turno.mapper.js";
 export class TurnoDatasourceImpl implements TurnoDatasource { 
 
 
-    // async register(registerAsignadoDto: RegisterAsignadoDto, by: string): Promise<AsignadoEntityOu> {
-    //     const { id_asigna,id_asignado} = registerAsignadoDto;
-    //     const pool = PostgresConnection.getPool();
-    //     try {
+    async register(registerTurnoDto: RegisterTurnoDto, by: string): Promise<TurnoEntityOu> {
+        const { nombre, descripcion} = registerTurnoDto;
+        const pool = PostgresConnection.getPool();
+        try {
             
-    //         const query = `SELECT insertar_rol_asignado (p_id_asigna:=$1, p_id_asignado:=$2, p_by:=$3 ) AS response`;
-    //         const values = [ id_asigna,id_asignado,by];
+            const query = `SELECT insertar_turno (p_turno:=$1, p_desc:=$2 ) AS response`;
+            const values = [ nombre,descripcion];
 
-    //         await pool.query('BEGIN'); 
-    //         const result = await pool.query(query, values); 
-    //         await pool.query('COMMIT'); 
+            await pool.query('BEGIN'); 
+            const result = await pool.query(query, values); 
+            await pool.query('COMMIT'); 
 
-    //         if(result.rows.length>0){
-    //             return AsignadoMapper.EntityFromObject({
-    //                 ok:result.rows[0].response.ok,
-    //                 message:result.rows[0].response.message 
-    //             });
-    //         }
+            if(result.rows.length>0){
+                return TurnoMapper.EntityFromObject({
+                    ok:result.rows[0].response.ok,
+                    message:result.rows[0].response.message 
+                });
+            }
 
-    //         return AsignadoMapper.EntityFromObject({ok:false,message:'Error'});
-    //     } catch (error) {
-    //         if(error instanceof CustomError){ throw error; }
-    //         throw CustomError.internalServer();
-    //     }
-    // }
+            return TurnoMapper.EntityFromObject({ok:false,message:'Error'});
+        } catch (error) {
+            if(error instanceof CustomError){ throw error; }
+            throw CustomError.internalServer();
+        }
+    }
 
     async findAll():Promise<TurnoEntityOu>{
         try {

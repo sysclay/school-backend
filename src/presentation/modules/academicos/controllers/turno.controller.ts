@@ -22,17 +22,17 @@ export class TurnoController {
         return res.status(500).json({error:'Internal Server Error'});
     }
 
-    // register= (req:AuthRequest, res:Response):any=>{
-    //     const [error, registerRolDto ] = RegisterAsignadoDto.create(req.body);
-    //     const by = req?.payload?.id_usuario;
-    //     if(error){ return res.status(400).json({message:error})};
-    //     this.asignadoRepository.register(registerRolDto!,by!)
-    //     .then(async data=>{
-    //         return res.json(data)
-    //     }).catch( error => {
-    //         return this.handleError(error,res)
-    //     });
-    // };
+    register= (req:AuthRequest, res:Response):any=>{
+        const [error, registerTurnoDto ] = RegisterTurnoDto.create(req.body);
+        const by = req?.payload?.id_usuario;
+        if(error){ return res.status(400).json({message:error})};
+        this.TurnoRepository.register(registerTurnoDto!,by!)
+        .then(async data=>{
+            return res.json(data)
+        }).catch( error => {
+            return this.handleError(error,res)
+        });
+    };
 
     findAll = (req:Request, res: Response)=>{
 

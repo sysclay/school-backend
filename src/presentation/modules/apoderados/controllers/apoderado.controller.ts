@@ -60,6 +60,7 @@ export class ApoderadoController {
         const { id_colegio:id_colegio_query, page, limit } = req?.query as { id_colegio?: string, page?:string, limit?:string };
 
         const id_colegio = id_colegio_payload || id_colegio_query;
+        console.log('id_colegio', id_colegio);
 
         this.apoderadoRepository.findAllColegio(id_colegio!).then(async data =>{
             res.json(data)

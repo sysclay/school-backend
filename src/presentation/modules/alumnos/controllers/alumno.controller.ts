@@ -48,22 +48,20 @@ export class AlumnoController {
     find = (req:AuthRequest, res: Response)=>{
         const by = req?.payload;
         const page = Number.isNaN(Number(req.query.page)) || !req.query.page ? 1 : Number(req.query.page);
-        const limit = Number.isNaN(Number(req.query.limit)) || !req.query.limit ? 10 : Number(req.query.limit);
+        const limit = Number.isNaN(Number(req.query.limit)) || !req.query.limit ? 100 : Number(req.query.limit);
         this.AlumnoRepository.findAll(page,limit).then(async data =>{
-
-            // res.json(data)
             const response = {
                 ok: data.ok,
                 message: data.message,
                 data: data.data,
-                // pagination: {
-                    // total: data.data. || 0,
-                    // page: data.page || page,
-                    // limit: data.limit || limit,
-                    // totalPages: data.totalPages || 0,
-                    // hasNextPage: data.page && data.totalPages ? data.page < data.totalPages : false,
-                    // hasPrevPage: data.page ? data.page > 1 : false,
-                // }
+                pagination: {
+                    total: data.total || 0,
+                    page: data.page || page,
+                    limit: data.limit || limit,
+                    totalPages: data.totalPages || 0,
+                    hasNextPage: data.page && data.totalPages ? data.page < data.totalPages : false,
+                    hasPrevPage: data.page ? data.page > 1 : false,
+                }
             };
             res.json(response);
         }).catch(error => {

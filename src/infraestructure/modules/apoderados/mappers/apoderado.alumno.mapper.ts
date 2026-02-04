@@ -17,6 +17,7 @@ export class ApoderadoAlumnoMapper {
                 data.id_apoderado,
                 data.id_apoderado_alumno,
                 data.id_alumno,
+                data.id_colegio,
                 data.tipo_doc,
                 data.nro_doc,
                 data.nombre,
@@ -28,6 +29,7 @@ export class ApoderadoAlumnoMapper {
                 data.telefono,
                 data.direccion,
                 data.qr,
+                data.qr_uri,
             );   
             return new ApoderadoAlumnoEntityOu(
                 ok,
@@ -55,6 +57,7 @@ export class ApoderadoAlumnoMapper {
                 data.id_apoderado,
                 data.id_apoderado_alumno,
                 data.id_alumno,
+                data.id_colegio,
                 data.tipo_doc,
                 data.nro_doc,
                 data.nombre,
@@ -66,6 +69,7 @@ export class ApoderadoAlumnoMapper {
                 data.telefono,
                 data.direccion,
                 data.qr,
+                data.qr_uri,
             );
 
             return new ApoderadoAlumnoEntityOu(
@@ -87,13 +91,14 @@ export class ApoderadoAlumnoMapper {
         const {ok,data,message} = object;
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
-                const {id_persona_apoderado,id_persona_alumno,id_apoderado,id_apoderado_alumno,id_alumno,tipo_doc,nro_doc,nombre,paterno,materno,genero,foto,correo,telefono,direccion,qr} = object;   
+                const {id_persona_apoderado,id_persona_alumno,id_apoderado,id_apoderado_alumno,id_alumno,id_colegio,tipo_doc,nro_doc,nombre,paterno,materno,genero,foto,correo,telefono,direccion,qr,qr_uri} = object;   
                 return new ApoderadoAlumnoEntity(
                     id_persona_apoderado,
                     id_persona_alumno,
                     id_apoderado,
                     id_apoderado_alumno,
                     id_alumno,
+                    id_colegio,
                     tipo_doc,
                     nro_doc,
                     nombre,
@@ -105,6 +110,7 @@ export class ApoderadoAlumnoMapper {
                     telefono,
                     direccion,
                     qr,
+                    qr_uri,
                 )
             })
             return new ApoderadoAlumnoEntityOu(

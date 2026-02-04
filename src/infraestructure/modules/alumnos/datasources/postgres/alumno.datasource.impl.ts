@@ -95,13 +95,38 @@ export class AlumnoDatasourceImpl implements AlumnoDatasource {
         try {
             const pool = PostgresConnection.getPool();
             const offset = (page - 1) * limit;
-            const query = `SELECT*FROM v_list_alumnos LIMIT $1 OFFSET $2`
-            const result = await pool.query(query, [limit, offset]);
 
-            if(result){
-                return AlumnoMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})
-            }
-            return AlumnoMapper.findEntityFromObject({ok:false,message:'Error'})
+            const values: any[] = [];
+            values.push(limit);
+            const limitIndex = values.length;
+            values.push(offset);
+            const offsetIndex = values.length;
+
+
+            const query = `SELECT*FROM v_list_alumnos ORDER BY created_at LIMIT $${limitIndex} OFFSET $${offsetIndex}`
+            const countQuery = `SELECT COUNT(*) AS total FROM v_list_alumnos`;
+
+            const [dataResult, countResult] = await Promise.all([
+                pool.query(query, values),
+                pool.query(countQuery, values.slice(0, values.length - 2))
+            ]);
+
+            const total = Number(countResult.rows[0].total);
+            const totalPages = Math.ceil(total / limit);
+
+            const result = await pool.query(query, [limit, offset]);
+            // if(result){
+            return AlumnoMapper.findEntityFromObject({
+                ok:true, 
+                data:result.rows,
+                message:'Operación exitosa',
+                total,
+                page,
+                limit,
+                totalPages
+            })
+            // }
+            // return AlumnoMapper.findEntityFromObject({ok:false,message:'Error'})
         } catch (error) {
             if(error instanceof CustomError){ throw error; }
             throw CustomError.internalServer();

@@ -45,14 +45,14 @@ export class ApoderadoAlumnoController {
         this.apoderadoalumnoRepository.findAllApoderado(id_apoderado!).then(async data =>{
             res.json(data)
         }).catch(error => {
-            console.log(error)
             this.handleError(error,res)
         });
     };
 
     filter= (req:Request, res:Response):any=>{
         const id_persona = req.query.id_persona as string;
-        const data = { id_persona }
+        const id_colegio = req.query.id_colegio as string;
+        const data = { id_persona, id_colegio }
         const [error, filterApoderadoAlumnoDto ] = FilterApoderadoAlumnoDto.filter(data);
         
         if(error){ return res.status(400).json({message:error})};

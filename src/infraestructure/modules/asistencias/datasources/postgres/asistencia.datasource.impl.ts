@@ -9,15 +9,15 @@ import { AsistenciaMapper } from "../../mappers/asistencia.mapper.js";
 export class AsistenciaDatasourceImpl implements AsistenciaDatasource { 
 
     async register(registerAsistenciaDto: RegisterAsistenciaDto,by:string): Promise<AsistenciaEntityOu>{
-        const { id_alumno, justificacion } = registerAsistenciaDto;
+        const { id_colegio,id_alumno, justificacion } = registerAsistenciaDto;
         const pool = PostgresConnection.getPool();
         try {
-            const values = [id_alumno, justificacion,  by ];
-            const query = `SELECT insertar_asistencia(p_id_alu:=$1,p_jus:=$2,p_by:=$3) AS response`;
+            const values = [id_colegio,id_alumno, justificacion,  by ];
+            const query = `SELECT insertar_asistencia(p_id_col:=$1, p_id_alu:=$2,p_jus:=$3,p_by:=$4) AS response`;
 
             await pool.query('BEGIN'); 
             const result = await pool.query(query, values); 
-            await pool.query('COMMIT'); 
+            await pool.query('COMMIT');
             if(result.rows.length>0){
                 return AsistenciaMapper.asistenciaEntityFromObject({
                     ok:result.rows[0].response.ok,
@@ -27,11 +27,10 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
                 });
             }
 
-
             return AsistenciaMapper.asistenciaEntityFromObject({ok:false,message:'Error'});
 
         } catch (error:any) {
-            console.log(error)
+            // console.log(error)
             await pool.query('ROLLBACK');
             if(error instanceof CustomError){
                 throw error;

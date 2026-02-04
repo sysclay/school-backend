@@ -10,6 +10,7 @@ export class AlumnoEntity {
         public telefono: string,
         public correo: string,
         public qr_code: string,
+        public qr_uri: string,
         public estado: boolean,
         public created_at: string,
     ){}
@@ -32,10 +33,10 @@ export class AlumnoEntityOu {
     }
 
         // Método para calcular el total de páginas
-    calculateTotalPages(): number {
-        if (this.total && this.limit) {
-            return Math.ceil(this.total / this.limit);
-        }
-        return 0;
-    }
+    // calculateTotalPages(): number {
+    //     if (this.total && this.limit) {
+    //         return Math.ceil(this.total / this.limit);
+    //     }
+    //     return 0;
+    // }
 }

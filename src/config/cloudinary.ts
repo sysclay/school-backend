@@ -79,6 +79,7 @@ export class CLOUDINARY {
 
                 // Buscar recurso en Cloudinary por public_id
                 const result = await cloudinary.api.resource(`qrcodes/${filename}`);
+                console.log('result', result);
 
                 const data = {
                     original_filename: result.original_filename,
@@ -92,6 +93,7 @@ export class CLOUDINARY {
                 return data
 
             } catch (error: any) {
+                console.log('error', error);
                 if (error.http_code === 404) return null
                 return null
                 // if (error instanceof CustomError) throw error;

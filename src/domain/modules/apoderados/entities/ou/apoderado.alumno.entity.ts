@@ -5,6 +5,7 @@ export class ApoderadoAlumnoEntity {
         public id_apoderado: string,
         public id_apoderado_alumno: string,
         public id_alumno: string,
+        public id_colegio: string,
         public tipo_doc: string,
         public nro_doc: string,
         public nombre: string,
@@ -16,6 +17,7 @@ export class ApoderadoAlumnoEntity {
         public telefono: string,
         public direccion: string,
         public qr: string,
+        public qr_uri: string,
         // public created_at: string,
     ){}
 }

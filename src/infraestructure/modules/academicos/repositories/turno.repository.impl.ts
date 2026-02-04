@@ -7,9 +7,9 @@ export class TurnoRepositoryImpl implements TurnoRepository {
         private readonly TurnoDatasource:TurnoDatasource,
     ){}
 
-    // register(registerTurnoDto: RegisterTurnoDto, by: string): Promise<TurnoEntityOu> {
-    //     return this.TurnoDatasource.register(registerTurnoDto,by);
-    // }
+    register(registerTurnoDto: RegisterTurnoDto, by: string): Promise<TurnoEntityOu> {
+        return this.TurnoDatasource.register(registerTurnoDto,by);
+    }
 
     findAll():Promise<TurnoEntityOu>{
         return this.TurnoDatasource.findAll();

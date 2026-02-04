@@ -7,7 +7,7 @@ import { AlumnoEntity, AlumnoEntityOu, CustomError } from "../../../../domain/in
 export class AlumnoMapper {
 
     static alumnoEntityFromObject(object:{[key:string]:any}){
-        const {ok,data,message} = object;
+        const {ok,data,message,total, page,limit,totalPages} = object;
         if(data!==undefined){
             // if(!data.nombre_institucion){ throw CustomError.badRequest('Missing nombre'); }
             // if(!data.correo){ throw CustomError.badRequest('Missing apellido'); }
@@ -22,6 +22,7 @@ export class AlumnoMapper {
                 data.telefono,
                 data.correo,
                 data.qr_code,
+                data.qr_uri,
                 data.estado,
                 data.created_at,
             );   
@@ -29,19 +30,27 @@ export class AlumnoMapper {
                 ok,
                 _data, 
                 message,
+                total,
+                page,
+                limit,
+                totalPages,
             );            
         }else{
             return new AlumnoEntityOu(
                 ok,
                 data, 
                 message,
+                total,
+                page,
+                limit,
+                totalPages,
             ); 
         }
     }
 
     static findByIdEntityFromObject(object:{ [key:string]:any}){
 
-        const {ok,data,message} = object;
+        const {ok,data,message,total, page,limit,totalPages} = object;
         var _data:any
 
         if(data){
@@ -56,6 +65,7 @@ export class AlumnoMapper {
                 data.telefono,
                 data.correo,
                 data.qr_code,
+                data.qr_uri,
                 data.estado,
                 data.created_at,
             );
@@ -63,6 +73,10 @@ export class AlumnoMapper {
                 ok,
                 _data,
                 message,
+                total,
+                page,
+                limit,
+                totalPages,
             );
         }
 
@@ -70,15 +84,19 @@ export class AlumnoMapper {
             ok,
             _data,
             message,
+            total,
+            page,
+            limit,
+            totalPages,
         );
     }
 
 
     static findEntityFromObject(object:{[key:string]:any}){
-        const {ok,data,message} = object;
+        const {ok,data,message,total, page,limit,totalPages} = object;
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
-                const {id_colegio,colegio,id_alumno,qr_code,nro_doc,nombre,paterno,materno,telefono,correo,estado,created_at} = object;   
+                const {id_colegio,colegio,id_alumno,qr_code,qr_uri,nro_doc,nombre,paterno,materno,telefono,correo,estado,created_at} = object;   
                 return new AlumnoEntity(
                     id_colegio,
                     colegio,
@@ -90,6 +108,7 @@ export class AlumnoMapper {
                     telefono,
                     correo,
                     qr_code,
+                    qr_uri,
                     estado,
                     created_at,
                 )
@@ -99,12 +118,20 @@ export class AlumnoMapper {
                 ok,
                 _data, 
                 message,
+                total,
+                page,
+                limit,
+                totalPages,
             )
         }else{
             return new AlumnoEntityOu(
                 ok,
                 data, 
                 message,
+                total,
+                page,
+                limit,
+                totalPages,
             )
         }
 

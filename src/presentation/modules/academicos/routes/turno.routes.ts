@@ -16,7 +16,7 @@ export class TurnoRoutes {
         const controller = new TurnoController(TurnoRepository);
 
         // router.get('/listar', authMiddleware, authorizeRoles(Permissiones.CREATE, Modulos.PermisoS ),controller.findPermiso);
-        // router.post('/register', authMiddleware, authorizeRoles(Permissiones.CREATE, Modulos.PERMISOS ),controller.registerPermiso);
+        router.post('/register', authMiddleware, authorizeRoles(Permissiones.CREATE, Modulos.TURNOS ),controller.register);
         router.get('/list', authMiddleware, authorizeRoles(Permissiones.LIST_ALL, Modulos.TURNOS ),controller.findAll);
         router.get('/list-active', authMiddleware, authorizeRoles(Permissiones.READ_OTHERS, Modulos.TURNOS ),controller.findAllActive);
         router.get('/list-active/:id', authMiddleware, authorizeRoles(Permissiones.READ_OTHERS, Modulos.TURNOS ),controller.findById);

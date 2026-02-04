@@ -65,10 +65,10 @@ export class ApoderadoAlumnoDatasourceImpl implements ApoderadoAlumnoDatasource 
     async filterAll(FilterApoderadoAlumnoDto:FilterApoderadoAlumnoDto):Promise<ApoderadoAlumnoEntityOu>{
         try {
 
-            const { id_persona} = FilterApoderadoAlumnoDto;
+            const { id_persona, id_colegio} = FilterApoderadoAlumnoDto;
             const pool = PostgresConnection.getPool();
-            const query = `SELECT*FROM v_list_apoderado_alumnos WHERE id_persona_apoderado=$1`
-            const values = [id_persona]
+            const query = `SELECT*FROM v_list_apoderado_alumnos WHERE id_persona_apoderado=$1 AND id_colegio=$2`
+            const values = [id_persona, id_colegio]
             const result = await pool.query(query,values);
             if(result){
                 return ApoderadoAlumnoMapper.findEntityFromObject({ok:true, data:result.rows,message:'Operación exitosa'})

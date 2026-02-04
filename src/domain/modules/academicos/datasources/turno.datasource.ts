@@ -4,7 +4,7 @@ import { TurnoEntityOu } from "../entities/ou/turno.entity.js";
 
 export abstract class TurnoDatasource {
 
-    // abstract register(registerTurnoDto:RegisterTurnoDto): Promise<TurnoEntityOu>;
+    abstract register(registerTurnoDto:RegisterTurnoDto,by:string): Promise<TurnoEntityOu>;
     abstract findById(id:string):Promise<TurnoEntityOu>;
     abstract findAll():Promise<TurnoEntityOu>;
     abstract findAllActive():Promise<TurnoEntityOu>;
