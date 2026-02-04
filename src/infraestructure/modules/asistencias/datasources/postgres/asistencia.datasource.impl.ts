@@ -76,10 +76,10 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
 
     async update(id:string,updateAsistenciaDto:UpdateAsistenciaDto, by:string): Promise<AsistenciaEntityOu> {
         try {
-            const { id_alumno } = updateAsistenciaDto;
+            const { id_colegio,id_alumno } = updateAsistenciaDto;
             const pool = PostgresConnection.getPool();
-            const query = `SELECT update_asistencia(p_id_alu:=$1,p_by:=$2) AS response`;
-            const values = [id_alumno, by];
+            const query = `SELECT update_asistencia(p_id_col:=$1, p_id_alu:=$2,p_by:=$3) AS response`;
+            const values = [id_colegio,id_alumno, by];
             const result = await pool.query(query, values);
             if(result){
                 return AsistenciaMapper.findByIdEntityFromObject({
