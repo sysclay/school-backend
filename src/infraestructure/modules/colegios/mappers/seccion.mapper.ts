@@ -1,0 +1,94 @@
+// import { CustomError, SeccionEntity, SeccionEntityOu } from "../../domain/index.js";
+import { CustomError, SeccionEntity, SeccionEntityOu } from "../../../../domain/index.js";
+
+export class SeccionMapper {
+
+    static SeccionEntityFromObject(object:{[key:string]:any}){
+        const {ok,data,message} = object;
+        if(data!==undefined){
+            const _data = new SeccionEntity (
+                data.id_nivel,
+                data.id_grado,
+                data.id_seccion,
+                data.nivel,
+                data.seccion,
+                data.grado,
+                data.descripcion,
+                data.estado,
+            );   
+            return new SeccionEntityOu(
+                ok,
+                _data, 
+                message,
+            );            
+        }else{
+            return new SeccionEntityOu(
+                ok,
+                data, 
+                message,
+            ); 
+        }
+    }
+
+    static findByIdEntityFromObject(object:{ [key:string]:any}){
+
+        const {ok,data,message} = object;
+        var _data:any
+        
+        if(data){
+            const _data = new SeccionEntity (
+                data.id_nivel,
+                data.id_grado,
+                data.id_seccion,
+                data.nivel,
+                data.seccion,
+                data.grado,
+                data.descripcion,
+                data.estado,
+            );
+            return new SeccionEntityOu(
+                ok,
+                _data,
+                message,
+            );
+        }
+
+        return new SeccionEntityOu(
+            ok,
+            _data,
+            message,
+        );
+    }
+
+
+    static findEntityFromObject(object:{[key:string]:any}){
+        const {ok,data,message} = object;
+        if(data!==undefined) {
+            const _data = data.map((object:any)=>{
+                const {id_nivel,id_grado,id_seccion,nivel,grado,seccion,descripcion,estado} = object;
+                return new SeccionEntity(
+                    id_nivel,
+                    id_grado,
+                    id_seccion,
+                    nivel,
+                    seccion,
+                    grado,
+                    descripcion,
+                    estado,
+                )
+            })
+
+            return new SeccionEntityOu(
+                ok,
+                _data, 
+                message,
+            )
+        }else{
+            return new SeccionEntityOu(
+                ok,
+                data, 
+                message,
+            )
+        }
+    }
+}
