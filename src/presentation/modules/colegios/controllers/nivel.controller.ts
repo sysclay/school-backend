@@ -32,9 +32,11 @@ export class NivelController {
 
     findById = (req:Request, res:Response) =>{
        const { id } = req.params;
+
         if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
        this.nivelRepository.findById(id)
        .then( async data =>{
            res.json(data)
@@ -66,9 +68,11 @@ export class NivelController {
         const [error,updateNivelDto ] = UpdateNivelDto.update(req.body);
         if(error){ return res.status(400).json({message:error})};
         const by = req?.payload?.id_usuario;
+
         if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }        
+
         this.nivelRepository.updateAll(id,updateNivelDto!,by!).then( async data =>{
             res.json(data)
         }).catch(error => {

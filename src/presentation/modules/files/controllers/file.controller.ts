@@ -49,9 +49,11 @@ export class FileController {
 
     findFileByFilename = (req: AuthRequest, res: Response) => {
         const { filename } = req.params;
+
         if (typeof filename !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.FileRepository.findByFilename(filename)
         .then(data => {
                 // if (!data.ok || !data.data) {
@@ -81,9 +83,11 @@ export class FileController {
     deleteFile = (req: AuthRequest, res: Response) => {
         const { filename } = req.params;
         const by = req?.payload?.id_usuario;
+
         if (typeof filename !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.FileRepository.delete(filename, by!)
             .then(data => res.json(data))
             .catch(error => this.handleError(error, res));

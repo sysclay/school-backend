@@ -33,9 +33,10 @@ export class PersonaController {
     findById = (req:AuthRequest, res:Response) =>{
         const { id } = req.params;
         // const by = req?.payload?.id_usuario;
-                if (typeof id !== "string") { 
+        if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.personaRepository.findById(id!).then( async data =>{
             res.json(data)
         }).catch(error => {
@@ -56,9 +57,11 @@ export class PersonaController {
     findPersonaByNDoc = (req:AuthRequest, res:Response) =>{
         const { id } = req.params;
         // const { doc } = req.query as { doc:string }
-                if (typeof id !== "string") { 
+
+        if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.personaRepository.findByNDoc(id).then( async data =>{
             res.json(data)
         }).catch(error => {
@@ -95,9 +98,11 @@ export class PersonaController {
         const [error,updatePersonaDto ] = UpdatePersonaDto.update(req.body);
         if(error){ return res.status(400).json({message:error})};
         const by = req?.payload?.id_usuario;
+
         if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.personaRepository.updateById(id,updatePersonaDto!,by!).then( async data =>{
             res.json(data)
         }).catch(error => {

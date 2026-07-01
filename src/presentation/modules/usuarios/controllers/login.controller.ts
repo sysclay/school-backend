@@ -15,7 +15,9 @@ export class LoginController {
 
 
     loginUsuario= (req:Request, res:Response):any=>{
+
         const [error, loginUsuarioDto ] = LoginUsuarioDto.login(req.body)
+
         if(error){ return res.status(400).json({ message: error})};
         this.loginRepository.login(loginUsuarioDto!).then(async data=>{
             return res.json(data)

@@ -11,7 +11,10 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
         // const payload = await JwtAdapter.verifyToken(token);
         const payload = await JwtAdapter.decryptWithRSA(token);
 
+<<<<<<< HEAD
         // console.log('TOKEN::', token, payload)
+=======
+>>>>>>> 3fcd7a4ca64f408e78613fcb12a85c97c5065df9
         if (!payload) {
             res.status(401).json({ message: "Token inválido o expirado" });
             return;

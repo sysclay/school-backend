@@ -38,9 +38,11 @@ export class AlumnoController {
 
     findById = (req:Request, res:Response) =>{
         const { id } = req.params;
+
         if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.AlumnoRepository.findById(id).then( async data =>{
             res.json(data)
         }).catch(error => {
@@ -105,9 +107,11 @@ export class AlumnoController {
         }
         const [error, updateAlumnoDto ] = UpdateAlumnoDto.update(query);
         if(error){ return res.status(400).json({message:error})};
+
         if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.AlumnoRepository.updateAll(id,updateAlumnoDto!).then( async data =>{
             res.json(data)
         }).catch(error => {

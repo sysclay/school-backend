@@ -31,9 +31,11 @@ export class ColegioNivelController {
 
     findById = (req:Request, res:Response) =>{
         const { id } = req.params;
+
          if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.colegioNivelRepository.findByIdColegio(id)
         .then( async data =>{
             res.json(data)

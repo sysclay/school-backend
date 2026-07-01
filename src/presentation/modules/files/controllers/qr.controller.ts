@@ -20,9 +20,11 @@ export class QRController {
 
     saveFilenameQR = (req: AuthRequest, res: Response) => {
         const { filename } = req.params;
+
         if (typeof filename !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.QRRepository.saveFilenameQR(filename).then(data => {
             // if (!data.ok || !data.data) {
                 return res.json(data)
@@ -39,9 +41,11 @@ export class QRController {
 
     findFileByFilename = (req: AuthRequest, res: Response) => {
         const { filename } = req.params;
+
         if (typeof filename !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.QRRepository.findByFilename(filename)
         .then(data => {
                 // if (!data.ok || !data.data) {

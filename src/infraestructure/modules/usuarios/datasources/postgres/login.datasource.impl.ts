@@ -17,6 +17,7 @@ export class LoginDatasourceImpl implements LoginDatasource {
     ){}
 
     async login(loginUsuarioDto: LoginUsuarioDto): Promise<LoginEntityOu> {
+<<<<<<< HEAD
 
         
         const { username,password } = loginUsuarioDto;
@@ -29,6 +30,10 @@ export class LoginDatasourceImpl implements LoginDatasource {
 
 
 
+=======
+        const { username,password } = loginUsuarioDto;
+        const pool = PostgresConnection.getPool();
+>>>>>>> 3fcd7a4ca64f408e78613fcb12a85c97c5065df9
         try {
             const query = `SELECT login_usuario(p_username := $1) AS response`
             const values = [username.toLocaleLowerCase()];
@@ -38,7 +43,10 @@ export class LoginDatasourceImpl implements LoginDatasource {
             await pool.query('COMMIT');
 
 
+<<<<<<< HEAD
             console.log(loginUsuarioDto,result)
+=======
+>>>>>>> 3fcd7a4ca64f408e78613fcb12a85c97c5065df9
             if(result.rows.length>0){
                 if(result.rows[0].response.ok){
                     const isPasswordValid = await this.compareFunction(password, result.rows[0].response.hash);

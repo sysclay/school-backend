@@ -33,9 +33,11 @@ export class DirectorController {
     findById = (req:AuthRequest, res: Response)=>{
         // const by = req?.payload?.id_Director;
         const { id } = req.params;
-                if (typeof id !== "string") { 
+
+        if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.DirectorRepository.findById(id!).then(async data =>{
             res.json(data)
         }).catch(error => {
@@ -55,9 +57,11 @@ export class DirectorController {
 
     findByIdColegio = (req:Request, res: Response)=>{
         const { id } = req.params;
-                if (typeof id !== "string") { 
+
+        if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.DirectorRepository.findByIdColegio(id).then(async data =>{
             res.json(data)
         }).catch(error => {

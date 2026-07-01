@@ -85,11 +85,11 @@ export class AcademicoColegioController {
 
     findById = (req:AuthRequest, res: Response)=>{
         const { id } = req.params;
+
         if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
 
-        // const id = req.params.id;
         this.academicoColegioRepository.findById(id!)
         .then(async data =>{
             res.json(data)

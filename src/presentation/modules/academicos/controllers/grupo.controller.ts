@@ -56,9 +56,11 @@ export class GrupoController {
     findById = (req:AuthRequest, res: Response)=>{
         // const id_rol = req?.payload?.rol.id_rol;
         const { id } = req.params;
+
         if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.GrupoRepository.findById(id!)
         .then(async data =>{
             res.json(data)

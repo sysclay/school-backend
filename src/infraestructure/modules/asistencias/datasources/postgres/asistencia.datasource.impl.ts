@@ -30,6 +30,10 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
             return AsistenciaMapper.asistenciaEntityFromObject({ok:false,message:'Error'});
 
         } catch (error:any) {
+<<<<<<< HEAD
+=======
+            // console.log(error)
+>>>>>>> 3fcd7a4ca64f408e78613fcb12a85c97c5065df9
             await pool.query('ROLLBACK');
             if(error instanceof CustomError){
                 throw error;

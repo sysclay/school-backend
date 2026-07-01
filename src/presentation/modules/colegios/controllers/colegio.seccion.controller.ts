@@ -32,9 +32,11 @@ export class ColegioSeccionController {
     findByIdColegio = (req:Request, res:Response) =>{
         const { id } = req.params;
         const estado_query = req.query.estado as boolean | undefined;
+
         if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.ColegioSeccionRepository.findByIdColegio(id, estado_query!)
         .then( async data =>{
            res.json(data)

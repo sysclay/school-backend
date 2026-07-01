@@ -6,6 +6,7 @@ import { PersonaRolColegioRoutes, PersonaRolRoutes } from "./modules/gestiones/i
 import { MatriculaEstadoRoutes, MatriculaIngresoRoutes, MatriculaRoutes } from "./modules/matriculas/index.js";
 import { AsistenciaProgramadoRoutes, AsistenciaRoutes } from "./modules/asistencias/index.js";
 
+
 export class AppRouter {
     static get routes(): Router {
         const router = Router();

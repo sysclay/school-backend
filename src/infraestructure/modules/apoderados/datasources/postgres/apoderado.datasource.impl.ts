@@ -117,6 +117,7 @@ export class ApoderadoDatasourceImpl implements ApoderadoDatasource {
             const values: any[] = [nro_documento];
             let index = 2;
 
+
             await pool.query('BEGIN'); 
             const result = await pool.query(queryS, values); 
             await pool.query('COMMIT'); 

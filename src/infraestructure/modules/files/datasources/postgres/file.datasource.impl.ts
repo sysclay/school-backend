@@ -49,12 +49,14 @@ export class FileDatasourceImpl implements FileDatasource {
 
     async register(registerFileDto: RegisterFileDto): Promise<FileEntityOu> {
         try {
+
             const data = {
                 filename: registerFileDto.filename,
                 path: path.join(this.basePath, registerFileDto.filename),
                 mimetype: registerFileDto.mimetype,
                 size: registerFileDto.size
             }
+
             return FileMapper.FileEntityFromObject({
                 ok: true,
                 data: data,
@@ -140,6 +142,7 @@ export class FileDatasourceImpl implements FileDatasource {
                 message: 'File actualizada correctamente'
             });
         } catch (error) {
+
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServer();
         }

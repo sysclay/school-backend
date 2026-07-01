@@ -75,6 +75,7 @@ export class TurnoColegioController {
     findById = (req:AuthRequest, res: Response)=>{
         // const id_rol = req?.payload?.rol.id_rol;
         const { id } = req.params;
+
         if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
@@ -93,9 +94,11 @@ export class TurnoColegioController {
         // const [error,updatePersonaDto ] = UpdatePersonaDto.update(req.body);
         // if(error){ return res.status(400).json({message:error})};
         const by = req?.payload?.id_usuario;
+
         if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
         this.TurnoColegioRepository.update(id,estado,by!).then( async data =>{
             res.json(data)
         }).catch(error => {

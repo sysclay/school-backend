@@ -51,9 +51,12 @@ export class UsuarioController {
         const { id } = req.params;
         const [error, updateUsuarioDto ] = UpdateUsuarioDto.update(req.body);
         if(error){ return res.status(400).json({message:error})};
+
         if (typeof id !== "string") { 
             return res.status(400).json({ message: "El id debe ser un string"});
         }
+
+
         this.usuarioRepository.updateAll(id,updateUsuarioDto!).then(async data =>{
             res.json(data)
         }).catch(error => {
