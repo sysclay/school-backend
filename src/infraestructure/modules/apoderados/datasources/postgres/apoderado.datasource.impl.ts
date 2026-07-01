@@ -117,20 +117,6 @@ export class ApoderadoDatasourceImpl implements ApoderadoDatasource {
             const values: any[] = [nro_documento];
             let index = 2;
 
-            // console.log(filterApoderadoDto)
-            // if (year) {
-            //     queryS += ` AND CONCAT_WS(' ', nombre, paterno, materno) ILIKE $${index}`;
-            //     values.push(`%${year}%`);
-            //     index++;
-            //     }
-
-            // if (year) {
-            //     queryS += ` AND nro_doc::TEXT ILIKE $${index}`;
-            //     values.push(`%${year}%`);
-            //     index++;
-            // }
-            // queryS += ` LIMIT 5`;
-            // console.log(queryS, values)
             await pool.query('BEGIN'); 
             const result = await pool.query(queryS, values); 
             await pool.query('COMMIT'); 
