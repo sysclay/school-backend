@@ -1,9 +1,11 @@
 // import { AsistenciaDatasource, AsistenciaEntityOu, RegisterAsistenciaDto } from "../../../../../domain/modulos/asistencia/index.js";
-import { CustomError, AsistenciaDatasource, AsistenciaEntityOu, RegisterAsistenciaDto, UpdateAsistenciaDto  } from "../../../../../domain/index.js";
+import { CustomError, AsistenciaDatasource, AsistenciaEntityOu, RegisterAsistenciaDto, UpdateAsistenciaDto, AsistenciaMarcadoEntityOu  } from "../../../../../domain/index.js";
 import { FilterAsistenciaDto } from "../../../../../domain/modules/asistencias/dtos/filter.asistencia.dto.js";
+import { FilterAsistenciaMarcadoDto } from "../../../../../domain/modules/asistencias/dtos/filter.asistencia.marcado.dto.js";
 import { PostgresConnection } from "../../../../database/index.js";
 
 import { AsistenciaMapper } from "../../mappers/asistencia.mapper.js";
+import { AsistenciaMarcadoMapper } from "../../mappers/asistencia.marcado.mapper.js";
 // import { PostgresDatabase } from "../../../../../data/postgres/index.js";
 
 export class AsistenciaDatasourceImpl implements AsistenciaDatasource { 
@@ -70,6 +72,60 @@ export class AsistenciaDatasourceImpl implements AsistenciaDatasource {
             return AsistenciaMapper.findEntityFromObject({ok:false,message:'Error'})
         } catch(error) {
             if(error instanceof CustomError){ throw error; }
+            throw CustomError.internalServer();
+        }
+    }
+
+    async filterMarcado(
+        filterAsistenciaMarcadoDto: FilterAsistenciaMarcadoDto,
+        page: number,
+        limit: number
+    ): Promise<AsistenciaMarcadoEntityOu> {
+        try {
+            const { id_grupo_academico, id_matricula, fecha_inicio, fecha_fin } = filterAsistenciaMarcadoDto;
+            const pool = PostgresConnection.getPool();
+
+            // Si no vienen los parámetros obligatorios → retorna vacío sin ir a DB
+            if (!id_grupo_academico || !id_matricula) {
+                return AsistenciaMarcadoMapper.findEntityFromObject({
+                    ok: true,
+                    data: [],
+                    message: 'Parámetros insuficientes',
+                });
+            }
+
+            const values: any[] = [id_grupo_academico, id_matricula];
+
+            // fecha_inicio y fecha_fin son opcionales — el procedure acepta NULL
+            values.push(fecha_inicio ?? null);
+            values.push(fecha_fin    ?? null);
+
+            const dataQuery = `
+                SELECT * FROM fn_asistencias_alumno(
+                    p_id_grupo     := $1,
+                    p_id_matricula := $2,
+                    p_fecha_inicio := $3,
+                    p_fecha_fin    := $4
+                )
+            `;
+            const result = await pool.query(dataQuery, values);
+
+            if (result) {
+                return AsistenciaMarcadoMapper.findEntityFromObject({
+                    ok: true,
+                    data: result.rows,
+                    message: 'Operación exitosa',
+                });
+            }
+
+            return AsistenciaMarcadoMapper.findEntityFromObject({
+                ok: false,
+                data: [],
+                message: 'Error al ejecutar la consulta',
+            });
+
+        } catch (error) {
+            if (error instanceof CustomError) throw error;
             throw CustomError.internalServer();
         }
     }

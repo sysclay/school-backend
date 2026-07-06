@@ -44,7 +44,6 @@ export class QRDatasourceImpl implements QRDatasource {
     async findByFilename(filename: string): Promise<FileEntityOu> {
         try {
             const result = await CLOUDINARY.cloudinaryQRRead(`qr-${filename}`);
-            // console.log('result', result);
             if (!result) {
                 return FileMapper.FileEntityFromObject({
                     ok: false,

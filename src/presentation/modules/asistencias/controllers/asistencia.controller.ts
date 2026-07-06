@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AsistenciaRepository, CustomError, RegisterAsistenciaDto, UpdateAsistenciaDto  } from "../../../../domain/index.js";
+import { AsistenciaRepository, CustomError, FilterAsistenciaMarcadoDto, RegisterAsistenciaDto, UpdateAsistenciaDto  } from "../../../../domain/index.js";
 import { FilterAsistenciaDto } from "../../../../domain/modules/asistencias/dtos/filter.asistencia.dto.js";
 
 interface AuthRequest extends Request {
@@ -52,6 +52,35 @@ export class AsistenciaController {
             this.handleError(error,res)
         });
     }
+
+    filterMatricula = (req: AuthRequest, res: Response): any => {
+        const { id_grupo_academico, id_matricula, fecha_inicio, fecha_fin } = req.query;
+
+        const query = {
+            id_grupo_academico: typeof id_grupo_academico === "string" && id_grupo_academico.trim() !== ""
+                ? id_grupo_academico.trim()
+                : null,
+
+            id_matricula: typeof id_matricula === "string" && id_matricula.trim() !== ""
+                ? id_matricula.trim()
+                : null,
+
+            fecha_inicio: typeof fecha_inicio === "string" && fecha_inicio.trim() !== ""
+                ? fecha_inicio.trim()
+                : null,
+
+            fecha_fin: typeof fecha_fin === "string" && fecha_fin.trim() !== ""
+                ? fecha_fin.trim()
+                : null,
+        };
+
+        const [error, filterAsistenciaMarcadoDto] = FilterAsistenciaMarcadoDto.filterMarcado(query);
+        if (error) return res.status(400).json({ message: error });
+
+        this.asistenciaRepository.filterMarcado(filterAsistenciaMarcadoDto!, 1, 400)
+            .then(data => res.json(data))
+            .catch(error => this.handleError(error, res));
+    };
 
     update = (req:AuthRequest, res: Response):any=>{
 

@@ -3,6 +3,8 @@
 
 import { AsistenciaDatasource, AsistenciaEntityOu, AsistenciaRepository, FilterMatriculaDto, RegisterAsistenciaDto, UpdateAsistenciaDto } from "../../../../domain/index.js";
 import { FilterAsistenciaDto } from "../../../../domain/modules/asistencias/dtos/filter.asistencia.dto.js";
+import { FilterAsistenciaMarcadoDto } from "../../../../domain/modules/asistencias/dtos/filter.asistencia.marcado.dto.js";
+import { AsistenciaMarcadoEntityOu } from "../../../../domain/modules/asistencias/entities/ou/asistencia.marcado.entity.js";
 // import { UpdateAsistenciaDto } from "../../../../domain/modules/asistencias/dtos/update.asistencia.dto.js";
 
 export class AsistenciaRepositoryImpl implements AsistenciaRepository {
@@ -33,6 +35,10 @@ export class AsistenciaRepositoryImpl implements AsistenciaRepository {
 
     filter(filterAsistenciaDto: FilterAsistenciaDto): Promise<AsistenciaEntityOu> {
         return this.asistenciaDatasource.filter(filterAsistenciaDto);
+    }
+
+    filterMarcado(filterAsistenciaMarcadoDto: FilterAsistenciaMarcadoDto,page: number, limit: number): Promise<AsistenciaMarcadoEntityOu> {
+        return this.asistenciaDatasource.filterMarcado(filterAsistenciaMarcadoDto,page,limit);
     }
 
     update(id:string,updateAsistenciaDto: UpdateAsistenciaDto, by: string): Promise<AsistenciaEntityOu> {

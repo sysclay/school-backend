@@ -1,10 +1,13 @@
 // import { FilterClaseAsistenciaDto } from "../dtos/asistencia/filter.clase.asistencia.dto.js";
 import { FilterAsistenciaDto } from "../dtos/filter.asistencia.dto.js";
+import { FilterAsistenciaMarcadoDto } from "../dtos/filter.asistencia.marcado.dto.js";
+import { FilterAsistenciaProgramadoDto } from "../dtos/filter.asistencia.programado.dto.js";
 import { RegisterAsistenciaDto } from "../dtos/register.asistencia.dto.js";
 import { UpdateAsistenciaDto } from "../dtos/update.asistencia.dto.js";
 // import { UpdateEntradaAsistenciaDto } from "../dtos/asistencia/update.entrada.asistencia.dto.js";
 // import { UpdateSalidaAsistenciaDto } from "../dtos/asistencia/update.salida.asistencia.dto.js";
 import { AsistenciaEntityOu } from "../entities/ou/asistencia.entity.js";
+import { AsistenciaMarcadoEntityOu } from "../entities/ou/asistencia.marcado.entity.js";
 
 export abstract class AsistenciaRepository {
 
@@ -17,4 +20,6 @@ export abstract class AsistenciaRepository {
     // abstract findAll():Promise<AsistenciaEntityOu|null>;
     abstract filter(filterAsistenciaDto:FilterAsistenciaDto):Promise<AsistenciaEntityOu>;
     abstract update(id:string,updateAsistenciaDto:UpdateAsistenciaDto,by:string): Promise<AsistenciaEntityOu>;
+
+    abstract filterMarcado(filterAsistenciaMarcadoDto:FilterAsistenciaMarcadoDto,page:number, limit:number):Promise<AsistenciaMarcadoEntityOu>;
 }

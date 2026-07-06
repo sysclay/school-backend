@@ -15,3 +15,6 @@ export * from './repositories/asistencia.repository.js';
 export * from './entities/ou/asistencia.entity.js';
 export * from './dtos/register.asistencia.dto.js';
 export * from './dtos/update.asistencia.dto.js';
+
+export * from './dtos/filter.asistencia.marcado.dto.js';
+export * from './entities/ou/asistencia.marcado.entity.js';
