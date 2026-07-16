@@ -18,6 +18,7 @@ export class GrupoMapper {
                 data.grado,
                 data.seccion,
                 data.capacidad,
+                data.matriculados,
                 data.hora_inicio,
                 data.hora_fin,
                 data.turno,
@@ -56,6 +57,7 @@ export class GrupoMapper {
                 data.grado,
                 data.seccion,
                 data.capacidad,
+                data.matriculados,
                 data.hora_inicio,
                 data.hora_fin,
                 data.turno,
@@ -81,7 +83,7 @@ export class GrupoMapper {
         const {ok,data,message} = object;
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
-                const {id_grupo,id_academico,id_colegio,id_nivel,id_grado,id_seccion,nombre,nivel,grado,seccion,capacidad,hora_inicio,hora_fin,turno,estado,created_at} = object;
+                const {id_grupo,id_academico,id_colegio,id_nivel,id_grado,id_seccion,nombre,nivel,grado,seccion,capacidad,matriculados,hora_inicio,hora_fin,turno,estado,created_at} = object;
                 return new GrupoEntity(
                     id_grupo,
                     id_academico,
@@ -94,6 +96,7 @@ export class GrupoMapper {
                     grado,
                     seccion,
                     capacidad,
+                    matriculados,
                     hora_inicio,
                     hora_fin,
                     turno,

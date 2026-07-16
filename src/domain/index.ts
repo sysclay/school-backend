@@ -61,11 +61,3 @@ export * from './modules/asistencias/index.js';
 // export * from './dtos/fcm/register.fcm.dto.js';
 // export * from './dtos/fcm/filter.fcm.dto.js';
 // export * from './dtos/fcm/update.fcm.dto.js';
-
-// DOMAIN NOTIFICACION
-// export * from './entities/in/notificacion.entity.js';
-// export * from './entities/ou/notificacion.entity.js';
-// export * from './datasources/notificacion.datasource.js';
-// export * from './repositories/notificacion.repository.js';
-// export * from './dtos/notificacion/register.notificacion.dto.js';
-// export * from './dtos/notificacion/filter.asistencia.notificacion.dto.js';

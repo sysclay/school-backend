@@ -1,5 +1,5 @@
 
-import { DirectorDatasource, DirectorEntityOu, DirectorRepository, RegisterDirectorDto } from "../../../../domain/index.js";
+import { DirectorDatasource, DirectorEntityOu, DirectorRepository, FilterDirectorDto, RegisterDirectorDto } from "../../../../domain/index.js";
 
 export class DirectorRepositoryImpl implements DirectorRepository {
 
@@ -20,8 +20,11 @@ export class DirectorRepositoryImpl implements DirectorRepository {
     }
 
     
-    findByIdColegio(id:string):Promise<DirectorEntityOu>{
-        return this.DirectorDatasource.findByIdColegio(id);
+    findByIdColegio(id_colegio:string):Promise<DirectorEntityOu>{
+        return this.DirectorDatasource.findByIdColegio(id_colegio);
     }
 
+    filterAll(filterDirectorDto:FilterDirectorDto):Promise<DirectorEntityOu>{
+        return this.DirectorDatasource.filterAll(filterDirectorDto);
+    }
 }

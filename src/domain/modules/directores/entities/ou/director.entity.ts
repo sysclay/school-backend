@@ -1,16 +1,16 @@
 export class DirectorEntity {
     constructor(
-        public id_persona: string,
         public id_colegio: string,
-        public id_rol: string,
-        public nro_documento: string,
-        public nombre_completo: string,
-        public correo: string,
-        public telefono: string,
         public colegio: string,
-        // public cip: string,
-        // public formacion_academica: string,
+        public id_director: string,
+        public nro_doc: string,
+        public nombre: string,
+        public paterno: string,
+        public materno: string,
+        public telefono: string,
+        public correo: string,
         public estado: boolean,
+        public created_at: string,
     ){}
 }
 

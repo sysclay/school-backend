@@ -17,7 +17,6 @@ export const Modulos = {
   MATRICULA_INGRESOS:"modulo-matriculas-ingresos",
   MATRICULAS:"modulo-matriculas",
 
-  DIRECTORES:"modulo-personas-roles-colegios",
 
   PERSONAS_ROLES:"modulo-personas-roles",
   PERSONAS_ROLES_COLEGIOS:"modulo-personas-roles-colegios",
@@ -39,6 +38,7 @@ export const Modulos = {
   PARENTESCOS:"modulo-parentescos",
 
   PORTEROS:"modulo-porteros",
+  DIRECTORES:"modulo-directores", 
 
   NIVELES:"modulo-niveles",
   GRADOS:"modulo-grados",

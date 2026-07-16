@@ -7,15 +7,17 @@ export class DirectorMapper {
         const {ok,data,message} = object;
         if(data!==undefined){
             const _data = new DirectorEntity (
-                data.id_persona,
                 data.id_colegio,
-                data.id_rol,
-                data.nro_documento,
-                data.nombre_completo,
-                data.correo,
-                data.telefono,
                 data.colegio,
+                data.id_director,
+                data.nro_doc,
+                data.nombre,
+                data.paterno,
+                data.materno,
+                data.telefono,
+                data.correo,
                 data.estado,
+                data.created_at,
             );   
             return new DirectorEntityOu(
                 ok,
@@ -38,15 +40,17 @@ export class DirectorMapper {
 
         if(data){
             const _data = new DirectorEntity (
-                data.id_persona,
                 data.id_colegio,
-                data.id_rol,
-                data.nro_documento,
-                data.nombre_completo,
-                data.correo,
-                data.telefono,
                 data.colegio,
+                data.id_director,
+                data.nro_doc,
+                data.nombre,
+                data.paterno,
+                data.materno,
+                data.telefono,
+                data.correo,
                 data.estado,
+                data.created_at,
             );
             return new DirectorEntityOu(
                 ok,
@@ -67,17 +71,19 @@ export class DirectorMapper {
         const {ok,data,message} = object;
         if(data!==undefined) {
             const _data = data.map((object:any)=>{
-                const {id_persona,id_colegio,id_rol,nro_documento,nombre_completo,correo,telefono,colegio,estado} = object;   
+                const {id_colegio,id_director,nro_doc,nombre,paterno,materno,correo,telefono,colegio,estado,created_at} = object;   
                 return new DirectorEntity(
-                    id_persona,
                     id_colegio,
-                    id_rol,
-                    nro_documento,
-                    nombre_completo,
-                    correo,
-                    telefono,
                     colegio,
+                    id_director,
+                    nro_doc,
+                    nombre,
+                    paterno,
+                    materno,
+                    telefono,
+                    correo,
                     estado,
+                    created_at,
                 )
             })
 

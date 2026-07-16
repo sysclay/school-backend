@@ -11,6 +11,7 @@ export class GrupoEntity {
         public grado: string,
         public seccion: string,
         public capacidad: number,
+        public matriculados: number,
         public hora_inicio: string,
         public hora_fin: string,
         public turno: string,
