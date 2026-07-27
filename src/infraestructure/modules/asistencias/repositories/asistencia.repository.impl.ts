@@ -1,11 +1,9 @@
-// import {  AsistenciaDatasource, AsistenciaEntityOu, AsistenciaRepository, RegisterAsistenciaDto} from "../../../../domain/modulos/asistencia/index.js";
-// import { RegisterTipoUsuarioDto } from "../../domain/dtos/tipousuario/register.usuario.dto";
 
-import { AsistenciaDatasource, AsistenciaEntityOu, AsistenciaRepository, FilterMatriculaDto, RegisterAsistenciaDto, UpdateAsistenciaDto } from "../../../../domain/index.js";
+import { AsistenciaDatasource, AsistenciaEntityOu, AsistenciaRepository, RegisterAsistenciaDto, ResumenAlumnoDto, ResumenAlumnoEntityOu, ResumenDayEntityOu, ResumenMonthDto, ResumenMonthEntityOu, UpdateAsistenciaDto } from "../../../../domain/index.js";
 import { FilterAsistenciaDto } from "../../../../domain/modules/asistencias/dtos/filter.asistencia.dto.js";
 import { FilterAsistenciaMarcadoDto } from "../../../../domain/modules/asistencias/dtos/filter.asistencia.marcado.dto.js";
+import { ResumenDayDto } from "../../../../domain/modules/asistencias/dtos/resumen.day.dto.js";
 import { AsistenciaMarcadoEntityOu } from "../../../../domain/modules/asistencias/entities/ou/asistencia.marcado.entity.js";
-// import { UpdateAsistenciaDto } from "../../../../domain/modules/asistencias/dtos/update.asistencia.dto.js";
 
 export class AsistenciaRepositoryImpl implements AsistenciaRepository {
 
@@ -17,22 +15,6 @@ export class AsistenciaRepositoryImpl implements AsistenciaRepository {
         return this.asistenciaDatasource.register(registerAsistenciaDto,by);
     } 
 
-    // findById(id:string):Promise<AsistenciaEntityOu>{
-    //    return this.asistenciaDatasource.findById(id);
-    // }
-
-    // findAll(page:number, limit:number):Promise<AsistenciaEntityOu>{
-    //     return this.asistenciaDatasource.findAll(page, limit);
-    // }
-
-    // findAllActive(page: number, limit: number): Promise<AsistenciaEntityOu> {
-    //     return this.asistenciaDatasource.findAllActive(page, limit);
-    // }
-
-    // findOne(id: string): Promise<AsistenciaEntityOu> {
-    //     return this.asistenciaDatasource.findOne(id);
-    // }
-
     filter(filterAsistenciaDto: FilterAsistenciaDto): Promise<AsistenciaEntityOu> {
         return this.asistenciaDatasource.filter(filterAsistenciaDto);
     }
@@ -43,6 +25,18 @@ export class AsistenciaRepositoryImpl implements AsistenciaRepository {
 
     update(id:string,updateAsistenciaDto: UpdateAsistenciaDto, by: string): Promise<AsistenciaEntityOu> {
         return this.asistenciaDatasource.update(id,updateAsistenciaDto,by)
+    }
+
+    resumenMonth(resumenMonthDto: ResumenMonthDto, page: number, limit: number): Promise<ResumenMonthEntityOu> {
+        return this.asistenciaDatasource.resumenMonth(resumenMonthDto,page,limit)
+    }
+
+    resumenDay(resumenDayDto: ResumenDayDto, page: number, limit: number): Promise<ResumenDayEntityOu> {
+        return this.asistenciaDatasource.resumenDay(resumenDayDto,page,limit)
+    }
+
+    resumenAlumno(resumenAlumnoDto: ResumenAlumnoDto, page: number, limit: number): Promise<ResumenAlumnoEntityOu> {
+        return this.asistenciaDatasource.resumenAlumno(resumenAlumnoDto,page,limit)
     }
 
 }

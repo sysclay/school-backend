@@ -17,13 +17,13 @@ export class AsistenciaRoutes {
         const controller = new AsistenciaController(AsistenciaRepository);
 
         router.post('/register', authMiddleware, authorizeRoles(Permissiones.CREATE,Modulos.ASISTENCIA), controller.registerAsistencia);
-        //router.get('/search/:id', controller.findById);
-        //router.get('/filter', controller.findByNameCorto);
-        // router.get('/list/:id', authMiddleware, authorizeRoles(Permissiones.READ_OTHERS, Modulos.COLEGIOS_GRADOS), controller.findByIdColegio);
-        // router.get('/list', authMiddleware, authorizeRoles(Permissiones.LIST_ALL, Modulos.COLEGIOS_GRADOS), controller.findAsistencia);
         router.get('/filter-marcado', authMiddleware, authorizeRoles(Permissiones.READ_OTHERS, Modulos.ASISTENCIA), controller.filterMatricula);
         router.get('/filter', authMiddleware, authorizeRoles(Permissiones.READ_OTHERS, Modulos.ASISTENCIA), controller.filter);
         router.patch('/salida', authMiddleware, authorizeRoles(Permissiones.UPDATE_OWN, Modulos.ASISTENCIA), controller.update);
+
+        router.get('/resumen-month', authMiddleware, authorizeRoles(Permissiones.READ_OTHERS, Modulos.ASISTENCIA), controller.resumenMonth);
+        router.get('/resumen-day', authMiddleware, authorizeRoles(Permissiones.READ_OTHERS, Modulos.ASISTENCIA), controller.resumenDay);
+        router.get('/resumen-alumno', authMiddleware, authorizeRoles(Permissiones.READ_OTHERS, Modulos.ASISTENCIA), controller.resumenAlumno);
 
         return router
     }

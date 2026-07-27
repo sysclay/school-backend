@@ -17,4 +17,10 @@ export * from './dtos/register.asistencia.dto.js';
 export * from './dtos/update.asistencia.dto.js';
 
 export * from './dtos/filter.asistencia.marcado.dto.js';
+export * from './dtos/resumen.month.dto.js';
+export * from './dtos/resumen.day.dto.js';
+export * from './dtos/resumen.alumno.dto.js';
+export * from './entities/ou/resumen.day.entity.js';
+export * from './entities/ou/resumen.month.entity.js';
+export * from './entities/ou/resumen.alumno.entity.js';
 export * from './entities/ou/asistencia.marcado.entity.js';

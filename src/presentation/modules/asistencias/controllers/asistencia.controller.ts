@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { AsistenciaRepository, CustomError, FilterAsistenciaMarcadoDto, RegisterAsistenciaDto, UpdateAsistenciaDto  } from "../../../../domain/index.js";
+import { AsistenciaRepository, CustomError, FilterAsistenciaMarcadoDto, RegisterAsistenciaDto, ResumenAlumnoDto, ResumenMonthDto, UpdateAsistenciaDto  } from "../../../../domain/index.js";
 import { FilterAsistenciaDto } from "../../../../domain/modules/asistencias/dtos/filter.asistencia.dto.js";
+import { ResumenDayDto } from "../../../../domain/modules/asistencias/dtos/resumen.day.dto.js";
 
 interface AuthRequest extends Request {
     payload?: { id_usuario: string, asistencia:{ id_asistencia:string } };
@@ -94,5 +95,70 @@ export class AsistenciaController {
             this.handleError(error,res)
         });
     }
+
+    resumenMonth = (req: AuthRequest, res: Response): any => {
+        const {
+            id_colegio,
+            id_anio_academico,
+            id_grupo_academico,
+            month,
+        } = req.query;
+        const query = {
+            id_colegio: typeof id_colegio === 'string' && id_colegio.trim() !== ''
+                ? id_colegio.trim()
+                : null,
+
+            id_anio_academico: typeof id_anio_academico === 'string' && id_anio_academico.trim() !== ''
+                ? id_anio_academico.trim()
+                : null,
+
+            id_grupo_academico: typeof id_grupo_academico === 'string' && id_grupo_academico.trim() !== ''
+                ? id_grupo_academico.trim()
+                : null,
+
+            month: month != null ? Number(month) : null,
+        };
+
+        const [error, resumenMonthDto] = ResumenMonthDto.resumenMonth(query);
+        if (error) {
+            return res.status(400).json({ message: error });
+        }
+
+        this.asistenciaRepository.resumenMonth(resumenMonthDto!, 1, 1000)
+            .then(data => res.json(data))
+            .catch(error => this.handleError(error, res));
+    };
+
+    resumenDay = (req: AuthRequest, res: Response): any => {
+        const { id_asistencia_programada } = req.query;
+        const query = {
+            id_asistencia_programada: typeof id_asistencia_programada === "string" && id_asistencia_programada.trim() !== ""
+                ? id_asistencia_programada.trim()
+                : null,
+        };
+
+
+        const [error, resumenDayDto] = ResumenDayDto.resumenDay(query);
+        if (error) return res.status(400).json({ message: error });
+
+        this.asistenciaRepository.resumenDay(resumenDayDto!, 1, 400)
+            .then(data => res.json(data))
+            .catch(error => this.handleError(error, res));
+    };
+    resumenAlumno = (req: AuthRequest, res: Response): any => {
+        const { id_alumno } = req.query;
+        const query = {
+            id_alumno: typeof id_alumno === "string" && id_alumno.trim() !== ""
+                ? id_alumno.trim()
+                : null,
+        };
+        console.log(query,id_alumno, 'query');
+        const [error, resumenAlumnoDto] = ResumenAlumnoDto.resumenAlumno(query);
+        if (error) return res.status(400).json({ message: error });
+
+        this.asistenciaRepository.resumenAlumno(resumenAlumnoDto!, 1, 400)
+            .then(data => res.json(data))
+            .catch(error => this.handleError(error, res));
+    };
 
 }

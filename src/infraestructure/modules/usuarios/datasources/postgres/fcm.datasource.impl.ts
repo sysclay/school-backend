@@ -146,6 +146,7 @@ export class FcmDatasourceImpl implements FcmDatasource {
             await pool.query('BEGIN'); 
             const result = await pool.query(query, values); 
             await pool.query('COMMIT'); 
+
             if(result.rowCount!=0){
                 return FcmMapper.findEntityFromObject({ok:result.rows[0].response.ok,message:result.rows[0].response.message})
             }else {
