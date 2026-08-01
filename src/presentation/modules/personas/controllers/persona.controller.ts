@@ -59,7 +59,8 @@ export class PersonaController {
         // const { doc } = req.query as { doc:string }
 
         if (typeof id !== "string") { 
-            res.status(400).json({ message: "El id debe ser un string" }); return;
+            res.status(400).json({ message: "El id debe ser un string" }); 
+            return;
         }   
 
         this.personaRepository.findByNDoc(id).then( async data =>{
