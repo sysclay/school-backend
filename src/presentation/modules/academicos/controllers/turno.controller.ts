@@ -53,12 +53,15 @@ export class TurnoController {
         });
     }
 
-    findById = (req:AuthRequest, res: Response)=>{
+    findById = (req:AuthRequest, res: Response): void =>{
         // const id_rol = req?.payload?.rol.id_rol;
         const { id } = req.params;
 
-        if (typeof id !== "string") { 
-            return res.status(400).json({ message: "El id debe ser un string"});
+        if (typeof id !== "string") {
+            res.status(400).json({
+                message: "El id debe ser un string"
+            });
+            return;
         }
 
         this.TurnoRepository.findById(id!)

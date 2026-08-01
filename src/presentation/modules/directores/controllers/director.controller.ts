@@ -29,17 +29,6 @@ export class DirectorController {
     }
 
     register= (req:AuthRequest, res:Response):any=>{
-        // const [error, registerDirectorDto ] = RegisterDirectorDto.create(req.body);
-        
-        // if(error){ return res.status(400).json({message:error})};
-        // const by = req?.payload?.id_usuario;
-
-        // this.DirectorRepository.register(registerDirectorDto!,by!).then(async data=>{
-        //     return res.json(data)
-        // }).catch( error => {
-        //     return this.handleError(error,res)
-        // });
-
 
         const id_colegio = req?.payload?.colegio?.id_colegio;
         const valid_id_colegio = (id_colegio !== undefined && id_colegio !== null && id_colegio !== '') ? id_colegio : undefined;
@@ -58,29 +47,17 @@ export class DirectorController {
         }).catch( error => {
             return this.handleError(error,res)
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     };
 
-    findById = (req:AuthRequest, res: Response)=>{
+    findById = (req:AuthRequest, res: Response): void =>{
         // const by = req?.payload?.id_Director;
         const { id } = req.params;
 
-        if (typeof id !== "string") { 
-            return res.status(400).json({ message: "El id debe ser un string"});
+        if (typeof id !== "string") {
+            res.status(400).json({
+                message: "El id debe ser un string"
+            });
+            return;
         }
 
         this.DirectorRepository.findById(id!).then(async data =>{
@@ -100,11 +77,14 @@ export class DirectorController {
         });
     }
 
-    findByIdColegio = (req:Request, res: Response)=>{
+    findByIdColegio = (req:Request, res: Response): void =>{
         const { id } = req.params;
 
-        if (typeof id !== "string") { 
-            return res.status(400).json({ message: "El id debe ser un string"});
+        if (typeof id !== "string") {
+            res.status(400).json({
+                message: "El id debe ser un string"
+            });
+            return;
         }
 
         this.DirectorRepository.findByIdColegio(id).then(async data =>{

@@ -29,12 +29,15 @@ export class ColegioSeccionController {
         });
     };
 
-    findByIdColegio = (req:Request, res:Response) =>{
+    findByIdColegio = (req:Request, res:Response): void =>{
         const { id } = req.params;
         const estado_query = req.query.estado as boolean | undefined;
 
-        if (typeof id !== "string") { 
-            return res.status(400).json({ message: "El id debe ser un string"});
+        if (typeof id !== "string") {
+            res.status(400).json({
+                message: "El id debe ser un string"
+            });
+            return;
         }
 
         this.ColegioSeccionRepository.findByIdColegio(id, estado_query!)

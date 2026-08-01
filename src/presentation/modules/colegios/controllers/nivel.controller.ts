@@ -30,11 +30,14 @@ export class NivelController {
         });
     };
 
-    findById = (req:Request, res:Response) =>{
+    findById = (req:Request, res:Response): void =>{
        const { id } = req.params;
 
-        if (typeof id !== "string") { 
-            return res.status(400).json({ message: "El id debe ser un string"});
+        if (typeof id !== "string") {
+            res.status(400).json({
+                message: "El id debe ser un string"
+            });
+            return;
         }
 
        this.nivelRepository.findById(id)
