@@ -18,11 +18,14 @@ export class QRController {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 
-    saveFilenameQR = (req: AuthRequest, res: Response) => {
+    saveFilenameQR = (req: AuthRequest, res: Response): void => {
         const { filename } = req.params;
 
-        if (typeof filename !== "string") { 
-            return res.status(400).json({ message: "El id debe ser un string"});
+        if (typeof filename !== "string") {
+            res.status(400).json({
+                message: "El filename debe ser un string"
+            });
+            return;
         }
 
         this.QRRepository.saveFilenameQR(filename).then(data => {
@@ -39,11 +42,14 @@ export class QRController {
         });
     };
 
-    findFileByFilename = (req: AuthRequest, res: Response) => {
+    findFileByFilename = (req: AuthRequest, res: Response): void => {
         const { filename } = req.params;
 
-        if (typeof filename !== "string") { 
-            return res.status(400).json({ message: "El id debe ser un string"});
+        if (typeof filename !== "string") {
+            res.status(400).json({
+                message: "El filename debe ser un string"
+            });
+            return;
         }
 
         this.QRRepository.findByFilename(filename)
