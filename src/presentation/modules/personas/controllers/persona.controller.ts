@@ -23,6 +23,7 @@ export class PersonaController {
         const by = req?.payload?.id_usuario;
 
         this.personaRepository.register(registerPersonaDto!,by!)
+        
         .then(async data=>{
             return res.json(data)
         }).catch( error => {

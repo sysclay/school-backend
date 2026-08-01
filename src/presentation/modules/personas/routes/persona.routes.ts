@@ -24,10 +24,6 @@ export class PersonaRoutes {
         router.get('/perfil', authMiddleware, authorizeRoles(Permissiones.READ_OWN, Modulos.PERSONAS), controller.findPersonaById);
         router.get('/colegio/:id', authMiddleware, authorizeRoles(Permissiones.READ_OTHERS, Modulos.PERSONAS), controller.findPersonaByNDoc);
 
-
-
-        // router.get('/search/:id', authMiddleware, authorizeRoles(Roles.ADMIN, Roles.APODERADO, Roles.AUXILIAR, Roles.DOCENTE), controller.findById);
-        // router.get('/searchall', authMiddleware, authorizeRoles(Roles.ADMIN, Roles.APODERADO, Roles.AUXILIAR, Roles.DOCENTE), controller.findPersona);
         router.put('/update/:id', authMiddleware, authorizeRoles(Permissiones.UPDATE_ALL, Modulos.PERSONAS), controller.updateById);
  
         return router
