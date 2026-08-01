@@ -57,13 +57,15 @@ export class PersonaController {
             this.handleError(error,res)
         })
     };
-
-    findPersonaByNDoc = (req:AuthRequest, res:Response) =>{
+    findPersonaByNDoc = (req:AuthRequest, res:Response): void =>{
         const { id } = req.params;
 
-        if (typeof id !== "string") { 
-            return res.status(400).json({ message: "El id debe ser un string" }); 
-        }   
+        if (typeof id !== "string") {
+            res.status(400).json({
+                message: "El id debe ser un string"
+            });
+            return;
+        } 
 
         this.personaRepository.findByNDoc(id!).then( async data =>{
             res.json(data)
