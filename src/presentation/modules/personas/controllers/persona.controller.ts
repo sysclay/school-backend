@@ -60,7 +60,7 @@ export class PersonaController {
 
         if (typeof id !== "string") { 
             res.status(400).json({ message: "El id debe ser un string" }); return;
-        }
+        }   
 
         this.personaRepository.findByNDoc(id).then( async data =>{
             res.json(data)
